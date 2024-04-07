@@ -1,5 +1,4 @@
 import { Sequelize } from "sequelize-typescript";
-import { configDotenv } from "dotenv";
 
 const DB_BASE: string | undefined = process.env.DB_BASE;
 const DB_USER: string | undefined = process.env.DB_USER;
@@ -11,7 +10,7 @@ const sequelize = new Sequelize({
   dialect: "postgres",
   username: DB_USER,
   password: DB_PASSWORD,
-  storage: ":memory:", // Para SQLite
+  host: DB_HOST,
   models: [__dirname + "/../models/*.ts"],
 });
 
