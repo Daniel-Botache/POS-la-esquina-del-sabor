@@ -6,6 +6,7 @@ interface ClientAttributes {
   tel: string;
   address: string;
   dateIn: string;
+  ban: boolean;
 }
 
 interface ClientCreationAttributes
