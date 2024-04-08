@@ -38,4 +38,5 @@ if (DB_BASE && DB_USER && DB_HOST && DB_PASSWORD) {
   throw new Error("Missing database connection details");
 }
 const { Client } = sequelize.models;
+
 export { sequelize, Client };

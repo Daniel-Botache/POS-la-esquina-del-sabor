@@ -1,12 +1,13 @@
 import { Model, Optional } from "sequelize";
 
-interface ClientAttributes {
+export interface ClientAttributes {
   id: string;
   name: string;
   tel: string;
   address: string;
   dateIn: string;
   ban: boolean;
+  cedula: number;
 }
 
 interface ClientCreationAttributes

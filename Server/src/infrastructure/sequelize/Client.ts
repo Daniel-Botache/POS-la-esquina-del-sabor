@@ -1,11 +1,15 @@
-import { ClientInstance } from "./interfaces/ClientAtrributes";
-import { Sequelize, DataTypes, INTEGER } from "sequelize";
+import { ClientInstance } from "../../domain/models/ClientAtrributes";
+import { Sequelize, DataTypes } from "sequelize";
 
 export default (sequelize: Sequelize) => {
   return sequelize.define<ClientInstance>("Client", {
     id: {
-      type: INTEGER,
+      type: DataTypes.UUID,
       primaryKey: true,
+    },
+    cedula: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
     name: {
       type: DataTypes.STRING,
@@ -21,7 +25,7 @@ export default (sequelize: Sequelize) => {
     },
     dateIn: {
       type: DataTypes.DATE,
-      allowNull: true,
+      allowNull: false,
       defaultValue: false,
     },
   });
