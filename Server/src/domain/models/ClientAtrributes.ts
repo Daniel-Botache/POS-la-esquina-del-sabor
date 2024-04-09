@@ -5,7 +5,6 @@ export interface ClientAttributes {
   name: string;
   tel: string;
   address: string;
-  dateIn: string;
   ban: boolean;
   cedula: number;
 }

@@ -1,6 +1,7 @@
 import { ModelDefined, Sequelize } from "sequelize";
 import fs from "fs";
 import path from "path";
+import "dotenv/config";
 
 const DB_BASE: string | undefined = process.env.DB_BASE;
 const DB_USER: string | undefined = process.env.DB_USER;
