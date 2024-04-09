@@ -1,6 +1,5 @@
 import { Sequelize, DataTypes } from "sequelize";
 import { SaleInstance } from "../../../domain/models/SaleAttributes";
-import Credit from "./Credit";
 
 export default (sequelize: Sequelize) => {
   return sequelize.define<SaleInstance>("Expense", {
