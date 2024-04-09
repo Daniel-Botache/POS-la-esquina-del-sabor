@@ -8,20 +8,20 @@ export class ClientController {
     this.clientRepository = new ClientRepository();
   }
 
-  getAllClientes = async (_req: Request, res: Response) => {
+  getAllClients = async (_req: Request, res: Response) => {
     try {
-      const clientes = await this.clientRepository.findAll();
-      res.json(clientes);
+      const clients = await this.clientRepository.findAll();
+      res.status(200).json(clients);
     } catch (error) {
       const err = error as Error;
       res.status(500).send(err.message);
     }
   };
-  createCliente = async (req: Request, res: Response) => {
+  createClient = async (req: Request, res: Response) => {
     try {
       const dataRequest = req.body;
-      const createdCliente = await this.clientRepository.create(dataRequest);
-      res.json(createdCliente);
+      const createdClient = await this.clientRepository.create(dataRequest);
+      res.status(200).json(createdClient);
     } catch (error) {
       const err = error as Error;
       res.status(500).send(err.message);

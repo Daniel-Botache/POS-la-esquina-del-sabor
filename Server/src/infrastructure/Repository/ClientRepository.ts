@@ -4,19 +4,19 @@ import { Client } from "../config/database";
 
 export class ClientRepository implements IClientRepository {
   public async findAll(): Promise<ClientInstance[]> {
-    const clientes = await Client.findAll();
-    return clientes.map((c) => c as ClientInstance);
+    const clients = await Client.findAll();
+    return clients.map((c) => c as ClientInstance);
   }
 
   public async findById(cedula: number): Promise<ClientInstance | null> {
-    const cliente = await Client.findByPk(cedula);
-    return cliente as ClientInstance;
+    const client = await Client.findByPk(cedula);
+    return client as ClientInstance;
   }
 
   public async create(client: ClientInstance): Promise<ClientInstance> {
     // Crear un objeto que coincida con las columnas de la tabla Client
     const { id, cedula, name, tel, address, ban } = client;
-    const createdCliente = await Client.create({
+    const createdClient = await Client.create({
       id,
       cedula,
       name,
@@ -24,7 +24,7 @@ export class ClientRepository implements IClientRepository {
       address,
       ban,
     });
-    return createdCliente as ClientInstance;
+    return createdClient as ClientInstance;
   }
 
   public async update(cedula: number, client: ClientInstance): Promise<void> {
