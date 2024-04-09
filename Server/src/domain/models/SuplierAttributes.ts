@@ -10,7 +10,7 @@ export interface SuplierAttributes {
 interface SuplierCreationAttributes
   extends Optional<SuplierAttributes, "tel"> {}
 
-export interface ClientInstance
+export interface SuplierInstance
   extends Model<SuplierAttributes, SuplierCreationAttributes>,
     SuplierAttributes {
   createdAt?: Date;
