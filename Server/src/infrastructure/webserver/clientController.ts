@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { ClientRepository } from "../Repository/ClientRepository";
+import { ClientRepository } from "../repository/ClientRepository";
 
 export class ClientController {
   private clientRepository: ClientRepository;
