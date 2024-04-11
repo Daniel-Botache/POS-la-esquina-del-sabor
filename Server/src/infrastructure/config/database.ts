@@ -38,6 +38,52 @@ if (DB_BASE && DB_USER && DB_HOST && DB_PASSWORD) {
 } else {
   throw new Error("Missing database connection details");
 }
-const { Client } = sequelize.models;
+const { Client, Bale, Base, Credit, Expense, Product, Sale, Suplier, User } =
+  sequelize.models;
 
-export { sequelize, Client };
+//relations
+Sale.belongsTo(Client, { foreignKey: "clientId" });
+Client.hasMany(Sale, { foreignKey: "clientId" });
+
+Client.hasOne(Credit, {
+  foreignKey: "clientId",
+  as: "credit",
+});
+Credit.belongsTo(Client, {
+  foreignKey: "ClientId",
+  as: "client",
+});
+
+Sale.belongsTo(User, { foreignKey: "userId" });
+User.hasMany(Sale, { foreignKey: "userId" });
+
+Base.belongsTo(User, { foreignKey: "userId" });
+User.hasMany(Base, { foreignKey: "userId" });
+
+Expense.belongsTo(User, { foreignKey: "userId" });
+User.hasMany(Expense, { foreignKey: "userId" });
+
+Product.belongsToMany(Expense, { through: "product-expense" });
+Expense.belongsToMany(Product, { through: "product-expense" });
+
+Product.belongsToMany(Sale, { through: "product-sale" });
+Sale.belongsToMany(Product, { through: "product-sale" });
+
+Product.belongsToMany(Suplier, { through: "product-suplier" });
+Suplier.belongsToMany(Product, { through: "product-suplier" });
+
+Bale.belongsTo(Product, { foreignKey: "productId" });
+Product.hasMany(Bale, { foreignKey: "productId" });
+
+export {
+  sequelize,
+  Client,
+  Bale,
+  Base,
+  Credit,
+  Expense,
+  Product,
+  Sale,
+  Suplier,
+  User,
+};

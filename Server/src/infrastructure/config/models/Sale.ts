@@ -2,7 +2,7 @@ import { Sequelize, DataTypes } from "sequelize";
 import { SaleInstance } from "../../../domain/models/SaleAttributes";
 
 export default (sequelize: Sequelize) => {
-  return sequelize.define<SaleInstance>("Expense", {
+  return sequelize.define<SaleInstance>("Sale", {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
