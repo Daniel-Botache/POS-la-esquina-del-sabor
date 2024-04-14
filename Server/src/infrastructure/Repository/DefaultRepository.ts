@@ -16,7 +16,7 @@ export class defaultRepository {
   public async create(data: any) {
     let whereCondition;
     if (this.model === sequelize.models.Client) {
-      whereCondition = { cedula: data.cedula };
+      whereCondition = { id: data.id };
     } else {
       whereCondition = data;
     }
@@ -25,5 +25,9 @@ export class defaultRepository {
       defaults: data,
     });
     return !created;
+  }
+  public async getById(id: string) {
+    const data = await this.model.findByPk(id);
+    return data;
   }
 }

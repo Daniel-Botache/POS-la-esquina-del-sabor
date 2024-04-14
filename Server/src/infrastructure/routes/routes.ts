@@ -8,8 +8,8 @@ const router = Router();
 //const controllers = new ClientController();
 const controller = new defaultController(sequelize.models.Client);
 
-router.get("/", controller.getAllClients);
-//router.get("/:id", controller.getClienteById);
+router.get("/", controller.getAllData);
+router.get("/:id", controller.getDataById);
 router.post("/", controller.createData);
 //router.put("/:id", controller.updateCliente);
 //router.delete("/:id", controller.deleteCliente);

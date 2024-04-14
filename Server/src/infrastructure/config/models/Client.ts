@@ -4,14 +4,10 @@ import { Sequelize, DataTypes } from "sequelize";
 export default (sequelize: Sequelize) => {
   return sequelize.define<ClientInstance>("Client", {
     id: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
+      type: DataTypes.INTEGER,
       primaryKey: true,
     },
-    cedula: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
+
     name: {
       type: DataTypes.STRING,
       allowNull: false,
