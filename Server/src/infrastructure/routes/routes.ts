@@ -11,7 +11,7 @@ const controller = new defaultController(sequelize.models.Client);
 router.get("/", controller.getAllData);
 router.get("/:id", controller.getDataById);
 router.post("/", controller.createData);
-//router.put("/:id", controller.updateCliente);
+router.put("/:id", controller.putData);
 router.delete("/:id", controller.deleteData);
 
 export const clienteRoutes = router;

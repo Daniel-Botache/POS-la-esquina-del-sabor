@@ -34,4 +34,12 @@ export class defaultRepository {
     const data = await this.model.destroy({ where: { id } });
     return data;
   }
+  public async put(id: string, data: any) {
+    const cell = await this.getById(id);
+    if (cell) {
+      cell.update(data);
+      return true;
+    }
+    return false;
+  }
 }
