@@ -12,6 +12,6 @@ router.get("/", controller.getAllData);
 router.get("/:id", controller.getDataById);
 router.post("/", controller.createData);
 //router.put("/:id", controller.updateCliente);
-//router.delete("/:id", controller.deleteCliente);
+router.delete("/:id", controller.deleteData);
 
 export const clienteRoutes = router;

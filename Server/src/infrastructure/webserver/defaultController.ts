@@ -35,4 +35,17 @@ export class defaultController extends defaultRepository {
       res.status(500).send(err.message);
     }
   };
+  deleteData = async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      const data = await this.delete(id);
+      if (data) {
+        res.status(200).send(true);
+      }
+      res.status(404).send("Data not found");
+    } catch (error) {
+      const err = error as Error;
+      res.status(500).send(err.message);
+    }
+  };
 }

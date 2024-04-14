@@ -30,4 +30,8 @@ export class defaultRepository {
     const data = await this.model.findByPk(id);
     return data;
   }
+  public async delete(id: string) {
+    const data = await this.model.destroy({ where: { id } });
+    return data;
+  }
 }
