@@ -1,4 +1,4 @@
-import { Model } from "sequelize";
+import { Model, Optional } from "sequelize";
 
 interface UserAttributes {
   id: string;
@@ -7,8 +7,11 @@ interface UserAttributes {
   admin: boolean;
   ban: boolean;
 }
+interface UserCreationAttributes extends Optional<UserAttributes, "id"> {}
 
-export interface UserInstance extends Model<UserAttributes>, UserAttributes {
+export interface UserInstance
+  extends Model<UserAttributes, UserCreationAttributes>,
+    UserAttributes {
   createdAt?: Date;
   updatedAt?: Date;
 }
