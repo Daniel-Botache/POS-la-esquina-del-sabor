@@ -1,5 +1,5 @@
 import morgan from "morgan";
-import { clienteRoutes } from "../routes/routes";
+import { routes } from "../routes/routes";
 import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -22,6 +22,6 @@ app.use(morgan("dev"));
 //Cors config
 app.use(cors(corsOptions));
 
-app.use("/", clienteRoutes);
+app.use("/", routes);
 
 export { app };

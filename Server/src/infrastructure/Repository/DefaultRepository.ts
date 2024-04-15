@@ -1,7 +1,7 @@
 import { ModelDefined } from "sequelize";
 import { sequelize } from "../config/database";
 
-export class defaultRepository {
+export class DefaultRepository {
   public model: ModelDefined<any, any>;
 
   constructor(model: ModelDefined<any, any>) {
