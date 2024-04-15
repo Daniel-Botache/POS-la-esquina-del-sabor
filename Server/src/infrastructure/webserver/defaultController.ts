@@ -42,7 +42,7 @@ export class defaultController extends defaultRepository {
       if (data) {
         return res.status(200).send(true);
       }
-      return res.status(404).send("Data not found");
+      return res.status(404).send("Datos no encontrados");
     } catch (error) {
       const err = error as Error;
       return res.status(500).send(err.message);
@@ -54,9 +54,13 @@ export class defaultController extends defaultRepository {
       const dataRequest = req.body;
       const update = await this.put(id, dataRequest);
       if (update) {
-        return res.status(200).send(true);
+        return res
+          .status(200)
+          .json({ succes: true, message: "Datos actualizados correctamente" });
       }
-      return res.status(404).send(false);
+      return res
+        .status(404)
+        .send({ succes: false, message: "Datos no encontrados" });
     } catch (error) {
       const err = error as Error;
       return res.status(500).send(err.message);
