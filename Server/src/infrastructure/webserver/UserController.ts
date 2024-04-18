@@ -75,4 +75,30 @@ export class UserController extends DefaultController {
       return res.status(500).send(err.message);
     }
   };
+  login = async (req: Request, res: Response) => {
+    try {
+      const { user, password } = req.body;
+      if (!user || !password)
+        return res.status(400).json({ message: "Faltan datos", succes: false });
+      const log = await this.userRespository.login(user);
+      if (!log || log.ban === true) {
+        return res
+          .status(400)
+          .json({ succes: false, message: "Usuario no encontrado" });
+      }
+      const userId = log.id;
+      const passwordMatch = await bcrypt.compare(password, log.password);
+      if (!passwordMatch) {
+        return res
+          .status(403)
+          .json({ succes: false, message: "Contaseña incorrecta" });
+      }
+      if (log.admin == true)
+        return res.status(200).json({ succes: true, admin: true, id: userId });
+      return res.status(200).json({ access: true, admin: false, id: userId });
+    } catch (error) {
+      const err = error as Error;
+      return res.status(500).send(err.message);
+    }
+  };
 }

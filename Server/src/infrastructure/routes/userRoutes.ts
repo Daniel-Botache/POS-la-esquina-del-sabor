@@ -9,5 +9,6 @@ router.get("/:id", controller.getDataById);
 router.post("/", controller.createUserData);
 router.put("/:id", controller.putData);
 router.delete("/:id", controller.deleteData);
+router.post("/login", controller.login);
 
 export const userRoutes = router;
