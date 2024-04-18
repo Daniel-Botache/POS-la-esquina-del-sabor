@@ -15,8 +15,14 @@ export class DefaultController extends DefaultRepository {
     try {
       const data = req.body;
       const createdData = await this.create(data);
-      if (createdData) return res.status(400).send("Data ya existe");
-      else return res.status(200).send("Data creada");
+      if (createdData)
+        return res
+          .status(400)
+          .json({ message: "Data ya existe", succes: createdData });
+      else
+        return res
+          .status(200)
+          .json({ message: "Data creada exitosamente", succes: createdData });
     } catch (error) {
       const err = error as Error;
       return res.status(500).send(err.message);

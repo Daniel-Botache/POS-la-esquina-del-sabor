@@ -20,7 +20,7 @@ export class UserRepository implements IUserRepository {
       where: { user: data.user },
       defaults: { user: data.user, password: data.password, admin: data.admin },
     });
-    return !created;
+    return created;
   }
   public async delete(id: number): Promise<boolean> {
     const data = await User.destroy({ where: { id } });

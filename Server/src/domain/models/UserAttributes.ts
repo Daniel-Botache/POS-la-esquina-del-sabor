@@ -1,7 +1,7 @@
 import { Model, Optional } from "sequelize";
 
-interface UserAttributes {
-  id: string;
+export interface UserAttributes {
+  id?: string;
   user: string;
   password: string;
   admin: boolean;
