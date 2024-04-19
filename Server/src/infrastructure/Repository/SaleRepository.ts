@@ -15,6 +15,32 @@ export class SaleRepository implements ISaleRepository {
     });
     return saleData as SaleInstance;
   }
-  create(data: SaleInstance): Promise<boolean> {}
-  delete(id: number): Promise<boolean> {}
+  public async create(data: SaleInstance): Promise<boolean> {
+    try {
+      const products = data.products;
+      const created = await Sale.create(
+        {
+          // Supongamos que data contiene otros campos además de productos
+          // y necesitas excluir `products` para la creación inicial
+        },
+        {
+          include: [{ model: Product, as: "products" }], // Esto incluye el modelo durante la creación si es necesario
+        }
+      );
+
+      if (data.products) {
+        created.set("products", products); // Asegúrate de que data.products es un array de IDs o instancias de Product
+      }
+
+      return true;
+    } catch (error) {
+      console.error("Failed to create sale with products:", error);
+      return false;
+    }
+  }
+
+  public async delete(id: number): Promise<boolean> {
+    const data = await Sale.destroy({ where: { id } });
+    return !data;
+  }
 }
