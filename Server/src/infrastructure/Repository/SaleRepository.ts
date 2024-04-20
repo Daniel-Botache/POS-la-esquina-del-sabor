@@ -20,8 +20,7 @@ export class SaleRepository implements ISaleRepository {
       const products = data.products;
       const created = await Sale.create(
         {
-          // Supongamos que data contiene otros campos además de productos
-          // y necesitas excluir `products` para la creación inicial
+          data,
         },
         {
           include: [{ model: Product, as: "products" }], // Esto incluye el modelo durante la creación si es necesario
