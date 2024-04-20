@@ -8,8 +8,7 @@ export interface ClientAttributes {
   ban: boolean;
 }
 
-interface ClientCreationAttributes
-  extends Optional<ClientAttributes, "address"> {}
+interface ClientCreationAttributes extends Optional<ClientAttributes, "id"> {}
 
 export interface ClientInstance
   extends Model<ClientAttributes, ClientCreationAttributes>,

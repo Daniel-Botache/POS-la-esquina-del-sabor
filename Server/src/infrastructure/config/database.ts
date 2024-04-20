@@ -50,7 +50,7 @@ Client.hasOne(Credit, {
   as: "credit",
 });
 Credit.belongsTo(Client, {
-  foreignKey: "ClientId",
+  foreignKey: "clientId",
   as: "client",
 });
 
