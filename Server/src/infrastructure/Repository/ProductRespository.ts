@@ -14,4 +14,16 @@ export class ProductRepository implements IProductRepository {
     });
     return productData as ProductInstance;
   }
+  public async findAll(): Promise<ProductInstance[]> {
+    const productsData = await Product.findAll({
+      include: [
+        {
+          model: Suplier,
+          as: "supliers",
+        },
+      ],
+    });
+    return productsData.map((product) => product as ProductInstance);
+  }
+  public async create(data: ProductInstance): Promise<boolean> {}
 }
