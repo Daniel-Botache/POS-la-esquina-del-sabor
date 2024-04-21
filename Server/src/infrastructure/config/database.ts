@@ -69,8 +69,8 @@ Expense.belongsToMany(Product, { through: "product-expense" });
 Product.belongsToMany(Sale, { through: "product-sale", as: "sales" });
 Sale.belongsToMany(Product, { through: "product-sale", as: "products" });
 
-Product.belongsToMany(Suplier, { through: "product-suplier" });
-Suplier.belongsToMany(Product, { through: "product-suplier" });
+Product.belongsToMany(Suplier, { through: "product-suplier", as: "supliers" });
+Suplier.belongsToMany(Product, { through: "product-suplier", as: "products" });
 
 Bale.belongsTo(Product, { foreignKey: "productId" });
 Product.hasMany(Bale, { foreignKey: "productId" });
