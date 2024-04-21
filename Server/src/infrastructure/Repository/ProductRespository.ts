@@ -54,4 +54,12 @@ export class ProductRepository implements IProductRepository {
       return false;
     }
   }
+  public async update(id: string, data: any): Promise<boolean> {
+    const productData = await this.findById(id);
+    if (productData) {
+      productData.update(data);
+      return true;
+    }
+    return false;
+  }
 }
