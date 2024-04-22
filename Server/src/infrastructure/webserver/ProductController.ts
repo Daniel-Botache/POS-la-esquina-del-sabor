@@ -42,4 +42,21 @@ export class ProductController extends DefaultController {
       return res.status(500).send(err.message);
     }
   };
+  createProduct = async (req: Request, res: Response) => {
+    try {
+      const data = req.body;
+      const createdData = await this.productRepository.create(data);
+      if (createdData) {
+        return res
+          .status(200)
+          .json({ success: true, message: "Datos creados con exito" });
+      }
+      return res
+        .status(400)
+        .json({ succes: false, message: "Datos ya existentes" });
+    } catch (error) {
+      const err = error as Error;
+      return res.status(500).json({ succes: false, message: err.message });
+    }
+  };
 }
