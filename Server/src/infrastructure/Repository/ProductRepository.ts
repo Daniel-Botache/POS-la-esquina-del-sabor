@@ -29,8 +29,9 @@ export class ProductRepository implements IProductRepository {
     try {
       const { name, type, volume, maximum, barCode, price, spent } = data;
       const supliers = data.supliers;
-      const created = await Product.create(
-        {
+      const [res, created] = await Product.findOrCreate({
+        where: { barCode },
+        defaults: {
           name,
           type,
           volume,
@@ -39,16 +40,14 @@ export class ProductRepository implements IProductRepository {
           price,
           spent,
         },
-        {
-          include: [{ model: Suplier, as: "supliers" }], // Esto incluye el modelo durante la creación si es necesario
-        }
-      );
+        include: [{ model: Suplier, as: "supliers" }], // Esto incluye el modelo durante la creación si es necesario
+      });
 
       if (supliers) {
-        created.set("supliers", supliers); // Asegúrate de que data.products es un array de IDs o instancias de Product
+        res.set("supliers", supliers); // Asegúrate de que data.products es un array de IDs o instancias de Product
       }
 
-      return true;
+      return created;
     } catch (error) {
       console.error("Failed to create sale with products:", error);
       return false;
