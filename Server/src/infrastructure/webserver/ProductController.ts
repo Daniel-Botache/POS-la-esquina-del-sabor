@@ -59,4 +59,22 @@ export class ProductController extends DefaultController {
       return res.status(500).json({ succes: false, message: err.message });
     }
   };
+  updateProduct = async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      const data = req.body;
+      const updatedProduct = await this.productRepository.update(id, data);
+      if (updatedProduct) {
+        return res
+          .status(200)
+          .json({ succes: true, message: "Datos actualizados" });
+      }
+      return res
+        .status(404)
+        .json({ succes: false, message: "Datos no encontrados" });
+    } catch (error) {
+      const err = error as Error;
+      return res.status(500).json({ succes: false, message: err.message });
+    }
+  };
 }
