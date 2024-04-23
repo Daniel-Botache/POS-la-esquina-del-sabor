@@ -2,6 +2,7 @@ import { SaleInstance } from "../../domain/models/SaleAttributes";
 import { Sale } from "../config/database";
 import { Product } from "../config/database";
 import { ISaleRepository } from "../../application/repositories/ISaleRepository";
+import { ProductInstance } from "../../domain/models/ProductAttributes";
 
 export class SaleRepository implements ISaleRepository {
   public async findById(id: string): Promise<SaleInstance | null> {
@@ -19,7 +20,7 @@ export class SaleRepository implements ISaleRepository {
     try {
       const { paymentType, movementType, total, clientId, credit } = data;
       const products = data.products;
-      const created = await Sale.create(
+      const created = (await Sale.create(
         {
           paymentType,
           movementType,
@@ -30,12 +31,17 @@ export class SaleRepository implements ISaleRepository {
         {
           include: [{ model: Product, as: "products" }], // Esto incluye el modelo durante la creación si es necesario
         }
-      );
+      )) as SaleInstance;
 
-      if (data.products) {
-        created.set("products", products); // Asegúrate de que data.products es un array de IDs o instancias de Product
+      if (products && products.length > 0 && created && created.addProducts) {
+        const productsToAssociate = (await Product.findAll({
+          where: { id: products },
+        })) as ProductInstance[];
+
+        if (productsToAssociate.length > 0) {
+          await created.addProducts(productsToAssociate);
+        }
       }
-
       return true;
     } catch (error) {
       console.error("Failed to create sale with products:", error);

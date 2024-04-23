@@ -1,4 +1,5 @@
 import { Model, Optional } from "sequelize";
+import { ProductInstance } from "./ProductAttributes";
 interface SaleAttributes {
   id: string;
   total: number;
@@ -13,4 +14,7 @@ export interface SaleInstance
     SaleAttributes {
   createdAt?: Date;
   updatedAt?: Date;
+  addProducts?: (
+    products: ProductInstance[] | ProductInstance
+  ) => Promise<void>;
 }
