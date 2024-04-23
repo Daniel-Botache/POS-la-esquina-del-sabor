@@ -46,9 +46,4 @@ export class SaleRepository implements IExpenseRepository {
       return false;
     }
   }
-
-  public async delete(id: number): Promise<boolean> {
-    const data = await Sale.destroy({ where: { id } });
-    return !data;
-  }
 }
