@@ -1,6 +1,6 @@
-import { BaleInstance } from "../../domain/models/BaleAttributes";
+import { ExpenseInstance } from "../../domain/models/ExpenseAttributes";
 
-export interface IBaleRepository {
-  findById(id: string): Promise<BaleInstance | null>;
-  create(data: BaleInstance): Promise<boolean>;
+export interface IExpenseRepository {
+  findById(id: string): Promise<ExpenseInstance | null>;
+  create(data: ExpenseInstance): Promise<boolean>;
 }
