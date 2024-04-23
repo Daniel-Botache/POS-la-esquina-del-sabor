@@ -8,6 +8,7 @@ interface BaleAttributes {
   maximum: number;
   barCode: string;
   price: number;
+  individualQuanty: number;
 }
 interface BaleCreationAttributes extends Optional<BaleAttributes, "barCode"> {}
 

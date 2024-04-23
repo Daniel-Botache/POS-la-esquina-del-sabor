@@ -32,5 +32,9 @@ export default (sequelize: Sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    individualQuanty: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   });
 };
