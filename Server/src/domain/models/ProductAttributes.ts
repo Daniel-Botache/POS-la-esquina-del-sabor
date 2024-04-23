@@ -1,4 +1,5 @@
 import { Model, Optional } from "sequelize";
+import { SuplierInstance } from "./SuplierAttributes";
 
 interface ProductAttributes {
   id: string;
@@ -19,4 +20,7 @@ export interface ProductInstance
     ProductAttributes {
   createdAt?: Date;
   updatedAt?: Date;
+  addSupliers?: (
+    supliers: SuplierInstance[] | SuplierInstance
+  ) => Promise<void>;
 }

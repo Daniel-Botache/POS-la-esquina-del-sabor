@@ -1,6 +1,7 @@
 import { ProductInstance } from "../../domain/models/ProductAttributes";
 import { Product, Suplier } from "../config/database";
 import { IProductRepository } from "../../application/repositories/IProductRepository";
+import { SuplierInstance } from "../../domain/models/SuplierAttributes";
 
 export class ProductRepository implements IProductRepository {
   public async findById(id: string): Promise<ProductInstance | null> {
@@ -27,29 +28,38 @@ export class ProductRepository implements IProductRepository {
   }
   public async create(data: any): Promise<boolean> {
     try {
-      const { name, type, volume, maximum, barCode, price, spent } = data;
-      const supliers = data.supliers;
-      const [res, created] = await Product.findOrCreate({
+      const { name, type, volume, maximum, barCode, price, spent, supliers } =
+        data;
+      const [productInstance, created] = (await Product.findOrCreate({
         where: { barCode },
         defaults: {
           name,
           type,
           volume,
           maximum,
-          barCode,
           price,
           spent,
         },
-        include: [{ model: Suplier, as: "supliers" }], // Esto incluye el modelo durante la creación si es necesario
-      });
+      })) as [ProductInstance, boolean];
 
-      if (supliers) {
-        res.set("supliers", supliers); // Asegúrate de que data.products es un array de IDs o instancias de Product
+      if (
+        supliers &&
+        supliers.length > 0 &&
+        productInstance &&
+        productInstance.addSupliers
+      ) {
+        const suppliersToAssociate = (await Suplier.findAll({
+          where: { id: supliers },
+        })) as SuplierInstance[];
+
+        if (suppliersToAssociate.length > 0) {
+          await productInstance.addSupliers(suppliersToAssociate);
+        }
       }
 
       return created;
     } catch (error) {
-      console.error("Failed to create sale with products:", error);
+      console.error("Failed to create product with suppliers:", error);
       return false;
     }
   }
