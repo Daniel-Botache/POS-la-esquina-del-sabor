@@ -17,9 +17,9 @@ export default function SignUpForm() {
   ) => {
     try {
       event.preventDefault();
-      const response: any = ({} = await loginService(username, password));
+      const response = ({} = await loginService(username, password));
       if (response) {
-        dispatch(addUser(response));
+        //dispatch(addUser({user: response.username, userId: response.id, userAdmin: response.admin}));
         setAccess(true);
         navigate("/home");
       }
