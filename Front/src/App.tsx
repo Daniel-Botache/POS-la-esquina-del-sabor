@@ -1,9 +1,15 @@
-import { useState } from "react";
-import { signUpForm } from "modules/auth/components/signUpForm.tsx";
+import SignUpForm from "./modules/auth/components/SignUpForm";
 import "./App.css";
+import { Routes, Route } from "react-router-dom";
 
 function App() {
-  return <></>;
+  return (
+    <>
+      <Routes>
+        <Route path="/" element={<SignUpForm />} />
+      </Routes>
+    </>
+  );
 }
 
 export default App;
