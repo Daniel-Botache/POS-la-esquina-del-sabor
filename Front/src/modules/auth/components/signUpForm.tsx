@@ -1,21 +1,25 @@
 import { useState } from "react";
 import { loginService } from "../services/authServices";
 import { useNavigate } from "react-router-dom";
-//import { Dispatch } from "@reduxjs/toolkit";
+import { useDispatch } from "react-redux";
+import { addUser } from "../redux/actions";
+import { request } from "../services/authServices";
 
 export default function SignUpForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [access, setAccess] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const loginHandleSubmit = async (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     try {
       event.preventDefault();
-      const response = await loginService(username, password);
+      const response: any = ({} = await loginService(username, password));
       if (response) {
+        dispatch(addUser(response));
         setAccess(true);
         navigate("/home");
       }

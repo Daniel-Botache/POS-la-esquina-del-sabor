@@ -86,6 +86,7 @@ export class UserController extends DefaultController {
           .status(400)
           .json({ access: false, message: "Usuario no encontrado" });
       }
+      const username = log.user;
       const userId = log.id;
       const passwordMatch = await bcrypt.compare(password, log.password);
       if (!passwordMatch) {
@@ -94,8 +95,12 @@ export class UserController extends DefaultController {
           .json({ access: false, message: "Contaseña incorrecta" });
       }
       if (log.admin == true)
-        return res.status(200).json({ access: true, admin: true, id: userId });
-      return res.status(200).json({ access: true, admin: false, id: userId });
+        return res
+          .status(200)
+          .json({ access: true, admin: true, id: userId, user: username });
+      return res
+        .status(200)
+        .json({ access: true, admin: false, id: userId, user: username });
     } catch (error) {
       const err = error as Error;
       return res.status(500).send(err.message);

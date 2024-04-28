@@ -3,7 +3,7 @@ export const SET_USER_TYPE = "SET_USER_TYPE";
 
 export interface addUserAction {
   type: typeof ADD_USER;
-  payload: string;
+  payload: { user: string; userId: string; userAdmin: boolean };
 }
 
 export interface setUserType {

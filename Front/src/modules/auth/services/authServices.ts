@@ -1,6 +1,7 @@
 import axios from "axios";
-interface request {
-  data: { access: boolean; id: string; admin: boolean };
+
+export interface request {
+  data: { access: boolean; id: string; admin: boolean; username: string };
 }
 
 export async function loginService(user: string, password: string) {
@@ -12,7 +13,7 @@ export async function loginService(user: string, password: string) {
     console.log(data);
     const access = data.data.access;
     if (access) {
-      return true;
+      return data.data;
     }
     return false;
   } catch (error) {
