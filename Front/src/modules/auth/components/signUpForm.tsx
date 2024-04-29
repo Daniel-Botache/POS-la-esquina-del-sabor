@@ -1,17 +1,19 @@
 import { useState } from "react";
 import { loginService } from "../services/authServices";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { addUser } from "../redux/actions";
-import { request } from "../services/authServices";
+import {
+  useCustomSelector,
+  useCustomDispatch,
+} from "../../../store/hooks/index";
 
 export default function SignUpForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [access, setAccess] = useState(false);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-
+  const dispatch = useCustomDispatch();
+  const { auth } = useCustomSelector((state) => state);
+  console.log(auth);
   const loginHandleSubmit = async (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
