@@ -13,8 +13,6 @@ export default function SignUpForm() {
   const [access, setAccess] = useState(false);
   const navigate = useNavigate();
   const dispatch = useCustomDispatch();
-  const { auth } = useCustomSelector((state) => state);
-  console.log(auth);
 
   const loginHandleSubmit = async (
     event: React.MouseEvent<HTMLButtonElement>
