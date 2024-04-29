@@ -5,6 +5,7 @@ import {
   useCustomSelector,
   useCustomDispatch,
 } from "../../../store/hooks/index";
+import { setUserInfo } from "../redux/authSlice";
 
 export default function SignUpForm() {
   const [username, setUsername] = useState("");
@@ -14,14 +15,21 @@ export default function SignUpForm() {
   const dispatch = useCustomDispatch();
   const { auth } = useCustomSelector((state) => state);
   console.log(auth);
+
   const loginHandleSubmit = async (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     try {
       event.preventDefault();
-      const response = ({} = await loginService(username, password));
+      const response = await loginService(username, password);
       if (response) {
-        //dispatch(addUser({user: response.username, userId: response.id, userAdmin: response.admin}));
+        dispatch(
+          setUserInfo({
+            user: response.user,
+            userId: response.id,
+            admin: response.admin,
+          })
+        );
         setAccess(true);
         navigate("/home");
       }

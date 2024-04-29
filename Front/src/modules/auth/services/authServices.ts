@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export interface request {
-  data: { access: boolean; id: string; admin: boolean; username: string };
+  data: { access: boolean; id: string; admin: boolean; user: string };
 }
 
 export async function loginService(user: string, password: string) {
