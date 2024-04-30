@@ -11,5 +11,9 @@ export default function validate(input: any) {
   } else if (input.password.lengh < 6) {
     errors.password =
       "La contraseña debe contener minimo 6 caracteres y un numero";
+  } else if (!/\d/.test(input.password)) {
+    errors.password =
+      "La contraseña debe contener minimo 6 caracteres y un numero";
   }
+  return errors;
 }
