@@ -1,16 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { loginService } from "../services/authServices";
 import { useNavigate } from "react-router-dom";
-import {
-  useCustomSelector,
-  useCustomDispatch,
-} from "../../../store/hooks/index";
+import { useCustomDispatch } from "../../../store/hooks/index";
 import { setUserInfo } from "../redux/authSlice";
 
 export default function SignUpForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [access, setAccess] = useState(false);
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const dispatch = useCustomDispatch();
 
@@ -35,7 +33,9 @@ export default function SignUpForm() {
       console.log(error);
     }
   };
-
+  useEffect(() => {
+    !access && navigate("/");
+  }, [access]);
   return (
     <div>
       <form>
