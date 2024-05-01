@@ -6,7 +6,7 @@ import { setUserInfo } from "../redux/authSlice";
 import validate from "../validations/validates";
 import { errorMessage } from "../hooks/notifications";
 import { succesMessage } from "../hooks/notifications";
-import { Market } from "../../../utils/Icons/icons";
+import { MarketIcon, PasswordIcon } from "../../../utils/Icons/icons";
 import styles from "../styles/SignUpForm.module.css";
 
 export default function SignUpForm() {
@@ -60,7 +60,7 @@ export default function SignUpForm() {
     <div className={styles.principalContainer}>
       <div className={styles.formContainer}>
         <div className={styles.headContainer}>
-          <Market className={styles.headContainer__img} />
+          <MarketIcon className={styles.headContainer__img} />
           <h1 className={styles.headContainer__h1}>POS</h1>
           <h2 className={styles.headContainer__h2}>La esquina del sabor</h2>
         </div>
@@ -72,7 +72,7 @@ export default function SignUpForm() {
             onChange={(e) => setUsername(e.target.value)}
             className={styles.form__input}
           />
-
+          <PasswordIcon className={styles.form__icon} />
           <input
             type="password"
             placeholder="Contraseña"
