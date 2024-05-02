@@ -107,10 +107,9 @@ export const LogoPomo = ({ className }: any) => {
       y="0px"
       width="100%"
       viewBox="0 0 295 209"
-      enableBackground="new 0 0 295 209"
     >
       <path
-        fill="#FEFFFF"
+        fill="none"
         opacity="1.000000"
         stroke="none"
         d="
@@ -868,7 +867,7 @@ export const LogoPomo = ({ className }: any) => {
  z"
       />
       <path
-        fill="#FAFCFC"
+        fill="none"
         opacity="1.000000"
         stroke="none"
         d="
@@ -894,7 +893,7 @@ export const LogoPomo = ({ className }: any) => {
  z"
       />
       <path
-        fill="#EEF5F5"
+        fill="none"
         opacity="1.000000"
         stroke="none"
         d="
@@ -905,7 +904,7 @@ export const LogoPomo = ({ className }: any) => {
  z"
       />
       <path
-        fill="#EEF5F5"
+        fill="none"
         opacity="1.000000"
         stroke="none"
         d="

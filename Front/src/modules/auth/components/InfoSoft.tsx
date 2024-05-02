@@ -16,19 +16,19 @@ export default function InfoSoft() {
         <h1 className={styles.headContainer__h1}>POS</h1>
       </div>
       <div className={styles.infoContainer}>
-        <GananciasIcon />
+        <GananciasIcon className={styles.infoContainer__icon} />
         <p className={styles.infoContainer__p}>Aumenta tus ganancias</p>
       </div>
       <div className={styles.infoContainer}>
-        <TimonIcon />
+        <TimonIcon className={styles.infoContainer__icon} />
         <p className={styles.infoContainer__p}>Controla tus gastos</p>
       </div>
       <div className={styles.infoContainer}>
-        <InvetarioIcon />
+        <InvetarioIcon className={styles.infoContainer__icon} />
         <p className={styles.infoContainer__p}>Gestiona tu inventario</p>
       </div>
       <div className={styles.infoContainer}>
-        <CreditoIcon />
+        <CreditoIcon className={styles.infoContainer__icon} />
         <p className={styles.infoContainer__p}>Genera créditos</p>
       </div>
 

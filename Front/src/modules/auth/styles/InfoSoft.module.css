@@ -3,11 +3,32 @@
     height: 30em;
     background-color: aqua;
     padding: 2em;
+    position: relative;
 }
 
 .headContainer{
 display: flex;
+align-items: center;
 }
 .infoContainer{
     display: flex;
+    align-items: center;
+    gap: 0.5em;
+    height: 2.3em;
+}
+.logoPomo{
+    fill:none;
+    width: 10em;
+}
+.infoContainer__icon{
+    width: 2em;
+}
+.infoContainer__p{
+    font-size: 1.5em;
+}
+.imgInfo{
+    position: absolute;
+    width: 35em;
+    bottom: 0;
+    right: 0    ;
 }
