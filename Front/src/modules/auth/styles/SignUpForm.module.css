@@ -38,26 +38,26 @@
     width: 100%;
     border: none;
     font-size: 1em;
-    background-color:rgba(236, 236, 236, 0.541)  ;
-    border-bottom: 2px solid #35E6C2;
+    background-color:var(--color-background-grey)  ;
+    border-bottom: 2px solid var(--color-main-blue);
     outline: none;
     height: 2em ;
-    color:#353B39
+    color: var(--color-main-text)
 }
 
 .headContainer__h1{
 font-size: 2em;
 margin: 0;
-color: rgb(255, 255, 255);
+color: var(--color-white);
 font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
--webkit-text-stroke: 1px #353B39;
+-webkit-text-stroke: 1px var(--color-main-text);
 }
 .headContainer__h2{
     font-size: 2em;
 margin: 0;
-color: rgb(255, 255, 255);
+color: var(--color-white);
 font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
--webkit-text-stroke: 1px #353B39;
+-webkit-text-stroke: 1px var(--color-main-text);
 }
 .form__btn{
     width:10em;
@@ -65,15 +65,15 @@ font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     border-radius: 10px;
     outline: none;
     border: none;
-    background-color: #DB7D26;
-    color:rgb(255, 255, 255);
+    background-color: var(--color-secondary-orange);
+    color:var(--color-white);
     padding: 0.5em;
 
 }
 .form__btn:hover{
     background-color: rgb(255, 255, 255);
-    color: #DB7D26;
-    border: 2px solid #DB7D26;
+    color:var(--color-secondary-orange);
+    border: 2px solid var(--color-secondary-orange);
 }
 .inputsContainer{
     display: flex;
@@ -83,7 +83,7 @@ font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 
 .form__icon{
     width: 2em;
-    fill: rgb(182, 182, 182);
+    fill: var(--color-icon-grey);
     margin-right: 1em;
 }
 .btnContainer{

@@ -9,13 +9,13 @@
 
 }
 .principalContainer{
-    background-color: #ffffff;
+    background-color: var(--color-white);
     height: 95vh;
     position: relative;
     overflow: hidden;
 }
 .colorBackContainer{
-    background-color: #ff9966;
+    background-color: var(--color-main-orange);
     position: absolute;
     width: 120vw;
     height: 130vh;
