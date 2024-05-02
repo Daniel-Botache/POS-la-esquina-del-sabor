@@ -1,0 +1,15 @@
+.principalContainer{
+    height: 5vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color:#ff6633 ;
+    overflow: hidden;
+    font-size: 0.8em;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.principalContainer__link{
+    text-decoration: none;
+    font-style: italic;
+    color: rgb(0, 0, 255);
+}
