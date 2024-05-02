@@ -57,14 +57,14 @@ export default function SignUpForm() {
   }, [access, navigate]);
 
   return (
-    <div className={styles.principalContainer}>
-      <div className={styles.formContainer}>
-        <div className={styles.headContainer}>
-          <MarketIcon className={styles.headContainer__img} />
-          <h1 className={styles.headContainer__h1}>POS</h1>
-          <h2 className={styles.headContainer__h2}>La esquina del sabor</h2>
-        </div>
-        <form onSubmit={loginHandleSubmit} className={styles.form}>
+    <div className={styles.formContainer}>
+      <div className={styles.headContainer}>
+        <MarketIcon className={styles.headContainer__img} />
+        <h1 className={styles.headContainer__h1}>POS</h1>
+        <h2 className={styles.headContainer__h2}>La esquina del sabor</h2>
+      </div>
+      <form onSubmit={loginHandleSubmit} className={styles.form}>
+        <div className={styles.inputsContainer}>
           <UserIcon className={styles.form__icon} />
           <input
             type="text"
@@ -73,6 +73,8 @@ export default function SignUpForm() {
             onChange={(e) => setUsername(e.target.value)}
             className={styles.form__input}
           />
+        </div>
+        <div className={styles.inputsContainer}>
           <PasswordIcon className={styles.form__icon} />
           <input
             type="password"
@@ -81,11 +83,13 @@ export default function SignUpForm() {
             onChange={(e) => setPassword(e.target.value)}
             className={styles.form__input}
           />
+        </div>
+        <div className={styles.btnContainer}>
           <button type="submit" className={styles.form__btn}>
             Entrar
           </button>
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
   );
 }

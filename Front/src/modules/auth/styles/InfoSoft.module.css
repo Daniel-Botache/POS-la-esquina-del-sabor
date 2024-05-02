@@ -1,0 +1,13 @@
+.principalContainer{
+    width: 25em;
+    height: 30em;
+    background-color: aqua;
+    padding: 2em;
+}
+
+.headContainer{
+display: flex;
+}
+.infoContainer{
+    display: flex;
+}

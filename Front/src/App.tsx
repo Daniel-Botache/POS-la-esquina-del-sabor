@@ -1,4 +1,4 @@
-import SignUpForm from "./modules/auth/components/SignUpForm";
+import ViewAuth from "./modules/auth/components/ViewAuth";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import axios from "axios";
@@ -8,7 +8,7 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<SignUpForm />} />
+        <Route path="/" element={<ViewAuth />} />
       </Routes>
     </>
   );

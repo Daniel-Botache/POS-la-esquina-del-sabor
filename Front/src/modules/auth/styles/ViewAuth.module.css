@@ -1,0 +1,7 @@
+.componentsContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    margin-left: 10vw;
+}
