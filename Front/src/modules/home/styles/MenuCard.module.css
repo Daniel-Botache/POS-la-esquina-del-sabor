@@ -1,0 +1,28 @@
+.principalContainer{
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+width: 20em;
+height: 12em;    
+padding: 0.5em;
+border-radius: 10px;
+border: 1px #e7e7e7 solid;
+
+
+}
+.principalContainer:hover{
+    background-color:#ececec;
+    
+}
+.principalContainer__Img{
+    width: 12em;
+    height: 8em;
+    border-radius: 10px;
+
+}
+.principalContainer__h2{
+    font-size: 1.3em;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: rgb(61, 61, 61);
+}
