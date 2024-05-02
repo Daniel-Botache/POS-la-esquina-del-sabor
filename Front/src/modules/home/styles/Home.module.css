@@ -6,3 +6,6 @@
     gap: 2em;
     padding: 2em;
 }
+.principalContainer__Link{
+    text-decoration: none;
+}
