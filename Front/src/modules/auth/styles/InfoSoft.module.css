@@ -5,17 +5,23 @@
     font-weight: normal;
   }
 
+  @font-face {
+    font-family: 'Stand Alone';
+    src: url('../../../utils/Fonts/Stand Alone.otf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+  }
 .principalContainer{
-    width: 25em;
+    width: 30em;
     height: 30em;
-    padding: 2em;
     position: relative;
     background: none;
 }
 
 .headContainer{
 display: flex;
-align-items: center;
+align-items:center;    
+padding: 2em;
 }
 .infoContainer{
     display: flex;
@@ -25,7 +31,7 @@ align-items: center;
 }
 .logoPomo{
     fill:none;
-    width: 10em;
+    width: 5em;
 }
 .infoContainer__icon{
     width: 2em;
@@ -38,7 +44,29 @@ align-items: center;
 }
 .imgInfo{
     position: absolute;
-    width: 35em;
+    width: 32em;
     bottom: 0;
     right: 0    ;
 }
+.headContainer__h1{
+    font-family: Stand Alone;
+    text-align: left;
+    font-size: 2.5em;
+    color: rgb(61, 61, 61);
+    line-height: 0.5em;
+}
+.headContainer__span{
+    font-size: 0.5em;
+}
+@keyframes slide {
+    from {
+      translate: -50vw;
+    }
+    to {
+      translate: 0;
+    }
+  }
+  
+  .infoSoftSlide {
+    animation: slide 2s ease forwards;
+  }

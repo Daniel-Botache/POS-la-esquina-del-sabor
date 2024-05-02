@@ -10,10 +10,15 @@ import softImage from "../../../utils/images/jovenes.png";
 
 export default function InfoSoft() {
   return (
-    <div className={styles.principalContainer}>
+    <div className={`${styles.principalContainer} ${styles.infoSoftSlide}`}>
       <div className={styles.headContainer}>
         <LogoPomo className={styles.logoPomo} />
-        <h1 className={styles.headContainer__h1}>POS</h1>
+        <h1 className={styles.headContainer__h1}>
+          Pomo <br />
+          <span className={styles.headContainer__span}>
+            Contabilidad inteligente
+          </span>
+        </h1>
       </div>
       <div className={styles.infoContainer}>
         <GananciasIcon className={styles.infoContainer__icon} />
