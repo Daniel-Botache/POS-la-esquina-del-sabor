@@ -4,4 +4,24 @@
     justify-content: center;
     margin: auto;
     margin-left: 10vw;
+    margin-top: auto;
+   
+
+}
+.principalContainer{
+    background-color: #ff6633;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+.colorBackContainer{
+    background-color: #ff9933;
+    position: absolute;
+    width: 120vw;
+    height: 130vh;
+    rotate: 155deg;
+    left: 5vw;  
+    top: 40vh;  
+    object-fit: cover;
+    
 }

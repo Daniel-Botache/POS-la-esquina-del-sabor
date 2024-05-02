@@ -1,9 +1,16 @@
+@font-face {
+    font-family: 'Cooper Black';
+    src: url('../../../utils/Fonts/COOPBL.TTF') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+  }
+
 .principalContainer{
     width: 25em;
     height: 30em;
-    background-color: aqua;
     padding: 2em;
     position: relative;
+    background: none;
 }
 
 .headContainer{
@@ -22,9 +29,12 @@ align-items: center;
 }
 .infoContainer__icon{
     width: 2em;
+    fill: rgb(255, 255, 255);
 }
 .infoContainer__p{
-    font-size: 1.5em;
+    font-size: 1.3em;
+    color:rgb(255, 255, 255); 
+    font-family: Cooper Black;
 }
 .imgInfo{
     position: absolute;
