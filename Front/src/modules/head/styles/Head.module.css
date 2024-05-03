@@ -1,49 +1,87 @@
 @font-face {
-    font-family: 'Stand Alone';
-    src: url('../../../utils/Fonts/Stand Alone.otf') format('truetype');
-    font-style: normal;
-    font-weight: normal;}
-
-.principalContainer{
-    display: flex;
-    background-color: var(--color-background-grey);
-    height: 6vh;
-    color: var(--color-main-blue);
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    align-items: center;
-    justify-content: space-between;
-    
-    
+  font-family: "Stand Alone";
+  src: url("../../../utils/Fonts/Stand Alone.otf") format("truetype");
+  font-style: normal;
+  font-weight: normal;
 }
 
-.logoContainer{
-    display: flex;
-    align-items: center;
-    font-family: Stand Alone;
-    
-    
+.principalContainer {
+  display: flex;
+  background-color: var(--color-background-grey);
+  height: 6vh;
+  color: var(--color-main-blue);
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  align-items: center;
+  justify-content: space-between;
 }
-.identifyContainer{
-    display: flex;
-    align-items: center;
-    gap: 2em;
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  font-family: Stand Alone;
 }
-.logo{
-    width: 3em;
+.identifyContainer {
+  display: flex;
+  align-items: center;
+  position: relative;
 }
-.icon{
-    width: 2em;
-    fill: var(--color-main-blue)
+.identifyContainer:hover .logoutMenu {
+  display: block; /* Muestra el menú de logout al pasar el ratón */
 }
-.identifyContainer__h1{
-    font-size: 1.3em;
+.logo {
+  width: 3em;
+}
+.icon {
+  width: 2em;
+  fill: var(--color-main-blue);
+}
+.identifyContainer__h1 {
+  font-size: 1.3em;
 }
 .identifyContainer__h3 {
-    font-size: 1.1em;
+  font-size: 1.1em;
 }
-.identifyContainer__h2{
-    font-size: 1em;
+.identifyContainer__h2 {
+  font-size: 1em;
 }
-.companyContainer{
-    display: flex;
+.companyContainer {
+  display: flex;
+}
+.iconUser {
+  width: 1.2em;
+  fill: var(--color-main-blue);
+}
+
+.logoutMenu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: var(--color-background-grey);
+  border: 1px solid #dddddd;
+  border-radius: 10px;
+  padding: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  display: none;
+  width: 5em;
+}
+
+.logoutMenu__link {
+  text-decoration: none;
+  color: var(--color-main-text);
+}
+.optionContainer:hover {
+  background-color: var(--color-white);
+  border: 1px var(--color-main-blue) solid;
+}
+.optionContainer {
+  display: flex;
+  border-radius: 10px;
+  height: 2em;
+  align-items: center;
+  justify-content: center;
+}
+
+.optionContainer__p {
+  font-size: 0.8em;
 }

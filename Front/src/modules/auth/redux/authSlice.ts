@@ -20,8 +20,11 @@ const authSlice = createSlice({
         (state.user = action.payload.user),
         (state.userId = action.payload.userId);
     },
+    cleanUserInfo: (state) => {
+      (state.admin = false), (state.user = ""), (state.userId = "");
+    },
   },
 });
 
 export default authSlice.reducer;
-export const { setUserInfo } = authSlice.actions;
+export const { setUserInfo, cleanUserInfo } = authSlice.actions;
