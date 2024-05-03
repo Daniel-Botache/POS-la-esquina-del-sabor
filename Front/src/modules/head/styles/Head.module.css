@@ -1,0 +1,24 @@
+.principalContainer{
+    display: flex;
+    background-color: var(--color-main-orange);
+    height: 8vh;
+    color: var(--color-white);
+    
+}
+
+.logoContainer{
+    display: flex;
+    align-items: center;
+    
+}
+.identifyContainer{
+    display: flex;
+    align-items: center;
+}
+.logo{
+    width: 4em;
+}
+.icon{
+    width: 3em;
+    fill: var(--color-white);
+}
