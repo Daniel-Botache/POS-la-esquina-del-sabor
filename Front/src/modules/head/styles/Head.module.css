@@ -1,24 +1,49 @@
+@font-face {
+    font-family: 'Stand Alone';
+    src: url('../../../utils/Fonts/Stand Alone.otf') format('truetype');
+    font-style: normal;
+    font-weight: normal;}
+
 .principalContainer{
     display: flex;
-    background-color: var(--color-main-orange);
-    height: 8vh;
-    color: var(--color-white);
+    background-color: var(--color-background-grey);
+    height: 6vh;
+    color: var(--color-main-blue);
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    align-items: center;
+    justify-content: space-between;
+    
     
 }
 
 .logoContainer{
     display: flex;
     align-items: center;
+    font-family: Stand Alone;
+    
     
 }
 .identifyContainer{
     display: flex;
     align-items: center;
+    gap: 2em;
 }
 .logo{
-    width: 4em;
+    width: 3em;
 }
 .icon{
-    width: 3em;
-    fill: var(--color-white);
+    width: 2em;
+    fill: var(--color-main-blue)
+}
+.identifyContainer__h1{
+    font-size: 1.3em;
+}
+.identifyContainer__h3 {
+    font-size: 1.1em;
+}
+.identifyContainer__h2{
+    font-size: 1em;
+}
+.companyContainer{
+    display: flex;
 }
