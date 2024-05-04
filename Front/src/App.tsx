@@ -1,6 +1,7 @@
 import ViewAuth from "./modules/auth/components/ViewAuth";
 import Footer from "./modules/footer/components/Footer";
 import Home from "./modules/home/components/Home";
+import NavBarLeft from "./modules/navBarLeft/components/NavBarLeft";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import axios from "axios";
@@ -11,6 +12,7 @@ function App() {
   return (
     <>
       <Head />
+      <NavBarLeft />
       <Routes>
         <Route path="/" element={<ViewAuth />} />
         <Route path="/home" element={<Home />} />

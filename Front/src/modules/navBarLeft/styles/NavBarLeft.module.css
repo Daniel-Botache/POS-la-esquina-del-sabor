@@ -1,0 +1,21 @@
+.principalContainer {
+  left: 0;
+  width: 2em;
+  display: flex;
+  flex-direction: column;
+  top: 7vh;
+  position: fixed;
+  gap: 1.5em;
+  background-color: var(--color-background-grey);
+  justify-content: center;
+  align-items: center;
+}
+
+.principalContainer__icon {
+  width: 1.5em;
+  height: 1.5em;
+  fill: var(--color-icon-grey);
+}
+.principalContainer__icon:hover {
+  fill: var(--color-main-text);
+}

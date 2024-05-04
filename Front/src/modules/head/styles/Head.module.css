@@ -13,6 +13,8 @@
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   align-items: center;
   justify-content: space-between;
+  position: fixed;
+  width: 100vw;
 }
 
 .logoContainer {
@@ -24,6 +26,7 @@
   display: flex;
   align-items: center;
   position: relative;
+  margin-right: 2vw;
 }
 .identifyContainer:hover .logoutMenu {
   display: block; /* Muestra el menú de logout al pasar el ratón */
