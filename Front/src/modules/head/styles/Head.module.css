@@ -88,3 +88,7 @@
 .optionContainer__p {
   font-size: 0.8em;
 }
+.principalContainer__link {
+  text-decoration: none;
+  color: var(--color-main-blue);
+}

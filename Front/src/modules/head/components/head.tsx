@@ -14,10 +14,12 @@ export default function Head() {
   };
   return (
     <div className={style.principalContainer}>
-      <div className={style.logoContainer}>
-        <LogoPomo className={style.logo} />
-        <h1 className={style.identifyContainer__h1}>Pomo Pos</h1>
-      </div>
+      <Link to="/home" className={style.principalContainer__link}>
+        <div className={style.logoContainer}>
+          <LogoPomo className={style.logo} />
+          <h1 className={style.identifyContainer__h1}>Pomo Pos</h1>
+        </div>
+      </Link>
       <div className={style.companyContainer}>
         <MarketIcon className={style.icon} />
         <h2 className={style.identifyContainer__h2}>La esquina del sabor</h2>
