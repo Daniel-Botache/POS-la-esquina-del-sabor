@@ -1,11 +1,11 @@
-.principalContainer{
-    display: flex;
-    flex-wrap: wrap;
-    width: 80vw;
-    margin-left:10vw ;
-    gap: 2em;
-    padding: 2em;
+.principalContainer {
+  display: flex;
+  flex-wrap: wrap;
+  width: 80vw;
+  margin-left: 10vw;
+  gap: 2em;
+  padding: 2em;
 }
-.principalContainer__Link{
-    text-decoration: none;
+.principalContainer__Link {
+  text-decoration: none;
 }
