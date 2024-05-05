@@ -85,19 +85,22 @@ export class ProductController extends DefaultController {
         const stringName = name.toString();
         const lowerCaseName = stringName.toLowerCase();
         const products = await this.productRepository.findByName(lowerCaseName);
-        if (!products || Object.keys(products).length === 0) {
+        if (!products || products.length === 0) {
           return res
             .status(404)
-            .json({ succes: false, message: "Datos no encontrados" });
+            .json({ success: false, message: "Datos no encontrados" });
         }
         return res
           .status(200)
-          .json({ succes: products, message: "Datos encontrados" });
+          .json({ success: products, message: "Datos encontrados" });
       }
-      return res.status(408).json({ succes: false, message: "Faltan datos" });
+      return res.status(400).json({
+        success: false,
+        message: "Falta el parámetro 'name' en la consulta",
+      });
     } catch (error) {
       const err = error as Error;
-      return res.status(500).json({ succes: false, message: err.message });
+      return res.status(500).json({ success: false, message: err.message });
     }
   };
 }
