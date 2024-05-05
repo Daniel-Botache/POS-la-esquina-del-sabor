@@ -19,7 +19,7 @@ export class ProductController extends DefaultController {
       }
       return res
         .status(404)
-        .json({ success: productsData, message: "Datos no encontrados" });
+        .json({ success: false, message: "Datos no encontrados" });
     } catch (error) {
       const err = error as Error;
       return res.status(500).send(err.message);
@@ -36,7 +36,7 @@ export class ProductController extends DefaultController {
       }
       return res
         .status(404)
-        .json({ success: productData, message: "Datos no encontrados" });
+        .json({ success: false, message: "Datos no encontrados" });
     } catch (error) {
       const err = error as Error;
       return res.status(500).send(err.message);
@@ -72,6 +72,29 @@ export class ProductController extends DefaultController {
       return res
         .status(404)
         .json({ succes: false, message: "Datos no encontrados" });
+    } catch (error) {
+      const err = error as Error;
+      return res.status(500).json({ succes: false, message: err.message });
+    }
+  };
+  findProductByName = async (req: Request, res: Response) => {
+    try {
+      const { name } = req.query;
+
+      if (name) {
+        const stringName = name.toString();
+        const lowerCaseName = stringName.toLowerCase();
+        const products = await this.productRepository.findByName(lowerCaseName);
+        if (!products || Object.keys(products).length === 0) {
+          return res
+            .status(404)
+            .json({ succes: false, message: "Datos no encontrados" });
+        }
+        return res
+          .status(200)
+          .json({ succes: products, message: "Datos encontrados" });
+      }
+      return res.status(408).json({ succes: false, message: "Faltan datos" });
     } catch (error) {
       const err = error as Error;
       return res.status(500).json({ succes: false, message: err.message });

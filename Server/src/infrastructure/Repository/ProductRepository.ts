@@ -2,6 +2,7 @@ import { ProductInstance } from "../../domain/models/ProductAttributes";
 import { Product, Suplier } from "../config/database";
 import { IProductRepository } from "../../application/repositories/IProductRepository";
 import { SuplierInstance } from "../../domain/models/SuplierAttributes";
+const { Op } = require("sequelize");
 
 export class ProductRepository implements IProductRepository {
   public async findById(id: string): Promise<ProductInstance | null> {
@@ -70,5 +71,16 @@ export class ProductRepository implements IProductRepository {
       return true;
     }
     return false;
+  }
+
+  public async findByName(name: string): Promise<ProductInstance[]> {
+    const products = await Product.findAll({
+      where: {
+        name: {
+          [Op.iLike]: `%${name}%`,
+        },
+      },
+    });
+    return products.map((product) => product as ProductInstance);
   }
 }

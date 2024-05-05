@@ -5,4 +5,5 @@ export interface IProductRepository {
   findById(id: string): Promise<ProductInstance | null>;
   create(data: any): Promise<boolean>;
   update(id: string, data: any): Promise<boolean>;
+  findByName(name: string): Promise<ProductInstance[]>;
 }
