@@ -1,5 +1,5 @@
 import axios from "axios";
-import { request } from "http";
+import { errorMessage } from "../../auth/hooks/notifications";
 
 export interface request {
   data: {
@@ -32,17 +32,19 @@ export async function searchProductByName(name: string) {
   const convertedName = Number(name);
   if (!isNaN(convertedName)) {
     try {
-      const data = await axios.get(`/product/${convertedName}`);
-      console.log(data);
-    } catch (error) {
-      console.log(error);
+      const data = await axios.get(`/product/search/${convertedName}`);
+      return data.data.success;
+    } catch (error: any) {
+      errorMessage(error.response.data.message);
+      return error;
     }
   }
   try {
     const data: request = await axios.get(`/product/search?name=${name}`);
     console.log(data);
     return data.data.success;
-  } catch (error) {
+  } catch (error: any) {
+    errorMessage(error.response.data.message);
     return error;
   }
 }

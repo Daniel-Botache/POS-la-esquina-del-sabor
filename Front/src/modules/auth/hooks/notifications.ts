@@ -10,7 +10,7 @@ export const errorMessage = (message: string) => {
     pauseOnHover: false,
     draggable: true,
     progress: undefined,
-    theme: "light",
+    theme: "dark",
     transition: Slide,
   });
 };
