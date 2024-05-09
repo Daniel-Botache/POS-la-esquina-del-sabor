@@ -1,6 +1,6 @@
 import style from "../styles/Cards.module.css";
 import Card from "./Card";
-import { useCustomSelector } from "../../../store/hooks";
+import { useCustomSelector } from "../../../../store/hooks";
 
 export default function Cards() {
   const productSearched = useCustomSelector(
