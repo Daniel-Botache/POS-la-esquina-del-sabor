@@ -10,6 +10,7 @@ interface ProductAttributes {
   barCode: string;
   price: number;
   spent: boolean;
+  img: string;
 }
 
 interface ProductCreationAttributes

@@ -1,5 +1,5 @@
 import style from "../styles/SearchBar.module.css";
-import { searchProductByName } from "../services/searchProductService";
+import { searchProductByName } from "../services/searchByNameService";
 import { getPorductByName } from "../redux/searchSlice";
 import { useCustomDispatch } from "../../../store/hooks";
 import { useCustomSelector } from "../../../store/hooks";

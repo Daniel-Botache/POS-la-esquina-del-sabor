@@ -37,5 +37,11 @@ export default (sequelize: Sequelize) => {
       allowNull: false,
       defaultValue: false,
     },
+    img: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue:
+        "https://codigogenesis.com/genesis/2022/04/imagen-placeholder-por-defecto-WooCommerce.png",
+    },
   });
 };

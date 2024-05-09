@@ -6,7 +6,7 @@ export interface searchProductState {
 }
 
 const initialState: searchProductState = {
-  searchProductByBar: {},
+  searchProductByBar: [],
   searchProductByName: [],
 };
 
@@ -16,6 +16,12 @@ const searchSlice = createSlice({
   reducers: {
     getPorductByName: (state, action) => {
       state.searchProductByName = action.payload.searchProductByName;
+    },
+    getProductByBar: (state, action) => {
+      state.searchProductByBar = [
+        ...state.searchProductByName,
+        action.payload.searchProductByBar,
+      ];
     },
   },
 });

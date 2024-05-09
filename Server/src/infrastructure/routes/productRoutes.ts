@@ -5,6 +5,7 @@ const router = Router();
 const controller = new ProductController();
 
 router.get("/search", controller.findProductByName);
+router.get("/search/:barcode", controller.findProductByBarcode);
 router.get("/", controller.findAllProducts);
 router.get("/:id", controller.findProductById);
 router.post("/", controller.createProduct);

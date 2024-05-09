@@ -83,4 +83,12 @@ export class ProductRepository implements IProductRepository {
     });
     return products.map((product) => product as ProductInstance);
   }
+  public async findByBarCode(barCode: string): Promise<ProductInstance> {
+    const product = await Product.findOne({
+      where: {
+        barCode: barCode,
+      },
+    });
+    return product as ProductInstance;
+  }
 }

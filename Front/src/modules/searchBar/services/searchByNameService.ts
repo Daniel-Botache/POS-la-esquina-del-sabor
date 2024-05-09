@@ -29,6 +29,15 @@ export interface request {
 }
 
 export async function searchProductByName(name: string) {
+  const convertedName = Number(name);
+  if (!isNaN(convertedName)) {
+    try {
+      const data = await axios.get(`/product/${convertedName}`);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
   try {
     const data: request = await axios.get(`/product/search?name=${name}`);
     console.log(data);
