@@ -1,0 +1,38 @@
+.principalContainer {
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  border: 2px var(--color-main-orange) solid;
+  background-color: var(--color-background-grey);
+}
+.headContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 0.7em;
+}
+.headContainer__button {
+  display: flex;
+  border-radius: 10px;
+  border: 1px var(--color-main-orange) solid;
+  padding: 0.3em;
+  height: 2em;
+  justify-content: center;
+  align-items: center;
+  color: var(--color-main-orange);
+  fill: var(--color-main-orange);
+}
+
+.headContainer__button__icon {
+  width: 1.5em;
+}
+.headContainer__button__p {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-size: 0.8em;
+}
+
+.headContainer__button:hover {
+  background-color: var(--color-main-orange);
+  color: var(--color-white);
+  fill: var(--color-white);
+}
