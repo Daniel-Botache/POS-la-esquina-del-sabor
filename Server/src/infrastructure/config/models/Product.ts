@@ -4,9 +4,9 @@ import { Sequelize, DataTypes } from "sequelize";
 export default (sequelize: Sequelize) => {
   return sequelize.define<ProductInstance>("Product", {
     id: {
-      type: DataTypes.UUID,
+      type: DataTypes.INTEGER,
       primaryKey: true,
-      defaultValue: DataTypes.UUIDV4,
+      autoIncrement: true,
     },
     name: {
       type: DataTypes.STRING,

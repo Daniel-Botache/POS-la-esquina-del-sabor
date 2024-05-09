@@ -1,7 +1,7 @@
 import style from "../styles/SearchBar.module.css";
-import { searchProduct } from "../services/searchProdcutService";
+import { searchProduct } from "../services/searchProductService";
 import { searchAllProducts } from "../services/searchAllProductsService";
-import { getProductByName, getProductByBar } from "../redux/searchSlice";
+import { getProductByName } from "../redux/searchSlice";
 import { useCustomDispatch } from "../../../store/hooks";
 
 import { useState } from "react";
@@ -20,12 +20,8 @@ export default function SeachBar() {
     }
     const response = await searchProduct(productName);
     console.log(response);
-    if (response && Array.isArray(response)) {
+    if (response) {
       dispatch(getProductByName({ searchProductByName: response }));
-      return;
-    }
-    if (response && typeof response === "object") {
-      dispatch(getProductByBar({ searchProductByBar: response }));
       return;
     }
   };

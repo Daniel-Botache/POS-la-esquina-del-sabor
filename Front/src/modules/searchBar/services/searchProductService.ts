@@ -33,7 +33,9 @@ export async function searchProduct(name: string) {
   if (!isNaN(convertedName)) {
     try {
       const data = await axios.get(`/product/search/${convertedName}`);
-      return data.data.success;
+      const productArray = [];
+      productArray.push(data.data.success);
+      return productArray;
     } catch (error: any) {
       errorMessage(error.response.data.message);
       return false;
