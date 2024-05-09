@@ -7,7 +7,7 @@ export default function Sales() {
       <div className={style.searchContainer}>
         <div className={style.headContainer}>
           <SeachBar></SeachBar>
-          <button>Agregar Prodcuto</button>
+          <button>Agregar Producto</button>
         </div>
       </div>
       <div className={style.saleContainer}></div>
