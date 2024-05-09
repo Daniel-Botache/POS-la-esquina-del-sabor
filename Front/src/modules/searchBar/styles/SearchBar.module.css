@@ -1,0 +1,10 @@
+.principalContainer__input {
+  border: none;
+  border-radius: 10px;
+  font-size: 1em;
+  outline: none;
+  width: 70%;
+}
+.principalContainer {
+  width: 50%;
+}

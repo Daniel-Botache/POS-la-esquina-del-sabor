@@ -3,6 +3,7 @@ import { searchProduct } from "../services/searchProductService";
 import { searchAllProducts } from "../services/searchAllProductsService";
 import { getProductByName } from "../redux/searchSlice";
 import { useCustomDispatch } from "../../../store/hooks";
+import { SearchIcon } from "../../../utils/Icons/icons";
 
 import { useState } from "react";
 
@@ -31,8 +32,11 @@ export default function SeachBar() {
         type="text"
         placeholder="Buscar Producto"
         onChange={(e) => setProductName(e.target.value)}
+        className={style.principalContainer__input}
       />
-      <button onClick={searchByNameHandle}>Buscar</button>
+      <button onClick={searchByNameHandle}>
+        <SearchIcon className={style.principalContainer__icon} />
+      </button>
     </div>
   );
 }
