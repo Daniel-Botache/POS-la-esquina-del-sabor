@@ -1,4 +1,4 @@
-import style from "../styles/Cards.module.css";
+import style from "../../styles/Cards.module.css";
 import Card from "./Card";
 import { useCustomSelector } from "../../../../store/hooks";
 

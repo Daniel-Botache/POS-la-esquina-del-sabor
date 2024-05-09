@@ -1,4 +1,5 @@
 import style from "../../styles/BillSide.module.css";
+import CellList from "./CellList";
 
 export default function BillSide() {
   return (
@@ -22,6 +23,14 @@ export default function BillSide() {
           <h3>Total</h3>
         </div>
         <div className={style.billProductContainer}></div>
+        <div className={style.closeSale}>
+          <button>Cerrar Factura</button>
+          <h3>Total: </h3>
+        </div>
+        <div className={style.cancelSale}>
+          <p>Productos</p>
+          <button>Cancelar</button>
+        </div>
       </div>
     </div>
   );
