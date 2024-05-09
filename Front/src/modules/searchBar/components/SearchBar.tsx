@@ -1,8 +1,9 @@
 import style from "../styles/SearchBar.module.css";
-import { searchProductByName } from "../services/searchByNameService";
-import { getPorductByName } from "../redux/searchSlice";
+import { searchProduct } from "../services/searchProdcutService";
+import { searchAllProducts } from "../services/searchAllProductsService";
+import { getProductByName, getProductByBar } from "../redux/searchSlice";
 import { useCustomDispatch } from "../../../store/hooks";
-import { useCustomSelector } from "../../../store/hooks";
+
 import { useState } from "react";
 
 export default function SeachBar() {
@@ -11,11 +12,22 @@ export default function SeachBar() {
 
   const searchByNameHandle = async () => {
     if (!productName) {
-      console.log("no ha ingresado datos");
+      const response = await searchAllProducts();
+      if (response) {
+        dispatch(getProductByName({ searchProductByName: response }));
+        return;
+      }
     }
-    const response = await searchProductByName(productName);
+    const response = await searchProduct(productName);
     console.log(response);
-    dispatch(getPorductByName({ searchProductByName: response }));
+    if (response && Array.isArray(response)) {
+      dispatch(getProductByName({ searchProductByName: response }));
+      return;
+    }
+    if (response && typeof response === "object") {
+      dispatch(getProductByBar({ searchProductByBar: response }));
+      return;
+    }
   };
   return (
     <div className={style.principalContainer}>

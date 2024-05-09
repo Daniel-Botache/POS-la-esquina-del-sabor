@@ -28,7 +28,7 @@ export interface request {
   };
 }
 
-export async function searchProductByName(name: string) {
+export async function searchProduct(name: string) {
   const convertedName = Number(name);
   if (!isNaN(convertedName)) {
     try {
@@ -36,7 +36,7 @@ export async function searchProductByName(name: string) {
       return data.data.success;
     } catch (error: any) {
       errorMessage(error.response.data.message);
-      return error;
+      return false;
     }
   }
   try {
@@ -45,6 +45,6 @@ export async function searchProductByName(name: string) {
     return data.data.success;
   } catch (error: any) {
     errorMessage(error.response.data.message);
-    return error;
+    return false;
   }
 }
