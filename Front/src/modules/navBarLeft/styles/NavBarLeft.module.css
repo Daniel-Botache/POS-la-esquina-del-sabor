@@ -17,5 +17,5 @@
   fill: var(--color-icon-grey);
 }
 .principalContainer__icon:hover {
-  fill: var(--color-main-text);
+  fill: var(--color-main-orange);
 }

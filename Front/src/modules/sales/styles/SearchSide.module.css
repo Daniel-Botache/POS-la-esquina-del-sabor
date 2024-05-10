@@ -4,23 +4,27 @@
   border-radius: 10px;
   border: 2px var(--color-main-orange) solid;
   background-color: var(--color-background-grey);
+  width: 60%;
+  height: 85vh;
 }
 .headContainer {
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   margin-top: 0.7em;
+  padding: 1em;
 }
 .headContainer__button {
   display: flex;
   border-radius: 10px;
   border: 1px var(--color-main-orange) solid;
   padding: 0.3em;
-  height: 2em;
+  height: 1.2em;
   justify-content: center;
   align-items: center;
   color: var(--color-main-orange);
   fill: var(--color-main-orange);
+  gap: 0.3em;
 }
 
 .headContainer__button__icon {

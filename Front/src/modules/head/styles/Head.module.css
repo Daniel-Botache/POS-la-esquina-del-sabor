@@ -9,7 +9,7 @@
   display: flex;
   background-color: var(--color-background-grey);
   height: 6vh;
-  color: var(--color-main-blue);
+  color: var(--color-main-orange);
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   align-items: center;
   justify-content: space-between;
@@ -36,10 +36,11 @@
 }
 .icon {
   width: 2em;
-  fill: var(--color-main-blue);
+  fill: var(--color-main-orange);
 }
 .identifyContainer__h1 {
   font-size: 1.3em;
+  color: var(--color-main-blue);
 }
 .identifyContainer__h3 {
   font-size: 1.1em;
@@ -52,7 +53,7 @@
 }
 .iconUser {
   width: 1.2em;
-  fill: var(--color-main-blue);
+  fill: var(--color-main-orange);
 }
 
 .logoutMenu {
@@ -75,7 +76,7 @@
 }
 .optionContainer:hover {
   background-color: var(--color-white);
-  border: 1px var(--color-main-blue) solid;
+  border: 1px var(--color-main-orange) solid;
 }
 .optionContainer {
   display: flex;
@@ -90,5 +91,5 @@
 }
 .principalContainer__link {
   text-decoration: none;
-  color: var(--color-main-blue);
+  color: var(--color-main-orange);
 }

@@ -34,7 +34,10 @@ export default function SeachBar() {
         onChange={(e) => setProductName(e.target.value)}
         className={style.principalContainer__input}
       />
-      <button onClick={searchByNameHandle}>
+      <button
+        onClick={searchByNameHandle}
+        className={style.principalContainer__btn}
+      >
         <SearchIcon className={style.principalContainer__icon} />
       </button>
     </div>
