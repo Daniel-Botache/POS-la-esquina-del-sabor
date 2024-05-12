@@ -10,7 +10,7 @@ interface Product {
   type: string;
   volume: number;
   maximum: number;
-  barcode: string;
+  barCode: string;
   price: number;
   spent: boolean;
   createdAt: Date;
@@ -28,6 +28,7 @@ interface ProductState {
   quantity: number;
   price: number;
   name: string;
+  barCode: string;
 }
 
 const initialState: BillState = {
@@ -52,6 +53,7 @@ const billSlice = createSlice({
           quantity: quantity,
           price: product.price,
           name: product.name,
+          barCode: product.barCode,
         };
       }
     },

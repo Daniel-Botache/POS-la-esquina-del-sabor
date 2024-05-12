@@ -1,0 +1,16 @@
+.principalContainer {
+  display: flex;
+  flex-direction: column;
+  border: 2px var(--color-main-orange) solid;
+  border-radius: 10px;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+
+.titleContainer {
+  display: flex;
+  align-items: center;
+  border-bottom: 2px var(--color-main-grey) solid;
+}
+.titleContainer__h1 {
+  font-size: 1.2em;
+}
