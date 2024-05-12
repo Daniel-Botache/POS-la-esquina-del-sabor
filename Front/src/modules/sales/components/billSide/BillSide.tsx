@@ -14,9 +14,12 @@ export default function BillSide() {
 
   const handleTransactionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
+    if (Object.keys(productsSelected).length > 0) {
+      errorMessage("Debe cerrar la factura actual");
+      return;
+    }
     setTransactionType(value);
     if (value === "abono") {
-      dispatch(clearProductsBill());
       const abonoValue = prompt("Por favor ingresa el valor a abonar:");
       const convertedAbono = Number(abonoValue);
       if (abonoValue && !isNaN(convertedAbono)) {
