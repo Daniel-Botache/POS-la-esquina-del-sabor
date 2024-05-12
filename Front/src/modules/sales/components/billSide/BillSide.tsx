@@ -42,6 +42,7 @@ export default function BillSide() {
           className={style.principalContainer__input}
           onChange={handleInputChange}
           onKeyDown={handleInputEnter}
+          value={codigoBarras}
         />
       </div>
       <div className={style.billContainer}>

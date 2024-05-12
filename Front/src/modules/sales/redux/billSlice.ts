@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface BillState {
-  products: { [key: string]: number };
+  products: { [key: string]: ProductState };
 }
 
 interface Product {
@@ -24,6 +24,11 @@ interface Product {
     updatedAt: Date
   ];
 }
+interface ProductState {
+  quantity: number;
+  price: number;
+  name: string;
+}
 
 const initialState: BillState = {
   products: {},
@@ -38,8 +43,17 @@ const billSlice = createSlice({
       action: PayloadAction<{ product: Product; quantity: number }>
     ) => {
       const { product, quantity } = action.payload;
-      const currentQuantity = state.products[product.id] || 0;
-      state.products[product.id] = currentQuantity + quantity;
+      const productEntry = state.products[product.id];
+
+      if (productEntry) {
+        productEntry.quantity += quantity;
+      } else {
+        state.products[product.id] = {
+          quantity: quantity,
+          price: product.price,
+          name: product.name,
+        };
+      }
     },
   },
 });
