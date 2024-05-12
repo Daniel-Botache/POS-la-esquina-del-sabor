@@ -80,6 +80,19 @@
   height: 10%;
   justify-content: space-between;
   background-color: var(--color-background-grey);
+  border-radius: 10px;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+.closeSaleContainer:hover {
+  background-color: var(--color-main-orange);
+}
+.closeSaleContainer:hover .closeSaleContainer__h3_title {
+  background-color: var(--color-main-orange);
+  color: var(--color-white);
+}
+.closeSaleContainer:hover .closeSaleContainer__span {
+  color: var(--color-white);
 }
 .closeSaleContainer__h3 {
   font-size: 1.2em;
@@ -96,4 +109,18 @@
   display: flex;
   align-items: center;
   height: 10%;
+  justify-content: space-between;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+.cancelSaleContainer__btn {
+  border: none;
+  border-radius: 10px;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-size: 1em;
+  color: var(--color-main-orange);
+}
+
+.cancelSaleContainer__btn:hover {
+  border: 2px var(--color-main-orange) solid;
 }

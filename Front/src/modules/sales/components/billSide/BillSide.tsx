@@ -27,7 +27,11 @@ export default function BillSide() {
       return total + product.price * product.quantity;
     }, 0);
   };
-
+  const calculateTotalProduct = () => {
+    return Object.values(productsSelected).reduce((total, product) => {
+      return total + product.quantity;
+    }, 0);
+  };
   return (
     <div className={style.principalContainer}>
       <div className={style.titleContainer}>
@@ -57,6 +61,7 @@ export default function BillSide() {
         <div className={style.billTitleContainer}>
           <h3 className={style.billTitleContainer__h3}>Cod. Barras</h3>
           <h3 className={style.billTitleContainer__h3}>Producto</h3>
+          <h3 className={style.billTitleContainer__h3}>Precio</h3>
           <h3 className={style.billTitleContainer__h3}>Cantidad</h3>
           <h3 className={style.billTitleContainer__h3}>Total</h3>
         </div>
@@ -67,6 +72,7 @@ export default function BillSide() {
               barCode={productData.barCode}
               productName={productData.name}
               quantity={productData.quantity}
+              price={productData.price}
               total={productData.price * productData.quantity}
             />
           ))}
@@ -87,7 +93,9 @@ export default function BillSide() {
         </h3>
       </div>
       <div className={style.cancelSaleContainer}>
-        <p className={style.cancelSaleContainer__p}>Productos</p>
+        <p className={style.cancelSaleContainer__p}>
+          {calculateTotalProduct()} Productos
+        </p>
         <button className={style.cancelSaleContainer__btn}>Cancelar</button>
       </div>
     </div>

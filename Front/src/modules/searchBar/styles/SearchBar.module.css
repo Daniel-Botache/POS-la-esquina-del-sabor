@@ -25,3 +25,10 @@
 
   width: 10%;
 }
+.principalContainer__btn:hover .principalContainer__icon {
+  fill: var(--color-main-orange);
+}
+.principalContainer__btn:hover {
+  background-color: var(--color-white);
+  border: 2px var(--color-main-orange) solid;
+}
