@@ -4,13 +4,14 @@
   border: 2px var(--color-main-orange) solid;
   border-radius: 10px;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-  width: 40%;
-  height: 82vh;
+  width: 55%;
+  height: 79.5vh;
   margin-top: 1.5em;
   margin-bottom: auto;
   color: var(--color-main-text);
   padding: 1em;
   padding-top: 0;
+  gap: 0.5em;
 }
 
 .titleContainer {
@@ -18,7 +19,7 @@
   align-items: center;
   border-bottom: 2px var(--color-background-grey) solid;
   justify-content: space-between;
-  height: 8%;
+  height: 10%;
 }
 .titleContainer__h1 {
   font-size: 1.2em;
@@ -46,23 +47,53 @@
   display: flex;
   height: 8%;
   align-items: center;
-  border-bottom: 2px var(--color-background-grey) solid;
   gap: 0.5em;
 }
 .billContainer {
   display: flex;
   flex-direction: column;
+  height: 70%;
+  background-color: var(--color-background-grey);
+  border-radius: 10px;
 }
 .billTitleContainer {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 2px var(--color-white) solid;
+  padding-left: 1em;
 }
 .billProductContainer {
   display: flex;
   flex-direction: column;
+  overflow-y: scroll;
+  height: 90%;
 }
 .billTitleContainer__h3 {
   width: 20%;
-  text-align: left;
+  text-align: center;
+}
+
+.closeSaleContainer {
+  display: flex;
+  align-items: center;
+  height: 10%;
+  justify-content: space-between;
+  background-color: var(--color-background-grey);
+}
+.closeSaleContainer__h3 {
+  font-size: 1.2em;
+}
+
+.closeSaleContainer__h3_title {
+  color: var(--color-main-orange);
+}
+.closeSaleContainer__span {
+  color: #9c9c9c;
+}
+
+.cancelSaleContainer {
+  display: flex;
+  align-items: center;
+  height: 10%;
 }

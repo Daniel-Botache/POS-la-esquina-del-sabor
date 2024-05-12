@@ -24,7 +24,7 @@ interface Product {
     updatedAt: Date
   ];
 }
-interface ProductState {
+export interface ProductState {
   quantity: number;
   price: number;
   name: string;

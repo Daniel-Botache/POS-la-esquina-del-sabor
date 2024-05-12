@@ -22,6 +22,12 @@ export default function BillSide() {
     }
   };
 
+  const calculateTotal = () => {
+    return Object.values(productsSelected).reduce((total, product) => {
+      return total + product.price * product.quantity;
+    }, 0);
+  };
+
   return (
     <div className={style.principalContainer}>
       <div className={style.titleContainer}>
@@ -65,14 +71,24 @@ export default function BillSide() {
             />
           ))}
         </div>
-        <div className={style.closeSale}>
-          <button>Cerrar Factura</button>
-          <h3>Total: </h3>
-        </div>
-        <div className={style.cancelSale}>
-          <p>Productos</p>
-          <button>Cancelar</button>
-        </div>
+      </div>
+      <div className={style.closeSaleContainer}>
+        <h3
+          className={`${style.closeSaleContainer__h3} ${style.closeSaleContainer__h3_title}`}
+        >
+          Cerrar Factura
+        </h3>
+        <h3 className={style.closeSaleContainer__h3}>
+          Total:{" "}
+          <span className={style.closeSaleContainer__span}>
+            {" "}
+            {calculateTotal()}
+          </span>
+        </h3>
+      </div>
+      <div className={style.cancelSaleContainer}>
+        <p className={style.cancelSaleContainer__p}>Productos</p>
+        <button className={style.cancelSaleContainer__btn}>Cancelar</button>
       </div>
     </div>
   );
