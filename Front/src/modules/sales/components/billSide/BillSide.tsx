@@ -1,20 +1,48 @@
 import style from "../../styles/BillSide.module.css";
 import CellList from "./CellList";
+import { addProductBill } from "../../redux/billSlice";
+import { useState } from "react";
+import { useCustomDispatch } from "../../../../store/hooks";
+import { searchByBarCode } from "../../services/searchByBarCodeService";
 
 export default function BillSide() {
+  const [codigoBarras, setCodigoBarras] = useState("");
+  const dispatch = useCustomDispatch();
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCodigoBarras(e.target.value);
+  };
+  const handleInputEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      searchByBarCode(codigoBarras).then((producto) => {
+        dispatch(addProductBill({ product: producto, quantity: 1 }));
+      });
+      setCodigoBarras("");
+    }
+  };
+
   return (
     <div className={style.principalContainer}>
       <div className={style.titleContainer}>
         <h1>Facturar</h1>
-        <p>icon</p>
       </div>
       <div className={style.clientContainer}>
-        <h4>Cliente:</h4>
-        <input type="text" placeholder="Cédula" />
+        <h4 className={style.principalContainer__h4}>Cliente:</h4>
+        <input
+          type="text"
+          placeholder="Cédula"
+          className={style.principalContainer__input}
+        />
       </div>
       <div className={style.insertProductContainer}>
-        <h4>Cod barras</h4>
-        <input type="text" placeholder="Código" />
+        <h4 className={style.principalContainer__h4}>Cod barras</h4>
+        <input
+          type="text"
+          placeholder="Código"
+          className={style.principalContainer__input}
+          onChange={handleInputChange}
+          onKeyDown={handleInputEnter}
+        />
       </div>
       <div className={style.billContainer}>
         <div className={style.billTitleContainer}>

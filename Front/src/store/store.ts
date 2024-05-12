@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "../modules/auth/redux/authSlice";
 import searchReducer from "../modules/searchBar/redux/searchSlice";
+import billReducer from "../modules/sales/redux/billSlice";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
@@ -16,6 +17,11 @@ const peristSearchConfig = {
   storage,
   whitelist: ["searchProductByName", "searchProductByBar"],
 };
+const peristBillConfig = {
+  key: "bill",
+  storage,
+  whitelist: ["products"],
+};
 
 //store donde se van a comunicar los reducer, se hace una key con la configuracion de persistencia y
 //se le pasa como segundo argumento el reducer
@@ -28,6 +34,10 @@ export const store = configureStore({
     search: persistReducer<ReturnType<typeof searchReducer>>(
       peristSearchConfig,
       searchReducer
+    ),
+    bill: persistReducer<ReturnType<typeof billReducer>>(
+      peristBillConfig,
+      billReducer
     ),
   },
   middleware: (DefaultSerializer) =>
