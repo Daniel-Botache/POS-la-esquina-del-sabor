@@ -1,14 +1,45 @@
 import style from "../../styles/BillSide.module.css";
 import CellList from "./CellList";
-import { addProductBill } from "../../redux/billSlice";
+import { addProductBill, clearProductsBill } from "../../redux/billSlice";
 import { useState } from "react";
 import { useCustomDispatch, useCustomSelector } from "../../../../store/hooks";
 import { searchByBarCode } from "../../services/searchByBarCodeService";
+import { errorMessage } from "../../../auth/hooks/notifications";
 
 export default function BillSide() {
   const [barCode, setbarCode] = useState("");
+  const [transactionType, setTransactionType] = useState("compra");
   const dispatch = useCustomDispatch();
   const productsSelected = useCustomSelector((state) => state.bill.products);
+
+  const handleTransactionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setTransactionType(value);
+    if (value === "abono") {
+      dispatch(clearProductsBill());
+      const abonoValue = prompt("Por favor ingresa el valor a abonar:");
+      const convertedAbono = Number(abonoValue);
+      if (abonoValue && !isNaN(convertedAbono)) {
+        dispatch(
+          addProductBill({
+            product: {
+              id: "",
+              name: "Abono",
+              price: parseFloat(abonoValue),
+              volume: 0,
+              maximum: 0,
+              barCode: "",
+              type: "",
+              spent: false,
+            },
+            quantity: 1,
+          })
+        );
+        return;
+      }
+      errorMessage("Debe ingresar solo valores numericos");
+    }
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setbarCode(e.target.value);
@@ -59,6 +90,30 @@ export default function BillSide() {
           onKeyDown={handleInputEnter}
           value={barCode}
         />
+        <div>
+          <label htmlFor="abono">
+            Abono
+            <input
+              type="radio"
+              value="abono"
+              id="abono"
+              name="tipo"
+              onChange={handleTransactionChange}
+            />
+          </label>
+
+          <label htmlFor="compra">
+            Compra
+            <input
+              defaultChecked={transactionType === "compra"}
+              type="radio"
+              value="compra"
+              id="compra"
+              name="tipo"
+              onChange={handleTransactionChange}
+            />
+          </label>
+        </div>
       </div>
       <div className={style.billContainer}>
         <div className={style.billTitleContainer}>

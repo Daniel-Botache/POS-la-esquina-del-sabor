@@ -13,16 +13,6 @@ interface Product {
   barCode: string;
   price: number;
   spent: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-  suppliers: [
-    id: string,
-    company: string,
-    tel: string,
-    adviser: string,
-    createdAt: Date,
-    updatedAt: Date
-  ];
 }
 export interface ProductState {
   quantity: number;
@@ -57,8 +47,11 @@ const billSlice = createSlice({
         };
       }
     },
+    clearProductsBill: (state) => {
+      state.products = {};
+    },
   },
 });
 
 export default billSlice.reducer;
-export const { addProductBill } = billSlice.actions;
+export const { addProductBill, clearProductsBill } = billSlice.actions;
