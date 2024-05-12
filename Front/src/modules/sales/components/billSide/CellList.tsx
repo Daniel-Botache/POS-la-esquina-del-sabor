@@ -4,10 +4,10 @@ export default function CellList(props: any) {
   return (
     <div className={style.principalContainer}>
       <input type="checkbox" />
-      <div>{props.barCode}</div>
-      <div>{props.productName}</div>
-      <div>{props.quantity}</div>
-      <div>{props.total}</div>
+      <div className={style.principalContainer__text}>{props.barCode}</div>
+      <div className={style.principalContainer__text}>{props.productName}</div>
+      <div className={style.principalContainer__text}>{props.quantity}</div>
+      <div className={style.principalContainer__text}>{props.total}</div>
     </div>
   );
 }

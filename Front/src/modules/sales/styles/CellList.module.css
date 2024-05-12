@@ -1,0 +1,14 @@
+.principalContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px var(--color-background-grey) solid;
+  margin-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+
+.principalContainer__text {
+  width: 20%;
+  text-align: left;
+  font-size: 0.9em;
+}

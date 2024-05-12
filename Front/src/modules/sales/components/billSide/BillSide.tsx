@@ -26,17 +26,18 @@ export default function BillSide() {
     <div className={style.principalContainer}>
       <div className={style.titleContainer}>
         <h1 className={style.titleContainer__h1}>Factura</h1>
+        <div className={style.clientContainer}>
+          <h4 className={style.principalContainer__h4}>Cliente:</h4>
+          <input
+            type="text"
+            placeholder="Cédula"
+            className={style.principalContainer__input}
+          />
+        </div>
       </div>
-      <div className={style.clientContainer}>
-        <h4 className={style.principalContainer__h4}>Cliente:</h4>
-        <input
-          type="text"
-          placeholder="Cédula"
-          className={style.principalContainer__input}
-        />
-      </div>
+
       <div className={style.insertProductContainer}>
-        <h4 className={style.principalContainer__h4}>Cod barras</h4>
+        <h4 className={style.principalContainer__h4}>Cod barras:</h4>
         <input
           type="text"
           placeholder="Código"
@@ -48,9 +49,10 @@ export default function BillSide() {
       </div>
       <div className={style.billContainer}>
         <div className={style.billTitleContainer}>
-          <h3>Producto</h3>
-          <h3>Cantidad</h3>
-          <h3>Total</h3>
+          <h3 className={style.billTitleContainer__h3}>Cod. Barras</h3>
+          <h3 className={style.billTitleContainer__h3}>Producto</h3>
+          <h3 className={style.billTitleContainer__h3}>Cantidad</h3>
+          <h3 className={style.billTitleContainer__h3}>Total</h3>
         </div>
         <div className={style.billProductContainer}>
           {Object.entries(productsSelected).map(([productId, productData]) => (

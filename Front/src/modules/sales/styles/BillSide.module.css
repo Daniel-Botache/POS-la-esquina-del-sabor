@@ -4,13 +4,65 @@
   border: 2px var(--color-main-orange) solid;
   border-radius: 10px;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  width: 40%;
+  height: 82vh;
+  margin-top: 1.5em;
+  margin-bottom: auto;
+  color: var(--color-main-text);
+  padding: 1em;
+  padding-top: 0;
 }
 
 .titleContainer {
   display: flex;
   align-items: center;
-  border-bottom: 2px var(--color-main-grey) solid;
+  border-bottom: 2px var(--color-background-grey) solid;
+  justify-content: space-between;
+  height: 8%;
 }
 .titleContainer__h1 {
   font-size: 1.2em;
+  color: var(--color-main-text);
+  margin: 0;
+}
+
+.clientContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.principalContainer__h4 {
+  margin: 0;
+  font-size: 0.9em;
+}
+
+.principalContainer__input {
+  border-radius: 10px;
+  outline: none;
+  border: 2px var(--color-background-grey) solid;
+}
+.insertProductContainer {
+  display: flex;
+  height: 8%;
+  align-items: center;
+  border-bottom: 2px var(--color-background-grey) solid;
+  gap: 0.5em;
+}
+.billContainer {
+  display: flex;
+  flex-direction: column;
+}
+.billTitleContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.billProductContainer {
+  display: flex;
+  flex-direction: column;
+}
+.billTitleContainer__h3 {
+  width: 20%;
+  text-align: left;
 }
