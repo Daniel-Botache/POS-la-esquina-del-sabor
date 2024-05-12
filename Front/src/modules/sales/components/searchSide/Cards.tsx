@@ -11,6 +11,7 @@ export default function Cards() {
       <div className={style.container}>
         {productSearched.map((product: any) => (
           <Card
+            barCode={product.barCode}
             key={product.id}
             id={product.id}
             name={product.name}

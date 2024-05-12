@@ -26,6 +26,12 @@ export default function SeachBar() {
       return;
     }
   };
+  const handleInputEnter = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      searchByNameHandle();
+      setProductName("");
+    }
+  };
   return (
     <div className={style.principalContainer}>
       <input
@@ -33,6 +39,8 @@ export default function SeachBar() {
         placeholder="Buscar Producto"
         onChange={(e) => setProductName(e.target.value)}
         className={style.principalContainer__input}
+        onKeyDown={handleInputEnter}
+        value={productName}
       />
       <button
         onClick={searchByNameHandle}

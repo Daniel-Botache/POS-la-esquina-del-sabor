@@ -11,6 +11,9 @@
   justify-content: center;
   align-items: center;
 }
+.principalContainer:hover {
+  border: 2px var(--color-main-orange) solid;
+}
 .headContainer {
   display: flex;
   align-items: center;

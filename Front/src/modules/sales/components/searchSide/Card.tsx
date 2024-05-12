@@ -1,11 +1,18 @@
 import style from "../../styles/Card.module.css";
 import { FavoriteIcon } from "../../../../utils/Icons/icons";
+import { useCustomDispatch } from "../../../../store/hooks";
+import { addProductBill } from "../../redux/billSlice";
 
 export default function Card(props: any) {
+  const dispatch = useCustomDispatch();
+  const handleAddItem = () => {
+    dispatch(addProductBill({ product: props, quantity: 1 }));
+  };
   return (
-    <div className={style.principalContainer}>
+    <div className={style.principalContainer} onClick={handleAddItem}>
       <div className={style.headContainer}>
-        <h3 className={style.headContainer__h3}> Cod: {props.id} </h3>
+        <h3 className={style.headContainer__h3}> Id: {props.id} </h3>
+        <h3 className={style.headContainer__h3}>{props.barCode}</h3>
         <FavoriteIcon className={style.headContainer__icon} />
       </div>
 

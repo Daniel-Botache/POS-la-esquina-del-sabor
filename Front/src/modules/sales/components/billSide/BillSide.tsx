@@ -13,11 +13,14 @@ export default function BillSide() {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setbarCode(e.target.value);
   };
-  const handleInputEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleInputEnter = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      searchByBarCode(barCode).then((producto) => {
-        dispatch(addProductBill({ product: producto, quantity: 1 }));
-      });
+      const response = await searchByBarCode(barCode);
+      if (response) {
+        dispatch(addProductBill({ product: response, quantity: 1 }));
+        setbarCode("");
+        return;
+      }
       setbarCode("");
     }
   };
