@@ -26,5 +26,17 @@ export default (sequelize: Sequelize) => {
       allowNull: false,
       defaultValue: false,
     },
+    clientId: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    valueCash: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    valueTransaction: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
   });
 };

@@ -6,6 +6,9 @@ interface SaleAttributes {
   paymentType: string;
   movementType: string;
   credit: boolean;
+  clientId: number;
+  valueCash: number;
+  valueTransaction: number;
 }
 interface SaleCreationAttributes extends Optional<SaleAttributes, "id"> {}
 

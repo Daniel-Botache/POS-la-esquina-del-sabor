@@ -18,8 +18,16 @@ export class SaleRepository implements ISaleRepository {
   }
   public async create(data: any): Promise<boolean> {
     try {
-      const { paymentType, movementType, total, clientId, credit, userId } =
-        data;
+      const {
+        paymentType,
+        movementType,
+        total,
+        clientId,
+        credit,
+        userId,
+        valueTransaction,
+        valueCash,
+      } = data;
       const products = data.products;
       const created = (await Sale.create(
         {
@@ -29,6 +37,8 @@ export class SaleRepository implements ISaleRepository {
           clientId,
           credit,
           userId,
+          valueTransaction,
+          valueCash,
         },
         {
           include: [{ model: Product, as: "products" }], // Esto incluye el modelo durante la creación si es necesario

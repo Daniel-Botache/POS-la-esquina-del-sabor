@@ -1,7 +1,7 @@
 import { Model, Optional } from "sequelize";
 
 export interface ClientAttributes {
-  id: number;
+  id: string;
   name: string;
   tel: string;
   address: string;

@@ -11,6 +11,8 @@ export default function BillSide() {
   const [barCode, setbarCode] = useState("");
   const [transactionType, setTransactionType] = useState("Venta");
   const [totalSale, setTotalSale] = useState(0);
+  const [clientIdStatus, setClientIdStatus] = useState("");
+  const [showPaymentOptions, setShowPaymentOptions] = useState(false);
   const dispatch = useCustomDispatch();
   const productsSelected = useCustomSelector((state) => state.bill.products);
   const userId = useCustomSelector((state) => state.auth.userId);
@@ -22,7 +24,8 @@ export default function BillSide() {
       return;
     }
     setTransactionType(value);
-    if (value === "abono") {
+    console.log(transactionType);
+    if (value === "Abono") {
       const abonoValue = prompt("Por favor ingresa el valor a abonar:");
       const convertedAbono = Number(abonoValue);
       if (abonoValue && !isNaN(convertedAbono)) {
@@ -50,6 +53,10 @@ export default function BillSide() {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setbarCode(e.target.value);
   };
+  const handleInputClientChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setClientIdStatus(e.target.value);
+  };
+
   const handleInputEnter = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       const response = await searchByBarCode(barCode);
@@ -87,10 +94,12 @@ export default function BillSide() {
       movementType: transactionType,
       credit: false,
       products: productsId,
-      clientId: "",
       userId: userId,
+      clientId: null,
     };
     postSaleService(sale);
+    console.log(clientIdStatus);
+    dispatch(clearProductsBill());
   };
 
   return (
@@ -100,6 +109,7 @@ export default function BillSide() {
         <div className={style.clientContainer}>
           <h4 className={style.principalContainer__h4}>Cliente:</h4>
           <input
+            onChange={handleInputClientChange}
             type="text"
             placeholder="Cédula"
             className={style.principalContainer__input}

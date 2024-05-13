@@ -27,7 +27,7 @@ export class SaleController extends DefaultController {
       const data = req.body;
       console.log(data);
       const createdData = await this.saleRepository.create(data);
-      if (createdData)
+      if (!createdData)
         return res
           .status(400)
           .json({ message: "Data ya existe", succes: createdData });

@@ -7,7 +7,7 @@ export interface SaleAttributes {
   movementType: string;
   credit: boolean;
   products: string[];
-  clientId: string;
+  clientId: string | null;
 }
 
 export async function postSaleService(sale: SaleAttributes) {

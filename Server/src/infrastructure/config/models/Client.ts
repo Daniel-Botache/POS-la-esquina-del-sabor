@@ -4,7 +4,7 @@ import { Sequelize, DataTypes } from "sequelize";
 export default (sequelize: Sequelize) => {
   return sequelize.define<ClientInstance>("Client", {
     id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       primaryKey: true,
     },
 
