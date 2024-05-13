@@ -1,16 +1,19 @@
 import style from "../../styles/BillSide.module.css";
 import CellList from "./CellList";
 import { addProductBill, clearProductsBill } from "../../redux/billSlice";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useCustomDispatch, useCustomSelector } from "../../../../store/hooks";
 import { searchByBarCode } from "../../services/searchByBarCodeService";
 import { errorMessage } from "../../../auth/hooks/notifications";
+import { postSaleService } from "../../services/postSaleService";
 
 export default function BillSide() {
   const [barCode, setbarCode] = useState("");
-  const [transactionType, setTransactionType] = useState("compra");
+  const [transactionType, setTransactionType] = useState("Venta");
+  const [totalSale, setTotalSale] = useState(0);
   const dispatch = useCustomDispatch();
   const productsSelected = useCustomSelector((state) => state.bill.products);
+  const userId = useCustomSelector((state) => state.auth.userId);
 
   const handleTransactionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -69,6 +72,27 @@ export default function BillSide() {
       return total + product.quantity;
     }, 0);
   };
+  useEffect(() => {
+    const total = Object.values(productsSelected).reduce((sum, product) => {
+      return sum + product.price * product.quantity;
+    }, 0);
+
+    setTotalSale(total);
+  }, [productsSelected]);
+  const handleCloseSale = () => {
+    const productsId = Object.keys(productsSelected);
+    const sale = {
+      total: totalSale,
+      paymentType: "Efectivo",
+      movementType: transactionType,
+      credit: false,
+      products: productsId,
+      clientId: "",
+      userId: userId,
+    };
+    postSaleService(sale);
+  };
+
   return (
     <div className={style.principalContainer}>
       <div className={style.titleContainer}>
@@ -94,24 +118,24 @@ export default function BillSide() {
           value={barCode}
         />
         <div>
-          <label htmlFor="abono">
+          <label htmlFor="Abono">
             Abono
             <input
               type="radio"
-              value="abono"
-              id="abono"
+              value="Abono"
+              id="Abono"
               name="tipo"
               onChange={handleTransactionChange}
             />
           </label>
 
-          <label htmlFor="compra">
+          <label htmlFor="Venta">
             Compra
             <input
-              defaultChecked={transactionType === "compra"}
+              defaultChecked={transactionType === "Venta"}
               type="radio"
-              value="compra"
-              id="compra"
+              value="Venta"
+              id="Venta"
               name="tipo"
               onChange={handleTransactionChange}
             />
@@ -139,7 +163,7 @@ export default function BillSide() {
           ))}
         </div>
       </div>
-      <div className={style.closeSaleContainer}>
+      <div className={style.closeSaleContainer} onClick={handleCloseSale}>
         <h3
           className={`${style.closeSaleContainer__h3} ${style.closeSaleContainer__h3_title}`}
         >

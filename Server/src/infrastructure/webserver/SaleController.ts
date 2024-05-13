@@ -25,6 +25,7 @@ export class SaleController extends DefaultController {
   createSale = async (req: Request, res: Response) => {
     try {
       const data = req.body;
+      console.log(data);
       const createdData = await this.saleRepository.create(data);
       if (createdData)
         return res
