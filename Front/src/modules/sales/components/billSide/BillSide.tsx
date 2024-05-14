@@ -12,16 +12,47 @@ export default function BillSide() {
   const [transactionType, setTransactionType] = useState("Venta");
   const [totalSale, setTotalSale] = useState(0);
   const [clientIdStatus, setClientIdStatus] = useState("");
-  const [showPaymentOptions, setShowPaymentOptions] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedPaymentType, setSelectedPaymentType] = useState("Efectivo");
+
   const dispatch = useCustomDispatch();
   const productsSelected = useCustomSelector((state) => state.bill.products);
   const userId = useCustomSelector((state) => state.auth.userId);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handlePaymentSelection = async (paymentType: string) => {
+    setSelectedPaymentType(paymentType);
+    closeModal();
+    if (transactionType == "Abono" && selectedPaymentType == "Efectivo") {
+      const sale = {
+        total: totalSale,
+        paymentType: selectedPaymentType,
+        movementType: transactionType,
+        credit: false,
+        clientId: null,
+        userId: userId,
+        products: null,
+        valueCash: totalSale,
+      };
+      await postSaleService(sale);
+      dispatch(clearProductsBill());
+      return;
+    }
+    // Aquí puedes continuar con la lógica de procesamiento de la venta
+    // con el tipo de pago seleccionado
+  };
 
   const handleTransactionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     if (Object.keys(productsSelected).length > 0) {
       errorMessage("Debe cerrar la factura actual");
-      return;
     }
     setTransactionType(value);
     console.log(transactionType);
@@ -86,20 +117,9 @@ export default function BillSide() {
 
     setTotalSale(total);
   }, [productsSelected]);
+
   const handleCloseSale = () => {
-    const productsId = Object.keys(productsSelected);
-    const sale = {
-      total: totalSale,
-      paymentType: "Efectivo",
-      movementType: transactionType,
-      credit: false,
-      products: productsId,
-      userId: userId,
-      clientId: null,
-    };
-    postSaleService(sale);
-    console.log(clientIdStatus);
-    dispatch(clearProductsBill());
+    openModal();
   };
 
   return (
@@ -187,6 +207,23 @@ export default function BillSide() {
           </span>
         </h3>
       </div>
+      {isModalOpen && (
+        <div className={style.modalOverlay}>
+          <div className={style.modalContent}>
+            <h2>Seleccionar tipo de pago</h2>
+            <button onClick={() => handlePaymentSelection("Efectivo")}>
+              Efectivo
+            </button>
+            <button onClick={() => handlePaymentSelection("Mixto")}>
+              Mixto
+            </button>
+            <button onClick={() => handlePaymentSelection("Transacción")}>
+              Transacción
+            </button>
+            <button onClick={closeModal}>Cancelar</button>
+          </div>
+        </div>
+      )}
       <div className={style.cancelSaleContainer}>
         <p className={style.cancelSaleContainer__p}>
           {calculateTotalProduct()} Productos

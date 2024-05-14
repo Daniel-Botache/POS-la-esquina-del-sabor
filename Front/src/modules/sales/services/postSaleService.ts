@@ -6,8 +6,10 @@ export interface SaleAttributes {
   paymentType: string;
   movementType: string;
   credit: boolean;
-  products: string[];
+  products: string[] | null;
   clientId: string | null;
+  userId: string;
+  valueCash: number;
 }
 
 export async function postSaleService(sale: SaleAttributes) {
