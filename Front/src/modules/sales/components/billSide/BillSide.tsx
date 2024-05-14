@@ -4,7 +4,7 @@ import { addProductBill, clearProductsBill } from "../../redux/billSlice";
 import { useState, useEffect } from "react";
 import { useCustomDispatch, useCustomSelector } from "../../../../store/hooks";
 import { searchByBarCode } from "../../services/searchByBarCodeService";
-import { errorMessage } from "../../../auth/hooks/notifications";
+import { errorMessage, succesMessage } from "../../../auth/hooks/notifications";
 import { postSaleService } from "../../services/postSaleService";
 
 export default function BillSide() {
@@ -30,23 +30,49 @@ export default function BillSide() {
   const handlePaymentSelection = async (paymentType: string) => {
     setSelectedPaymentType(paymentType);
     closeModal();
-    if (transactionType == "Abono" && selectedPaymentType == "Efectivo") {
-      const sale = {
-        total: totalSale,
-        paymentType: selectedPaymentType,
-        movementType: transactionType,
-        credit: false,
-        clientId: null,
-        userId: userId,
-        products: null,
-        valueCash: totalSale,
-      };
-      await postSaleService(sale);
-      dispatch(clearProductsBill());
+
+    // Verifica si hay productos seleccionados para una venta o si es un abono con cliente.
+    if (
+      (transactionType === "Venta" &&
+        Object.keys(productsSelected).length === 0) ||
+      (transactionType === "Abono" && clientIdStatus === "")
+    ) {
+      errorMessage(
+        "No se pueden procesar ventas sin productos o abonos sin cliente."
+      );
       return;
     }
-    // Aquí puedes continuar con la lógica de procesamiento de la venta
-    // con el tipo de pago seleccionado
+
+    // Configura los datos comunes de la venta.
+    const saleData = {
+      total: totalSale,
+      paymentType: paymentType,
+      movementType: transactionType,
+      credit: false, // Valor predeterminado
+      clientId: clientIdStatus || null, // Usa null si clientIdStatus está vacío
+      userId: userId,
+      products:
+        transactionType === "Venta" ? Object.keys(productsSelected) : null,
+      valueCash: totalSale,
+    };
+
+    // Maneja el caso especial de crédito.
+    if (transactionType === "Venta" && clientIdStatus !== "") {
+      saleData.credit = confirm("¿Es crédito?");
+    }
+
+    // Realiza la petición de post venta.
+    try {
+      await postSaleService(saleData);
+      dispatch(clearProductsBill());
+      succesMessage(
+        transactionType === "Abono"
+          ? "Abono realizado con éxito"
+          : "Venta realizada con éxito"
+      );
+    } catch (error) {
+      errorMessage("Hubo un error al procesar la transacción.");
+    }
   };
 
   const handleTransactionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
