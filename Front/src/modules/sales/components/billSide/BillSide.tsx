@@ -6,6 +6,7 @@ import { useCustomDispatch, useCustomSelector } from "../../../../store/hooks";
 import { searchByBarCode } from "../../services/searchByBarCodeService";
 import { errorMessage, succesMessage } from "../../../auth/hooks/notifications";
 import { postSaleService } from "../../services/postSaleService";
+import { putProductService } from "../../services/putProductService";
 
 export default function BillSide() {
   const [barCode, setbarCode] = useState("");
@@ -75,6 +76,7 @@ export default function BillSide() {
     try {
       await postSaleService(saleData);
       dispatch(clearProductsBill());
+      putProductService(productsSelected);
       succesMessage(
         transactionType === "Abono"
           ? "Abono realizado con éxito"

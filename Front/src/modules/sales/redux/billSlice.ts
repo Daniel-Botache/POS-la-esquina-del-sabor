@@ -19,6 +19,7 @@ export interface ProductState {
   price: number;
   name: string;
   barCode: string;
+  volume: number;
 }
 
 const initialState: BillState = {
@@ -44,6 +45,7 @@ const billSlice = createSlice({
           price: product.price,
           name: product.name,
           barCode: product.barCode,
+          volume: product.volume,
         };
       }
     },
