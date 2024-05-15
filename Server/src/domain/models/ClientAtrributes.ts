@@ -6,6 +6,9 @@ export interface ClientAttributes {
   tel: string;
   address: string;
   ban: boolean;
+  quotaMax: number;
+  clientType: string;
+  remainingQuota: number;
 }
 
 interface ClientCreationAttributes extends Optional<ClientAttributes, "id"> {}

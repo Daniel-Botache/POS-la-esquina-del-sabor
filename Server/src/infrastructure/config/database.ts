@@ -45,15 +45,6 @@ const { Client, Bale, Base, Credit, Expense, Product, Sale, Suplier, User } =
 Sale.belongsTo(Client, { foreignKey: "clientId" });
 Client.hasMany(Sale, { foreignKey: "clientId" });
 
-Client.hasOne(Credit, {
-  foreignKey: "clientId",
-  as: "credit",
-});
-Credit.belongsTo(Client, {
-  foreignKey: "clientId",
-  as: "client",
-});
-
 Sale.belongsTo(User, { foreignKey: "userId" });
 User.hasMany(Sale, { foreignKey: "userId" });
 

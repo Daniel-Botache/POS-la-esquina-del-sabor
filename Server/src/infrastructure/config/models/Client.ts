@@ -20,5 +20,18 @@ export default (sequelize: Sequelize) => {
       allowNull: false,
       defaultValue: false,
     },
+    quotaMax: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    clientType: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: "Regular",
+    },
+    remainingQuota: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
   });
 };
