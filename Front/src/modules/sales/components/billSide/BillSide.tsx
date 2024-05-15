@@ -53,9 +53,19 @@ export default function BillSide() {
       userId: userId,
       products:
         transactionType === "Venta" ? Object.keys(productsSelected) : null,
-      valueCash: totalSale,
+      valueCash: 0,
+      valueTransaction: 0,
     };
-
+    if (paymentType === "Efectivo") {
+      saleData.valueCash = totalSale;
+    } else if (paymentType === "Transacción") {
+      saleData.valueTransaction = totalSale;
+    } else {
+      const cashValue = prompt("Por favor ingresa el valor en efectivo");
+      const cashValueConverted = Number(cashValue);
+      saleData.valueCash = cashValueConverted;
+      saleData.valueTransaction = totalSale - cashValueConverted;
+    }
     // Maneja el caso especial de crédito.
     if (transactionType === "Venta" && clientIdStatus !== "") {
       saleData.credit = confirm("¿Es crédito?");

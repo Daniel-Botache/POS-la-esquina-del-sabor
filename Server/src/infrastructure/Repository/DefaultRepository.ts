@@ -24,7 +24,7 @@ export class DefaultRepository {
       where: whereCondition,
       defaults: data,
     });
-    return !created;
+    return created;
   }
   public async getById(id: string) {
     const data = await this.model.findByPk(id);
