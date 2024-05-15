@@ -23,6 +23,7 @@ export default (sequelize: Sequelize) => {
     quotaMax: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      defaultValue: 0,
     },
     clientType: {
       type: DataTypes.STRING,
