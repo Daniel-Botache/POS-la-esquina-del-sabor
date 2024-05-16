@@ -1,5 +1,4 @@
 import axios from "axios";
-import { errorMessage } from "../../auth/hooks/notifications";
 
 export interface productResponse {
   data: {
@@ -28,12 +27,11 @@ export interface productResponse {
   };
 }
 
-export async function searchByBarCode(barCode: string) {
+export async function searchByBarCode(barCode: string, route: string) {
   try {
-    const data = await axios.get(`/product/search/${barCode}`);
+    const data = await axios.get(`/${route}/search/${barCode}`);
     return data.data.success;
   } catch (error: any) {
-    errorMessage(error.response.data.message);
     return false;
   }
 }

@@ -6,7 +6,11 @@ import { addProductBill } from "../../redux/billSlice";
 export default function Card(props: any) {
   const dispatch = useCustomDispatch();
   const handleAddItem = () => {
-    dispatch(addProductBill({ product: props, quantity: 1 }));
+    let quantityPrompt = Number(prompt("Cantidad"));
+    if (quantityPrompt === 0) {
+      quantityPrompt = 1;
+    }
+    dispatch(addProductBill({ product: props, quantity: quantityPrompt }));
   };
   return (
     <div className={style.principalContainer} onClick={handleAddItem}>

@@ -128,12 +128,19 @@ export default function BillSide() {
 
   const handleInputEnter = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      const response = await searchByBarCode(barCode);
-      if (response) {
-        dispatch(addProductBill({ product: response, quantity: 1 }));
+      const responseProduct = await searchByBarCode(barCode, "product");
+      const reponseBale = await searchByBarCode(barCode, "bale");
+      if (responseProduct) {
+        dispatch(addProductBill({ product: responseProduct, quantity: 1 }));
         setbarCode("");
         return;
       }
+      if (reponseBale) {
+        dispatch(addProductBill({ product: reponseBale, quantity: 1 }));
+        setbarCode("");
+        return;
+      }
+      errorMessage("Datos no encontrados");
       setbarCode("");
     }
   };
