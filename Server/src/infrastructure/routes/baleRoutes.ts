@@ -1,12 +1,11 @@
 import { Router } from "express";
-import { DefaultController } from "../webserver/DefaultController";
-import { sequelize } from "../config/database";
+import { BaleController } from "../webserver/BaleController";
 
 const router = Router();
-const controller = new DefaultController(sequelize.models.Bale);
-
-router.get("/", controller.getAllData);
+const controller = new BaleController();
 router.get("/:id", controller.getDataById);
+router.get("/", controller.getAllData);
+router.get("/search/:barcode", controller.findProductByBarcode);
 router.post("/", controller.createData);
 router.put("/:id", controller.putData);
 router.delete("/:id", controller.deleteData);
