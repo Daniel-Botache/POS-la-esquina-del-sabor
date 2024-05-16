@@ -3,6 +3,7 @@ import { BaleController } from "../webserver/BaleController";
 
 const router = Router();
 const controller = new BaleController();
+router.get("/search", controller.findProductByName);
 router.get("/:id", controller.getDataById);
 router.get("/", controller.getAllData);
 router.get("/search/:barcode", controller.findProductByBarcode);

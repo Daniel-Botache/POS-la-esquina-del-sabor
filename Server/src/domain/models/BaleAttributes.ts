@@ -9,6 +9,8 @@ interface BaleAttributes {
   barCode: string;
   price: number;
   individualQuanty: number;
+  img: string;
+  spent: boolean;
 }
 interface BaleCreationAttributes extends Optional<BaleAttributes, "barCode"> {}
 

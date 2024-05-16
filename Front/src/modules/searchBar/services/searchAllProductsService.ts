@@ -10,3 +10,13 @@ export async function searchAllProducts() {
     return false;
   }
 }
+
+export async function searchAllBale() {
+  try {
+    const data = await axios.get("/bale");
+    return data.data;
+  } catch (error: any) {
+    errorMessage(error.response.data.message);
+    return false;
+  }
+}

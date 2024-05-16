@@ -1,11 +1,14 @@
 import style from "../styles/SearchBar.module.css";
 import { searchProduct } from "../services/searchProductService";
-import { searchAllProducts } from "../services/searchAllProductsService";
+import {
+  searchAllProducts,
+  searchAllBale,
+} from "../services/searchAllProductsService";
 import { getProductByName } from "../redux/searchSlice";
 import { useCustomDispatch } from "../../../store/hooks";
 import { SearchIcon } from "../../../utils/Icons/icons";
-
 import { useState } from "react";
+import { errorMessage } from "../../auth/hooks/notifications";
 
 export default function SeachBar() {
   const [productName, setProductName] = useState("");
@@ -13,18 +16,32 @@ export default function SeachBar() {
 
   const searchByNameHandle = async () => {
     if (!productName) {
-      const response = await searchAllProducts();
+      const responseBales = await searchAllBale();
+      const responseProducts = await searchAllProducts();
+      const responseAll = responseBales.concat(responseProducts);
+      if (responseAll) {
+        dispatch(getProductByName({ searchProductByName: responseAll }));
+        return;
+      }
+    }
+    const responseProduct = await searchProduct(productName, "product");
+    const responseBale = await searchProduct(productName, "bale");
+    if (responseProduct && responseBale) {
+      const response = responseProduct.concat(responseBale);
       if (response) {
         dispatch(getProductByName({ searchProductByName: response }));
         return;
       }
     }
-    const response = await searchProduct(productName);
-    console.log(response);
-    if (response) {
-      dispatch(getProductByName({ searchProductByName: response }));
+    if (responseProduct && !responseBale) {
+      dispatch(getProductByName({ searchProductByName: responseProduct }));
       return;
     }
+    if (!responseProduct && responseBale) {
+      dispatch(getProductByName({ searchProductByName: responseBale }));
+      return;
+    }
+    errorMessage("Datos no encontrados");
   };
   const handleInputEnter = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {

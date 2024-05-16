@@ -15,6 +15,6 @@ router.use("/user", userRoutes);
 router.use("/sale", saleRoutes);
 router.use("/product", productRoutes);
 router.use("/suplier", suplierRoutes);
-router.use("bale", baleRoutes);
+router.use("/bale", baleRoutes);
 
 export const routes = router;
