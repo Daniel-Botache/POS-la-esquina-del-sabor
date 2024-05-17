@@ -18,6 +18,9 @@ export default function Cards() {
             price={product.price}
             volume={product.volume}
             img={product.img}
+            bale={product.bale}
+            productId={product.productId}
+            individualQuanty={product.individualQuanty}
           />
         ))}
       </div>

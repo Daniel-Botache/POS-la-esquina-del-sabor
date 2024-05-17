@@ -43,7 +43,15 @@ export default function BillSide() {
       );
       return;
     }
-
+    const bales: string[] = [];
+    const products: string[] = [];
+    Object.entries(productsSelected).forEach(([key, value]) => {
+      if (value.bale) {
+        bales.push(key);
+      } else {
+        products.push(key);
+      }
+    });
     // Configura los datos comunes de la venta.
     const saleData = {
       total: totalSale,
@@ -53,13 +61,14 @@ export default function BillSide() {
       clientId: clientIdStatus || null, // Usa null si clientIdStatus está vacío
       userId: userId,
       products:
-        transactionType === "Venta" ? Object.keys(productsSelected) : null,
+        transactionType === "Venta" && products.length > 0 ? products : null,
       valueCash: 0,
       valueTransaction: 0,
+      bales: transactionType === "Venta" && bales.length > 0 ? bales : null,
     };
     if (paymentType === "Efectivo") {
       saleData.valueCash = totalSale;
-    } else if (paymentType === "Transacción") {
+    } else if (paymentType === "Transaccion") {
       saleData.valueTransaction = totalSale;
     } else {
       const cashValue = prompt("Por favor ingresa el valor en efectivo");
@@ -109,6 +118,9 @@ export default function BillSide() {
               barCode: "",
               type: "",
               spent: false,
+              bale: false,
+              individualQuanty: 0,
+              productId: 0,
             },
             quantity: 1,
           })
@@ -262,7 +274,7 @@ export default function BillSide() {
             <button onClick={() => handlePaymentSelection("Mixto")}>
               Mixto
             </button>
-            <button onClick={() => handlePaymentSelection("Transacción")}>
+            <button onClick={() => handlePaymentSelection("Transaccion")}>
               Transacción
             </button>
             <button onClick={closeModal}>Cancelar</button>

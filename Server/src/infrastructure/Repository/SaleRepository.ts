@@ -1,8 +1,9 @@
 import { SaleInstance } from "../../domain/models/SaleAttributes";
 import { Sale } from "../config/database";
-import { Product } from "../config/database";
+import { Product, Bale } from "../config/database";
 import { ISaleRepository } from "../../application/repositories/ISaleRepository";
 import { ProductInstance } from "../../domain/models/ProductAttributes";
+import { BaleInstance } from "../../domain/models/BaleAttributes";
 
 export class SaleRepository implements ISaleRepository {
   public async findById(id: string): Promise<SaleInstance | null> {
@@ -11,6 +12,10 @@ export class SaleRepository implements ISaleRepository {
         {
           model: Product,
           as: "products",
+        },
+        {
+          model: Bale,
+          as: "bales",
         },
       ],
     });
@@ -29,6 +34,7 @@ export class SaleRepository implements ISaleRepository {
         valueCash,
       } = data;
       const products = data.products;
+      const bales = data.bales;
       const created = (await Sale.create(
         {
           paymentType,
@@ -41,7 +47,10 @@ export class SaleRepository implements ISaleRepository {
           valueCash,
         },
         {
-          include: [{ model: Product, as: "products" }], // Esto incluye el modelo durante la creación si es necesario
+          include: [
+            { model: Product, as: "products" },
+            { model: Bale, as: "bales" },
+          ],
         }
       )) as SaleInstance;
 
@@ -52,6 +61,15 @@ export class SaleRepository implements ISaleRepository {
 
         if (productsToAssociate.length > 0) {
           await created.addProducts(productsToAssociate);
+        }
+      }
+      if (bales && bales.length > 0 && created && created.addBales) {
+        const balesToAssociate = (await Bale.findAll({
+          where: { id: bales },
+        })) as BaleInstance[];
+
+        if (balesToAssociate.length > 0) {
+          await created.addBales(balesToAssociate);
         }
       }
       return true;

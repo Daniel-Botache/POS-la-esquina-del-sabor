@@ -14,6 +14,7 @@ export interface request {
         spent: boolean;
         createdAt: Date;
         updatedAt: Date;
+        productId: number;
         suppliers: [
           id: string,
           company: string,

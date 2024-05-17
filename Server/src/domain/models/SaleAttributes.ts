@@ -20,4 +20,5 @@ export interface SaleInstance
   addProducts?: (
     products: ProductInstance[] | ProductInstance
   ) => Promise<void>;
+  addBales?: (products: ProductInstance[] | ProductInstance) => Promise<void>;
 }

@@ -47,5 +47,10 @@ export default (sequelize: Sequelize) => {
       allowNull: false,
       defaultValue: false,
     },
+    bale: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true,
+    },
   });
 };
