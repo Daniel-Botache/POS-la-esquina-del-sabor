@@ -102,7 +102,6 @@ export default function BillSide() {
       errorMessage("Debe cerrar la factura actual");
     }
     setTransactionType(value);
-    console.log(transactionType);
     if (value === "Abono") {
       const abonoValue = prompt("Por favor ingresa el valor a abonar:");
       const convertedAbono = Number(abonoValue);
