@@ -1,15 +1,17 @@
 import axios from "axios";
 
 export async function putProductService(products: any) {
+  console.log(products);
   if (products) {
     const keysArray = Object.keys(products);
-    keysArray.forEach(async (product) => {
+    for (const product of keysArray) {
       if (products[product].bale) {
-        const volume = products[product].volume - products[product].quantity;
-        await axios.put(`/bale/${product}`, { volume: volume });
+        const itemSearchedBale = await axios.get(`/bale/${product}`);
+        const volume =
+          itemSearchedBale.data.volume - products[product].quantity;
+        console.log(volume);
         const productId = products[product].productId;
         const productIndividual = await axios.get(`/product/${productId}`);
-        console.log(productIndividual.data.succes);
         const volumeIndividual = productIndividual.data.succes.volume;
         const quantityPerBale = products[product].individualQuanty;
         const newVolumeIndividual =
@@ -17,10 +19,18 @@ export async function putProductService(products: any) {
         await axios.put(`/product/${productId}`, {
           volume: newVolumeIndividual,
         });
+        await axios.put(`/bale/${product}`, { volume: volume });
       } else {
-        const volume = products[product].volume - products[product].quantity;
-        await axios.put(`/product/${product}`, { volume: volume });
+        const volumeItem =
+          products[product].volume - products[product].quantity;
+        const itemSearched = await axios.get(`/product/${product}`);
+        const baleArray = itemSearched.data.succes.bales;
+        await axios.put(`/product/${product}`, { volume: volumeItem });
+        for (const bale of baleArray) {
+          const baleVolume = Math.floor(volumeItem / bale.individualQuanty);
+          await axios.put(`/bale/${bale.id}`, { volume: baleVolume });
+        }
       }
-    });
+    }
   }
 }

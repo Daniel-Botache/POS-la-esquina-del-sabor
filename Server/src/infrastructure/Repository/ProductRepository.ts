@@ -1,5 +1,5 @@
 import { ProductInstance } from "../../domain/models/ProductAttributes";
-import { Product, Suplier } from "../config/database";
+import { Product, Suplier, Bale } from "../config/database";
 import { IProductRepository } from "../../application/repositories/IProductRepository";
 import { SuplierInstance } from "../../domain/models/SuplierAttributes";
 const { Op } = require("sequelize");
@@ -11,6 +11,10 @@ export class ProductRepository implements IProductRepository {
         {
           model: Suplier,
           as: "supliers",
+        },
+        {
+          model: Bale,
+          as: "bales", // Asegúrate de que 'as' coincida con cómo definiste la asociación en tu modelo
         },
       ],
     });

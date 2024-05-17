@@ -67,7 +67,7 @@ Product.belongsToMany(Suplier, { through: "product-suplier", as: "supliers" });
 Suplier.belongsToMany(Product, { through: "product-suplier", as: "products" });
 
 Bale.belongsTo(Product, { foreignKey: "productId" });
-Product.hasMany(Bale, { foreignKey: "productId" });
+Product.hasMany(Bale, { foreignKey: "productId", as: "bales" });
 
 export {
   sequelize,
