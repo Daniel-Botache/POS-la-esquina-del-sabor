@@ -25,7 +25,7 @@
   justify-content: center;
   align-items: center;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-  gap: 1em;
+  gap: 0.5em;
   width: 70%;
   margin: auto;
   color: var(--color-main-text);
@@ -56,4 +56,14 @@
 
 .formContainer__btn:hover {
   border: 2px var(--color-main-orange) solid;
+}
+.form__select {
+  width: 80%;
+  font-size: 1em;
+  text-align: center;
+  border-radius: 5px;
+  border: 1px var(--color-main-orange) solid;
+  outline: none;
+  cursor: pointer;
+  font-family: "Franklin Gothic", "Arial Narrow", Arial, sans-serif;
 }

@@ -7,6 +7,7 @@ import { useState } from "react";
 
 export default function SearchSide() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
@@ -20,7 +21,7 @@ export default function SearchSide() {
         </div>
       </div>
       <Cards />
-      {isModalOpen && <CreateProductModal />}
+      {isModalOpen && <CreateProductModal onClose={toggleModal} />}
     </div>
   );
 }

@@ -3,11 +3,28 @@ import { useState, useEffect } from "react";
 import { useCustomSelector, useCustomDispatch } from "../../../store/hooks";
 import { getSuppliers } from "../redux/createProductSlice";
 import { SearchIcon } from "../../../utils/Icons/icons";
+type CreateProductModalProps = {
+  onClose: () => void;
+};
 
-export default function CreateProductModal() {
+export default function CreateProductModal({
+  onClose,
+}: CreateProductModalProps) {
   const [selectedSuppliers, setSelectedSuppliers] = useState<string[]>([]);
   const dispatch = useCustomDispatch();
   const suppliers = useCustomSelector((state) => state.createProduct.suppliers);
+  const [productType, setProductType] = useState("individual");
+
+  const handleClose = () => {
+    if (onClose) {
+      onClose();
+    }
+  };
+  const handleProductTypeChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setProductType(event.target.value);
+  };
 
   useEffect(() => {
     dispatch(getSuppliers());
@@ -24,19 +41,12 @@ export default function CreateProductModal() {
   return (
     <div className={style.modalOverlay}>
       <div className={style.principalContainer}>
+        <button className={style.closeButton} onClick={handleClose}>
+          X
+        </button>
         <form action="submit" className={style.formContainer}>
-          <h2>Crear o editar producto</h2>
-          <div className={style.inputContainer}>
-            <label htmlFor="inputName" className={style.form__label}>
-              Id
-            </label>
-            <input
-              disabled
-              type="text"
-              id="inputName"
-              className={style.form__inputText}
-            />
-          </div>
+          <h2>Crear Producto</h2>
+
           <div className={style.inputContainer}>
             {" "}
             <label htmlFor="inputBarCode" className={style.form__label}>
@@ -133,15 +143,51 @@ export default function CreateProductModal() {
                   name="tipo"
                   id="individualRadio"
                   value="individual"
+                  onChange={handleProductTypeChange}
                 />
               </label>
               <label htmlFor="pacaRadio">
                 Paca
-                <input type="radio" name="tipo" id="pacaRadio" value="paca" />
+                <input
+                  type="radio"
+                  name="tipo"
+                  id="pacaRadio"
+                  value="paca"
+                  onChange={handleProductTypeChange}
+                />
               </label>
             </div>
           </div>
-
+          {productType === "paca" && (
+            <div>
+              <div className={style.inputContainer}>
+                <label
+                  htmlFor="inputIndividualId"
+                  className={style.form__label}
+                >
+                  ID del producto individual
+                </label>
+                <input
+                  type="text"
+                  id="inputIndividualId"
+                  className={style.form__inputText}
+                />
+              </div>
+              <div className={style.inputContainer}>
+                <label
+                  htmlFor="inputIndividualId"
+                  className={style.form__label}
+                >
+                  Numero de productos individuales
+                </label>
+                <input
+                  type="text"
+                  id="inputIndividualId"
+                  className={style.form__inputText}
+                />
+              </div>
+            </div>
+          )}
           <label htmlFor="inputSuppliers" className={style.form__label}>
             Proveedores
           </label>
