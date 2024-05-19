@@ -2,10 +2,17 @@ import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "../modules/auth/redux/authSlice";
 import searchReducer from "../modules/searchBar/redux/searchSlice";
 import billReducer from "../modules/sales/redux/billSlice";
+import createProductReducer from "../modules/createProductModal/redux/createProductSlice";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
 //configuracion para peristir el reducer en el localstorage
+const persistCreateProductConfig = {
+  key: "createProduct",
+  storage,
+  whitelist: ["suppliers"],
+};
+
 const peristAuthConfig = {
   key: "auth",
   storage,
@@ -38,6 +45,10 @@ export const store = configureStore({
     bill: persistReducer<ReturnType<typeof billReducer>>(
       peristBillConfig,
       billReducer
+    ),
+    createProduct: persistReducer<ReturnType<typeof createProductReducer>>(
+      persistCreateProductConfig,
+      createProductReducer
     ),
   },
   middleware: (DefaultSerializer) =>
