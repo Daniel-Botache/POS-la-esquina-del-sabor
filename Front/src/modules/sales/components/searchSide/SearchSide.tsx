@@ -39,7 +39,7 @@ export default function SearchSide({ isModal, onClose }: searchProductType) {
             </div>
           )}
         </div>
-        <Cards isModal={isModal} />
+        <Cards isModal={isModal} onClose={handleClose} />
         {isModalOpen && <CreateProductModal onClose={toggleModal} />}
       </div>
     </div>

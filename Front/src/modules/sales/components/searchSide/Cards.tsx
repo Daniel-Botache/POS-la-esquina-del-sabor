@@ -4,8 +4,9 @@ import { useCustomSelector } from "../../../../store/hooks";
 
 type searchProductType = {
   isModal: boolean;
+  onClose: () => void;
 };
-export default function Cards({ isModal }: searchProductType) {
+export default function Cards({ isModal, onClose }: searchProductType) {
   const productSearched = useCustomSelector(
     (state) => state.search.searchProductByName
   );
@@ -14,6 +15,7 @@ export default function Cards({ isModal }: searchProductType) {
       <div className={style.container}>
         {productSearched.map((product: any) => (
           <Card
+            onClose={onClose}
             isModal={isModal}
             barCode={product.barCode}
             key={product.id}

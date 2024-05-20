@@ -6,7 +6,7 @@ import { addProductBill, addProductCreateBale } from "../../redux/billSlice";
 export default function Card(props: any) {
   const dispatch = useCustomDispatch();
   const handleAddItem = () => {
-    if (props.isModal) {
+    if (props.isModal && !props.bale) {
       dispatch(
         addProductCreateBale({
           id: props.id,
@@ -15,6 +15,10 @@ export default function Card(props: any) {
           bale: props.bale,
         })
       );
+      props.onClose();
+      return;
+    } else if (props.isModal && props.bale) {
+      alert("No puede agregar una paca sobre una paca, escoja otro producto.");
       return;
     }
     let quantityPrompt = Number(prompt("Cantidad"));
