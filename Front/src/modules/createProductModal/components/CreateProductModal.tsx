@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useCustomSelector, useCustomDispatch } from "../../../store/hooks";
 import { getSuppliers } from "../redux/createProductSlice";
 import { SearchIcon } from "../../../utils/Icons/icons";
+import SearchSide from "../../sales/components/searchSide/SearchSide";
 type CreateProductModalProps = {
   onClose: () => void;
 };
@@ -14,7 +15,12 @@ export default function CreateProductModal({
   const dispatch = useCustomDispatch();
   const suppliers = useCustomSelector((state) => state.createProduct.suppliers);
   const [productType, setProductType] = useState("individual");
+  const [isSearchModalopen, setIsSearchModalopen] = useState(false);
 
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    // Aquí va la lógica que deseas ejecutar cuando se envía el formulario
+  };
   const handleClose = () => {
     if (onClose) {
       onClose();
@@ -24,6 +30,10 @@ export default function CreateProductModal({
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setProductType(event.target.value);
+  };
+
+  const handleOpenSearchModal = () => {
+    setIsSearchModalopen(!isSearchModalopen);
   };
 
   useEffect(() => {
@@ -47,7 +57,7 @@ export default function CreateProductModal({
           </button>
         </div>
 
-        <form action="submit" className={style.formContainer}>
+        <form onSubmit={handleSubmit} className={style.formContainer}>
           <h2>Crear Producto</h2>
 
           <div className={style.inputContainer}>
@@ -176,7 +186,11 @@ export default function CreateProductModal({
                     id="inputIndividualId"
                     className={style.form__inputText}
                   />
-                  <button className={style.principalContainer__btn}>
+                  <button
+                    type="button"
+                    className={style.principalContainer__btn}
+                    onClick={handleOpenSearchModal}
+                  >
                     <SearchIcon className={style.principalContainer__icon} />
                   </button>
                 </div>
@@ -215,6 +229,9 @@ export default function CreateProductModal({
           <button type="submit" className={style.formContainer__btn}>
             Crear producto
           </button>
+          {!isSearchModalopen && (
+            <SearchSide onClose={handleOpenSearchModal} isModal={true} />
+          )}
         </form>
       </div>
     </div>

@@ -2,6 +2,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface BillState {
   products: { [key: string]: ProductState };
+  productSearched: ProductSearchedI;
+}
+interface ProductSearchedI {
+  id: number;
+  barCode: string;
+  name: string;
+  bale: boolean;
 }
 
 interface Product {
@@ -30,6 +37,7 @@ export interface ProductState {
 
 const initialState: BillState = {
   products: {},
+  productSearched: { id: 0, name: "", bale: false, barCode: "" },
 };
 
 const billSlice = createSlice({
@@ -61,8 +69,22 @@ const billSlice = createSlice({
     clearProductsBill: (state) => {
       state.products = {};
     },
+    addProductCreateBale: (state, action) => {
+      state.productSearched.id = action.payload.id;
+      state.productSearched.name = action.payload.name;
+      state.productSearched.bale = action.payload.bale;
+      state.productSearched.barCode = action.payload.barCode;
+    },
+    clearProductSearched: (state) => {
+      state.productSearched = { id: 0, name: "", bale: false, barCode: "" };
+    },
   },
 });
 
 export default billSlice.reducer;
-export const { addProductBill, clearProductsBill } = billSlice.actions;
+export const {
+  addProductBill,
+  clearProductsBill,
+  addProductCreateBale,
+  clearProductSearched,
+} = billSlice.actions;

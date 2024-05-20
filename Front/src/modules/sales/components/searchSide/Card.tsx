@@ -1,11 +1,22 @@
 import style from "../../styles/Card.module.css";
 import { FavoriteIcon } from "../../../../utils/Icons/icons";
 import { useCustomDispatch } from "../../../../store/hooks";
-import { addProductBill } from "../../redux/billSlice";
+import { addProductBill, addProductCreateBale } from "../../redux/billSlice";
 
 export default function Card(props: any) {
   const dispatch = useCustomDispatch();
   const handleAddItem = () => {
+    if (props.isModal) {
+      dispatch(
+        addProductCreateBale({
+          id: props.id,
+          name: props.name,
+          barCode: props.barCode,
+          bale: props.bale,
+        })
+      );
+      return;
+    }
     let quantityPrompt = Number(prompt("Cantidad"));
     if (quantityPrompt === 0) {
       quantityPrompt = 1;

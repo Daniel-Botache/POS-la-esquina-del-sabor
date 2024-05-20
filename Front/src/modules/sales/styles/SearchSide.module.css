@@ -43,3 +43,39 @@
   color: var(--color-white);
   fill: var(--color-white);
 }
+.modalContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.principalModalContainer {
+  background: var(--color-white);
+  padding: 2em;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  width: 50vw;
+
+  border: 2px var(--color-main-orange) solid;
+}
+.closeButtonContainer {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+}
+.closeButton {
+  color: var(--color-main-orange);
+  border: 1px transparent solid;
+  text-align: center;
+  border-radius: 5px;
+  font-size: 1em;
+}
+.closeButton:hover {
+  border: 1px var(--color-main-orange) solid;
+  cursor: pointer;
+}

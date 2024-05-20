@@ -2,7 +2,10 @@ import style from "../../styles/Cards.module.css";
 import Card from "./Card";
 import { useCustomSelector } from "../../../../store/hooks";
 
-export default function Cards() {
+type searchProductType = {
+  isModal: boolean;
+};
+export default function Cards({ isModal }: searchProductType) {
   const productSearched = useCustomSelector(
     (state) => state.search.searchProductByName
   );
@@ -11,6 +14,7 @@ export default function Cards() {
       <div className={style.container}>
         {productSearched.map((product: any) => (
           <Card
+            isModal={isModal}
             barCode={product.barCode}
             key={product.id}
             id={product.id}
