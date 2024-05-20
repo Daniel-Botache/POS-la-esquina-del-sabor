@@ -35,7 +35,7 @@
   display: flex;
   gap: 1em;
   align-items: center;
-  width: 80%;
+  width: 90%;
   justify-content: space-between;
 }
 
@@ -47,15 +47,16 @@
 }
 
 .formContainer__btn {
-  border: none;
+  border: 1px transparent solid;
   border-radius: 5px;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   font-size: 1em;
   color: var(--color-main-orange);
+  cursor: pointer;
 }
 
 .formContainer__btn:hover {
-  border: 2px var(--color-main-orange) solid;
+  border: 1px var(--color-main-orange) solid;
 }
 .form__select {
   width: 80%;
@@ -66,4 +67,52 @@
   outline: none;
   cursor: pointer;
   font-family: "Franklin Gothic", "Arial Narrow", Arial, sans-serif;
+}
+
+.closeButtonContainer {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+}
+.closeButton {
+  color: var(--color-main-orange);
+  border: 1px transparent solid;
+  text-align: center;
+  border-radius: 5px;
+  font-size: 1em;
+}
+.closeButton:hover {
+  border: 1px var(--color-main-orange) solid;
+  cursor: pointer;
+}
+.principalContainer__btn {
+  border: 1px transparent solid;
+  background-color: var(--color-main-orange);
+  border-radius: 5px;
+  align-items: center;
+  width: 2.5em;
+  cursor: pointer;
+}
+.principalContainer__icon {
+  width: 1em;
+  height: 1em;
+  margin: auto;
+  fill: var(--color-white);
+}
+.principalContainer__btn:hover .principalContainer__icon {
+  fill: var(--color-main-orange);
+}
+.principalContainer__btn:hover {
+  background-color: var(--color-white);
+  border: 1px var(--color-main-orange) solid;
+}
+
+.searchContainer {
+  display: flex;
+}
+.baleContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

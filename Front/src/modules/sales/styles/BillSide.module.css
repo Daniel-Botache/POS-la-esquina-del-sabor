@@ -83,6 +83,7 @@
   border-radius: 10px;
   padding-left: 0.5em;
   padding-right: 0.5em;
+  cursor: pointer;
 }
 .closeSaleContainer:hover {
   background-color: var(--color-main-orange);
@@ -114,15 +115,16 @@
   padding-right: 0.5em;
 }
 .cancelSaleContainer__btn {
-  border: none;
+  border: 1px transparent solid;
   border-radius: 10px;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   font-size: 1em;
   color: var(--color-main-orange);
+  cursor: pointer;
 }
 
 .cancelSaleContainer__btn:hover {
-  border: 2px var(--color-main-orange) solid;
+  border: 1px var(--color-main-orange) solid;
 }
 
 .modalOverlay {

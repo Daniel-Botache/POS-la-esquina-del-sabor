@@ -19,7 +19,7 @@
 }
 
 .principalContainer__btn {
-  border: none;
+  border: 1px transparent solid;
   background-color: var(--color-main-orange);
   border-radius: 10px;
 
@@ -30,5 +30,5 @@
 }
 .principalContainer__btn:hover {
   background-color: var(--color-white);
-  border: 2px var(--color-main-orange) solid;
+  border: 1px var(--color-main-orange) solid;
 }

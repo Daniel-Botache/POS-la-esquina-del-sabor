@@ -41,9 +41,12 @@ export default function CreateProductModal({
   return (
     <div className={style.modalOverlay}>
       <div className={style.principalContainer}>
-        <button className={style.closeButton} onClick={handleClose}>
-          X
-        </button>
+        <div className={style.closeButtonContainer}>
+          <button className={style.closeButton} onClick={handleClose}>
+            X
+          </button>
+        </div>
+
         <form action="submit" className={style.formContainer}>
           <h2>Crear Producto</h2>
 
@@ -159,7 +162,7 @@ export default function CreateProductModal({
             </div>
           </div>
           {productType === "paca" && (
-            <div>
+            <div className={style.baleContainer}>
               <div className={style.inputContainer}>
                 <label
                   htmlFor="inputIndividualId"
@@ -167,22 +170,27 @@ export default function CreateProductModal({
                 >
                   ID del producto individual
                 </label>
-                <input
-                  type="text"
-                  id="inputIndividualId"
-                  className={style.form__inputText}
-                />
+                <div className={style.searchContainer}>
+                  <input
+                    type="text"
+                    id="inputIndividualId"
+                    className={style.form__inputText}
+                  />
+                  <button className={style.principalContainer__btn}>
+                    <SearchIcon className={style.principalContainer__icon} />
+                  </button>
+                </div>
               </div>
               <div className={style.inputContainer}>
                 <label
-                  htmlFor="inputIndividualId"
+                  htmlFor="inputIndividualQuan"
                   className={style.form__label}
                 >
                   Numero de productos individuales
                 </label>
                 <input
                   type="text"
-                  id="inputIndividualId"
+                  id="inputIndividualQuan"
                   className={style.form__inputText}
                 />
               </div>
