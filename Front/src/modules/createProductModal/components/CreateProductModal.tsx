@@ -4,6 +4,8 @@ import { useCustomSelector, useCustomDispatch } from "../../../store/hooks";
 import { getSuppliers } from "../redux/createProductSlice";
 import { SearchIcon } from "../../../utils/Icons/icons";
 import SearchSide from "../../sales/components/searchSide/SearchSide";
+import { Product } from "../services/postNewProduct";
+import { postNewProduct } from "../services/postNewProduct";
 type CreateProductModalProps = {
   onClose: () => void;
 };
@@ -16,10 +18,30 @@ export default function CreateProductModal({
   const suppliers = useCustomSelector((state) => state.createProduct.suppliers);
   const [productType, setProductType] = useState("individual");
   const [isSearchModalopen, setIsSearchModalopen] = useState(false);
+  const [newProduct, setNewProduct] = useState<Product>({
+    id: null,
+    name: "",
+    type: "",
+    volume: 0,
+    maximum: 0,
+    barCode: "",
+    price: 0,
+    spent: false,
+    bale: null,
+    productId: null,
+    individualQuanty: null,
+    img: "",
+    supliers: [],
+  });
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // Aquí va la lógica que deseas ejecutar cuando se envía el formulario
+    console.log(newProduct);
+    if (newProduct.bale == null) {
+      await postNewProduct(newProduct, "product");
+      return;
+    }
+    await postNewProduct(newProduct, "bale");
   };
   const handleClose = () => {
     if (onClose) {
@@ -29,6 +51,11 @@ export default function CreateProductModal({
   const handleProductTypeChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
+    setNewProduct((prevState) => ({
+      ...prevState,
+      bale: event.target.value == "individual" ? null : true,
+    }));
+
     setProductType(event.target.value);
   };
 
@@ -46,7 +73,10 @@ export default function CreateProductModal({
       event.target.selectedOptions,
       (option) => option.value
     );
-    setSelectedSuppliers(selectedOptions);
+    setNewProduct((prevState) => ({
+      ...prevState,
+      supliers: selectedOptions,
+    }));
   };
   return (
     <div className={style.modalOverlay}>
@@ -66,6 +96,12 @@ export default function CreateProductModal({
               Cod. Barras
             </label>
             <input
+              onChange={(e) =>
+                setNewProduct((prevState) => ({
+                  ...prevState,
+                  barCode: e.target.value,
+                }))
+              }
               type="text"
               id="inputBarCode"
               className={style.form__inputText}
@@ -76,6 +112,12 @@ export default function CreateProductModal({
               Nombre
             </label>
             <input
+              onChange={(e) =>
+                setNewProduct((prevState) => ({
+                  ...prevState,
+                  name: e.target.value,
+                }))
+              }
               type="text"
               id="inputName"
               className={style.form__inputText}
@@ -87,7 +129,13 @@ export default function CreateProductModal({
               Precio
             </label>
             <input
-              type="text"
+              onChange={(e) =>
+                setNewProduct((prevState) => ({
+                  ...prevState,
+                  price: Number(e.target.value),
+                }))
+              }
+              type="number"
               id="inputPrice"
               className={style.form__inputText}
             />
@@ -98,7 +146,13 @@ export default function CreateProductModal({
               Inventario
             </label>
             <input
-              type="text"
+              onChange={(e) =>
+                setNewProduct((prevState) => ({
+                  ...prevState,
+                  volume: Number(e.target.value),
+                }))
+              }
+              type="number"
               id="inputVolume"
               className={style.form__inputText}
             />
@@ -108,7 +162,13 @@ export default function CreateProductModal({
               Tope
             </label>
             <input
-              type="text"
+              onChange={(e) =>
+                setNewProduct((prevState) => ({
+                  ...prevState,
+                  maximum: Number(e.target.value),
+                }))
+              }
+              type="number"
               name=""
               id="inputMaximum"
               className={style.form__inputText}
@@ -121,6 +181,12 @@ export default function CreateProductModal({
             <div>
               {" "}
               <input
+                onChange={(e) =>
+                  setNewProduct((prevState) => ({
+                    ...prevState,
+                    type: e.target.value,
+                  }))
+                }
                 type="text"
                 id="inputType"
                 className={style.form__inputText}
@@ -136,6 +202,12 @@ export default function CreateProductModal({
               URL Imagen
             </label>
             <input
+              onChange={(e) =>
+                setNewProduct((prevState) => ({
+                  ...prevState,
+                  img: e.target.value,
+                }))
+              }
               type="text"
               id="inputImg"
               className={style.form__inputText}
@@ -146,7 +218,17 @@ export default function CreateProductModal({
               <label htmlFor="inputSpent" className={style.form__label}>
                 Verdura
               </label>
-              <input type="checkbox" name="" id="inputSpent" />
+              <input
+                onChange={(e) =>
+                  setNewProduct((prevState) => ({
+                    ...prevState,
+                    spent: e.target.checked,
+                  }))
+                }
+                type="checkbox"
+                name=""
+                id="inputSpent"
+              />
             </div>
             <div>
               <label htmlFor="individualRadio">

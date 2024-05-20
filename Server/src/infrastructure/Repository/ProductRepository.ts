@@ -33,36 +33,39 @@ export class ProductRepository implements IProductRepository {
   }
   public async create(data: any): Promise<boolean> {
     try {
-      const { name, type, volume, maximum, barCode, price, spent, supliers } =
-        data;
-      const [productInstance, created] = (await Product.findOrCreate({
-        where: { barCode },
-        defaults: {
-          name,
-          type,
-          volume,
-          maximum,
-          price,
-          spent,
-        },
-      })) as [ProductInstance, boolean];
+      const {
+        name,
+        type,
+        volume,
+        maximum,
+        barCode,
+        price,
+        spent,
+        supliers,
+        img,
+      } = data;
+      const created = (await Product.create({
+        barCode,
+        name,
+        type,
+        volume,
+        maximum,
+        price,
+        spent,
+        img,
+      })) as ProductInstance;
 
-      if (
-        supliers &&
-        supliers.length > 0 &&
-        productInstance &&
-        productInstance.addSupliers
-      ) {
+      if (supliers && supliers.length > 0 && created && created.addSupliers) {
         const suppliersToAssociate = (await Suplier.findAll({
           where: { id: supliers },
         })) as SuplierInstance[];
 
         if (suppliersToAssociate.length > 0) {
-          await productInstance.addSupliers(suppliersToAssociate);
+          await created.addSupliers(suppliersToAssociate);
         }
       }
 
-      return created;
+      return true;
     } catch (error) {
       console.error("Failed to create product with suppliers:", error);
       return false;
