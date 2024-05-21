@@ -7,6 +7,7 @@ import SearchSide from "../../sales/components/searchSide/SearchSide";
 import { Product } from "../services/postNewProduct";
 import { postNewProduct } from "../services/postNewProduct";
 import { clearProductSearched } from "../../sales/redux/billSlice";
+import { errorMessage } from "../../auth/hooks/notifications";
 type CreateProductModalProps = {
   onClose: () => void;
 };
@@ -42,6 +43,19 @@ export default function CreateProductModal({
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log(newProduct);
+    if (
+      !newProduct.name ||
+      !newProduct.barCode ||
+      !newProduct.type ||
+      !newProduct.volume ||
+      !newProduct.maximum ||
+      !newProduct.price
+    ) {
+      errorMessage(
+        "Para crear un producto debe llenar los campos marcados con el *"
+      );
+      return;
+    }
     if (newProduct.bale == null) {
       setNewProduct((prevState) => ({
         ...prevState,
@@ -80,7 +94,6 @@ export default function CreateProductModal({
       barCode: "",
       price: 0,
       spent: false,
-
       productId: null,
       individualQuanty: null,
       img: undefined,
@@ -155,7 +168,7 @@ export default function CreateProductModal({
           <div className={style.inputContainer}>
             {" "}
             <label htmlFor="inputBarCode" className={style.form__label}>
-              Cod. Barras
+              Cod. Barras *
             </label>
             <input
               onChange={(e) =>
@@ -172,7 +185,7 @@ export default function CreateProductModal({
           </div>
           <div className={style.inputContainer}>
             <label htmlFor="inputName" className={style.form__label}>
-              Nombre
+              Nombre *
             </label>
             <input
               value={newProduct.name}
@@ -190,7 +203,7 @@ export default function CreateProductModal({
 
           <div className={style.inputContainer}>
             <label htmlFor="inputPrice" className={style.form__label}>
-              Precio
+              Precio *
             </label>
             <input
               value={Number(newProduct.price)}
@@ -208,7 +221,7 @@ export default function CreateProductModal({
           <div className={style.inputContainer}>
             {" "}
             <label htmlFor="inputVolume" className={style.form__label}>
-              Inventario
+              Inventario *
             </label>
             <input
               value={Number(newProduct.volume)}
@@ -225,7 +238,7 @@ export default function CreateProductModal({
           </div>
           <div className={style.inputContainer}>
             <label htmlFor="inputMaximum" className={style.form__label}>
-              Tope
+              Tope *
             </label>
             <input
               value={Number(newProduct.maximum)}
@@ -243,7 +256,7 @@ export default function CreateProductModal({
           </div>
           <div className={style.inputContainer}>
             <label htmlFor="inputType" className={style.form__label}>
-              Clasificación
+              Clasificación *
             </label>
             <div>
               {" "}
@@ -382,6 +395,7 @@ export default function CreateProductModal({
             Proveedores
           </label>
           <select
+            disabled={productType == "paca" ? true : false}
             multiple={true}
             id="inputSuppliers"
             value={selectedSuppliers}

@@ -34,7 +34,7 @@ export async function postNewProduct(product: Product, route: string) {
       succesMessage(newBale.data.message);
       return;
     } catch (error: any) {
-      errorMessage(error.response.data.message);
+      errorMessage("Error al crear producto");
       return;
     }
   }
@@ -43,7 +43,7 @@ export async function postNewProduct(product: Product, route: string) {
     succesMessage(newProduct.data.message);
     return;
   } catch (error: any) {
-    errorMessage(error.response.data.message);
+    errorMessage("Error al crear producto");
     return;
   }
 }
