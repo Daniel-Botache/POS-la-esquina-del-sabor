@@ -68,6 +68,7 @@
   flex-direction: column;
   overflow-y: scroll;
   height: 90%;
+  position: relative;
 }
 .billTitleContainer__h3 {
   width: 20%;
@@ -144,4 +145,27 @@
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.billProductContainer__btn {
+  width: 2.5em;
+  height: 2.5em;
+  border: 1px transparent solid;
+  bottom: 1%;
+  border-radius: 100%;
+  position: sticky;
+  left: 100%;
+  background-color: var(--color-main-orange);
+  cursor: pointer;
+}
+.billProductContainer__icon {
+  fill: var(--color-white);
+}
+.billProductContainer__btn:hover {
+  background-color: var(--color-white);
+  border: 1px var(--color-main-orange) solid;
+}
+
+.billProductContainer__btn:hover .billProductContainer__icon {
+  fill: var(--color-main-orange);
 }

@@ -7,6 +7,7 @@ import { searchByBarCode } from "../../services/searchByBarCodeService";
 import { errorMessage, succesMessage } from "../../../auth/hooks/notifications";
 import { postSaleService } from "../../services/postSaleService";
 import { putProductService } from "../../services/putProductService";
+import { DeleteIcon } from "../../../../utils/Icons/icons";
 
 export default function BillSide() {
   const [barCode, setbarCode] = useState("");
@@ -247,6 +248,10 @@ export default function BillSide() {
               total={productData.price * productData.quantity}
             />
           ))}
+
+          <button className={style.billProductContainer__btn}>
+            <DeleteIcon className={style.billProductContainer__icon} />
+          </button>
         </div>
       </div>
       <div className={style.closeSaleContainer} onClick={handleCloseSale}>

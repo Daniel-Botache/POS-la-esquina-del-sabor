@@ -1,9 +1,23 @@
 import style from "../../styles/CellList.module.css";
+import { useState } from "react";
 
 export default function CellList(props: any) {
+  const [isSelected, setIsSelected] = useState(false);
+
+  const handleSelect = () => {
+    setIsSelected(!isSelected);
+  };
+
   return (
-    <div className={style.principalContainer}>
-      <input type="checkbox" />
+    <div
+      className={
+        !isSelected
+          ? style.principalContainer
+          : style.principalContainerSelected
+      }
+      onClick={handleSelect}
+    >
+      <input type="checkbox" checked={isSelected} />
       <div className={style.principalContainer__text}>{props.barCode}</div>
       <div className={style.principalContainer__text}>{props.productName}</div>
       <div className={style.principalContainer__text}>{props.price}</div>

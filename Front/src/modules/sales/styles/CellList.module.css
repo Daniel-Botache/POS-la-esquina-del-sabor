@@ -5,10 +5,22 @@
   border-bottom: 2px var(--color-white) solid;
   margin-top: 0.5em;
   padding-bottom: 0.5em;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
 .principalContainer__text {
   width: 20%;
   text-align: center;
   font-size: 0.9em;
+}
+.principalContainerSelected {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px var(--color-white) solid;
+  margin-top: 0.5em;
+  cursor: pointer;
+  background-color: var(--color-main-blue);
+  border-radius: 10px;
 }
