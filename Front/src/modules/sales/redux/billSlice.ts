@@ -78,12 +78,16 @@ const billSlice = createSlice({
     clearProductSearched: (state) => {
       state.productSearched = { id: 0, name: "", bale: false, barCode: "" };
     },
+    updateProducts: (state, action) => {
+      state.products = action.payload;
+    },
   },
 });
 
 export default billSlice.reducer;
 export const {
   addProductBill,
+  updateProducts,
   clearProductsBill,
   addProductCreateBale,
   clearProductSearched,

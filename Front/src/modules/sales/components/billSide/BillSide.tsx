@@ -1,6 +1,10 @@
 import style from "../../styles/BillSide.module.css";
 import CellList from "./CellList";
-import { addProductBill, clearProductsBill } from "../../redux/billSlice";
+import {
+  addProductBill,
+  clearProductsBill,
+  updateProducts,
+} from "../../redux/billSlice";
 import { useState, useEffect } from "react";
 import { useCustomDispatch, useCustomSelector } from "../../../../store/hooks";
 import { searchByBarCode } from "../../services/searchByBarCodeService";
@@ -29,11 +33,23 @@ export default function BillSide() {
     setIsModalOpen(false);
   };
 
+  const handleDelete = (id: string) => {
+    const updatedProducts = { ...productsSelected };
+    delete updatedProducts[id];
+    dispatch(updateProducts(updatedProducts));
+  };
+
+  const handleCancelSale = () => {
+    const confirmCancel = confirm("¿Seguro desea cancelar la compra?");
+    if (confirmCancel) {
+      dispatch(clearProductsBill());
+    }
+  };
+
   const handlePaymentSelection = async (paymentType: string) => {
     setSelectedPaymentType(paymentType);
     closeModal();
 
-    // Verifica si hay productos seleccionados para una venta o si es un abono con cliente.
     if (
       (transactionType === "Venta" &&
         Object.keys(productsSelected).length === 0) ||
@@ -241,11 +257,13 @@ export default function BillSide() {
           {Object.entries(productsSelected).map(([productId, productData]) => (
             <CellList
               key={productId}
+              id={productId}
               barCode={productData.barCode}
               productName={productData.name}
               quantity={productData.quantity}
               price={productData.price}
               total={productData.price * productData.quantity}
+              onDelete={handleDelete}
             />
           ))}
 
@@ -289,7 +307,12 @@ export default function BillSide() {
         <p className={style.cancelSaleContainer__p}>
           {calculateTotalProduct()} Productos
         </p>
-        <button className={style.cancelSaleContainer__btn}>Cancelar</button>
+        <button
+          className={style.cancelSaleContainer__btn}
+          onClick={handleCancelSale}
+        >
+          Cancelar
+        </button>
       </div>
     </div>
   );

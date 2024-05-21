@@ -12,6 +12,7 @@
   padding: 1em;
   padding-top: 0;
   gap: 0.5em;
+  z-index: 100;
 }
 
 .titleContainer {
@@ -148,6 +149,7 @@
 }
 
 .billProductContainer__btn {
+  visibility: hidden;
   width: 2.5em;
   height: 2.5em;
   border: 1px transparent solid;
