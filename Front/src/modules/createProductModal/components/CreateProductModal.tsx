@@ -6,6 +6,7 @@ import { SearchIcon } from "../../../utils/Icons/icons";
 import SearchSide from "../../sales/components/searchSide/SearchSide";
 import { Product } from "../services/postNewProduct";
 import { postNewProduct } from "../services/postNewProduct";
+import { clearProductSearched } from "../../sales/redux/billSlice";
 type CreateProductModalProps = {
   onClose: () => void;
 };
@@ -31,21 +32,31 @@ export default function CreateProductModal({
     productId: null,
     individualQuanty: null,
     img: "",
-    supliers: [],
+    supliers: null,
   });
+  const individualProductId = useCustomSelector(
+    (state) => state.bill.productSearched
+  );
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log(newProduct);
     if (newProduct.bale == null) {
+      setNewProduct((prevState) => ({
+        ...prevState,
+        productId: null,
+        individualQuanty: null,
+      }));
       await postNewProduct(newProduct, "product");
       return;
     }
+
     await postNewProduct(newProduct, "bale");
   };
   const handleClose = () => {
     if (onClose) {
       onClose();
+      dispatch(clearProductSearched());
     }
   };
   const handleProductTypeChange = (
@@ -54,6 +65,7 @@ export default function CreateProductModal({
     setNewProduct((prevState) => ({
       ...prevState,
       bale: event.target.value == "individual" ? null : true,
+      supliers: event.target.value == "paca" ? null : [],
     }));
 
     setProductType(event.target.value);
@@ -66,9 +78,17 @@ export default function CreateProductModal({
   useEffect(() => {
     dispatch(getSuppliers());
   }, [dispatch]);
+
   const handleSupplierSelection = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
+    if (newProduct.bale) {
+      setNewProduct((prevState) => ({
+        ...prevState,
+        supliers: null,
+      }));
+      return;
+    }
     const selectedOptions = Array.from(
       event.target.selectedOptions,
       (option) => option.value
@@ -78,6 +98,14 @@ export default function CreateProductModal({
       supliers: selectedOptions,
     }));
   };
+
+  useEffect(() => {
+    setNewProduct((prevState) => ({
+      ...prevState,
+      productId: Number(individualProductId.id) || null, // Asegúrate de que individualProductId no sea undefined
+    }));
+  }, [individualProductId]);
+
   return (
     <div className={style.modalOverlay}>
       <div className={style.principalContainer}>
@@ -264,9 +292,17 @@ export default function CreateProductModal({
                 </label>
                 <div className={style.searchContainer}>
                   <input
+                    onChange={(e) =>
+                      setNewProduct((prevState) => ({
+                        ...prevState,
+                        productId: Number(e.target.value),
+                      }))
+                    }
+                    value={individualProductId.id}
                     type="text"
                     id="inputIndividualId"
                     className={style.form__inputText}
+                    disabled
                   />
                   <button
                     type="button"
@@ -285,6 +321,12 @@ export default function CreateProductModal({
                   Numero de productos individuales
                 </label>
                 <input
+                  onChange={(e) =>
+                    setNewProduct((prevState) => ({
+                      ...prevState,
+                      individualQuanty: Number(e.target.value),
+                    }))
+                  }
                   type="text"
                   id="inputIndividualQuan"
                   className={style.form__inputText}
