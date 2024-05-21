@@ -117,6 +117,7 @@ export default function BillSide() {
     const value = e.target.value;
     if (Object.keys(productsSelected).length > 0) {
       errorMessage("Debe cerrar la factura actual");
+      return;
     }
     setTransactionType(value);
     if (value === "Abono") {
