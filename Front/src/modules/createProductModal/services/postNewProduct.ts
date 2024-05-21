@@ -33,19 +33,17 @@ export async function postNewProduct(product: Product, route: string) {
       });
       succesMessage(newBale.data.message);
       return;
-    } catch (error) {
-      const err = error as Error;
+    } catch (error: any) {
+      errorMessage(error.response.data.message);
       return;
-      errorMessage(err.message);
     }
   }
   try {
     const newProduct = await axios.post(`/product`, product);
     succesMessage(newProduct.data.message);
     return;
-  } catch (error) {
-    const err = error as Error;
+  } catch (error: any) {
+    errorMessage(error.response.data.message);
     return;
-    errorMessage(err.message);
   }
 }

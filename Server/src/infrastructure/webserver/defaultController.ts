@@ -24,6 +24,7 @@ export class DefaultController extends DefaultRepository {
           .status(400)
           .json({ message: "Data no creada", succes: createdData });
     } catch (error) {
+      console.log(error);
       const err = error as Error;
       return res.status(500).send(err.message);
     }

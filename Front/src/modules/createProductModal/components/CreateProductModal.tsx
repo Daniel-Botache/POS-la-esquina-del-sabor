@@ -50,7 +50,8 @@ export default function CreateProductModal({
       }));
       await postNewProduct(newProduct, "product");
       dispatch(clearProductSearched());
-      setNewProduct(() => ({
+      setNewProduct((prevState) => ({
+        ...prevState,
         id: null,
         name: "",
         type: "",
@@ -59,7 +60,6 @@ export default function CreateProductModal({
         barCode: "",
         price: 0,
         spent: false,
-        bale: null,
         productId: null,
         individualQuanty: null,
         img: undefined,
@@ -70,7 +70,8 @@ export default function CreateProductModal({
 
     await postNewProduct(newProduct, "bale");
     dispatch(clearProductSearched());
-    setNewProduct(() => ({
+    setNewProduct((prevState) => ({
+      ...prevState,
       id: null,
       name: "",
       type: "",
@@ -79,7 +80,7 @@ export default function CreateProductModal({
       barCode: "",
       price: 0,
       spent: false,
-      bale: null,
+
       productId: null,
       individualQuanty: null,
       img: undefined,
