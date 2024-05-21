@@ -18,22 +18,28 @@ export default function CreateProductModal({
   const dispatch = useCustomDispatch();
   const suppliers = useCustomSelector((state) => state.createProduct.suppliers);
   const [productType, setProductType] = useState("individual");
-  const [isSearchModalopen, setIsSearchModalopen] = useState(false);
+  const [isSearchModalopen, setIsSearchModalopen] = useState(true);
   const [newProduct, setNewProduct] = useState<Product>({
     id: null,
     name: "",
     type: "",
-    volume: 0,
-    maximum: 0,
+    volume: null,
+    maximum: null,
     barCode: "",
-    price: 0,
+    price: null,
     spent: false,
     bale: null,
     productId: null,
     individualQuanty: null,
-    img: "",
+    img: undefined,
     supliers: null,
   });
+  const [inputValues, setInputValues] = useState({
+    inputBarCode: "",
+    inputName: "",
+    inputPrice: "",
+  });
+
   const individualProductId = useCustomSelector(
     (state) => state.bill.productSearched
   );
@@ -48,10 +54,42 @@ export default function CreateProductModal({
         individualQuanty: null,
       }));
       await postNewProduct(newProduct, "product");
+      dispatch(clearProductSearched());
+      setNewProduct(() => ({
+        id: null,
+        name: "",
+        type: "",
+        volume: 0,
+        maximum: 0,
+        barCode: "",
+        price: 0,
+        spent: false,
+        bale: null,
+        productId: null,
+        individualQuanty: null,
+        img: undefined,
+        supliers: null,
+      }));
       return;
     }
 
     await postNewProduct(newProduct, "bale");
+    dispatch(clearProductSearched());
+    setNewProduct(() => ({
+      id: null,
+      name: "",
+      type: "",
+      volume: 0,
+      maximum: 0,
+      barCode: "",
+      price: 0,
+      spent: false,
+      bale: null,
+      productId: null,
+      individualQuanty: null,
+      img: undefined,
+      supliers: null,
+    }));
   };
   const handleClose = () => {
     if (onClose) {
@@ -130,6 +168,7 @@ export default function CreateProductModal({
                   barCode: e.target.value,
                 }))
               }
+              value={newProduct.barCode}
               type="text"
               id="inputBarCode"
               className={style.form__inputText}
@@ -140,6 +179,7 @@ export default function CreateProductModal({
               Nombre
             </label>
             <input
+              value={newProduct.name}
               onChange={(e) =>
                 setNewProduct((prevState) => ({
                   ...prevState,
@@ -157,13 +197,14 @@ export default function CreateProductModal({
               Precio
             </label>
             <input
+              value={Number(newProduct.price)}
               onChange={(e) =>
                 setNewProduct((prevState) => ({
                   ...prevState,
                   price: Number(e.target.value),
                 }))
               }
-              type="number"
+              type="text"
               id="inputPrice"
               className={style.form__inputText}
             />
@@ -174,13 +215,14 @@ export default function CreateProductModal({
               Inventario
             </label>
             <input
+              value={Number(newProduct.volume)}
               onChange={(e) =>
                 setNewProduct((prevState) => ({
                   ...prevState,
                   volume: Number(e.target.value),
                 }))
               }
-              type="number"
+              type="text"
               id="inputVolume"
               className={style.form__inputText}
             />
@@ -190,13 +232,14 @@ export default function CreateProductModal({
               Tope
             </label>
             <input
+              value={Number(newProduct.maximum)}
               onChange={(e) =>
                 setNewProduct((prevState) => ({
                   ...prevState,
                   maximum: Number(e.target.value),
                 }))
               }
-              type="number"
+              type="text"
               name=""
               id="inputMaximum"
               className={style.form__inputText}
@@ -209,6 +252,7 @@ export default function CreateProductModal({
             <div>
               {" "}
               <input
+                value={newProduct.type}
                 onChange={(e) =>
                   setNewProduct((prevState) => ({
                     ...prevState,
@@ -230,6 +274,7 @@ export default function CreateProductModal({
               URL Imagen
             </label>
             <input
+              value={newProduct.img}
               onChange={(e) =>
                 setNewProduct((prevState) => ({
                   ...prevState,
@@ -247,6 +292,7 @@ export default function CreateProductModal({
                 Verdura
               </label>
               <input
+                checked={newProduct.spent}
                 onChange={(e) =>
                   setNewProduct((prevState) => ({
                     ...prevState,
@@ -262,6 +308,7 @@ export default function CreateProductModal({
               <label htmlFor="individualRadio">
                 Individual
                 <input
+                  defaultChecked
                   type="radio"
                   name="tipo"
                   id="individualRadio"
@@ -321,6 +368,7 @@ export default function CreateProductModal({
                   Numero de productos individuales
                 </label>
                 <input
+                  value={Number(newProduct.individualQuanty)}
                   onChange={(e) =>
                     setNewProduct((prevState) => ({
                       ...prevState,

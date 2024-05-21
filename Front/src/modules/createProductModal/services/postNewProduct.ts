@@ -2,13 +2,13 @@ import axios from "axios";
 import { succesMessage, errorMessage } from "../../auth/hooks/notifications";
 export interface Product {
   id: string | null;
-  img: string;
+  img: string | undefined;
   name: string;
   type: string;
-  volume: number;
-  maximum: number;
+  volume: number | null;
+  maximum: number | null;
   barCode: string;
-  price: number;
+  price: number | null;
   spent: boolean;
   bale: boolean | null;
   productId: number | null;
