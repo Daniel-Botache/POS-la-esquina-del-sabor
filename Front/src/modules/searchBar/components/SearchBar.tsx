@@ -7,12 +7,16 @@ import {
 import { getProductByName } from "../redux/searchSlice";
 import { useCustomDispatch } from "../../../store/hooks";
 import { SearchIcon } from "../../../utils/Icons/icons";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { errorMessage } from "../../auth/hooks/notifications";
 
 export default function SeachBar() {
   const [productName, setProductName] = useState("");
   const dispatch = useCustomDispatch();
+
+  useEffect(() => {
+    searchByNameHandle();
+  }, []);
 
   const searchByNameHandle = async () => {
     if (!productName) {
