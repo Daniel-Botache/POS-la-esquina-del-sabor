@@ -14,7 +14,7 @@ export default function BillSide() {
   const [totalSale, setTotalSale] = useState(0);
   const [clientIdStatus, setClientIdStatus] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedPaymentType, setSelectedPaymentType] = useState("Efectivo");
+  const [_selectedPaymentType, setSelectedPaymentType] = useState("Efectivo");
 
   const dispatch = useCustomDispatch();
   const productsSelected = useCustomSelector((state) => state.bill.products);

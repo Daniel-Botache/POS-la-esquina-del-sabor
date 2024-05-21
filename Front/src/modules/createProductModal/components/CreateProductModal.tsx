@@ -14,7 +14,7 @@ type CreateProductModalProps = {
 export default function CreateProductModal({
   onClose,
 }: CreateProductModalProps) {
-  const [selectedSuppliers, setSelectedSuppliers] = useState<string[]>([]);
+  const [selectedSuppliers, _setSelectedSuppliers] = useState<string[]>([]);
   const dispatch = useCustomDispatch();
   const suppliers = useCustomSelector((state) => state.createProduct.suppliers);
   const [productType, setProductType] = useState("individual");
@@ -33,11 +33,6 @@ export default function CreateProductModal({
     individualQuanty: null,
     img: undefined,
     supliers: null,
-  });
-  const [inputValues, setInputValues] = useState({
-    inputBarCode: "",
-    inputName: "",
-    inputPrice: "",
   });
 
   const individualProductId = useCustomSelector(
@@ -154,7 +149,7 @@ export default function CreateProductModal({
         </div>
 
         <form onSubmit={handleSubmit} className={style.formContainer}>
-          <h2>Crear Producto</h2>
+          <h2 className={style.formContainer__h2}>Crear Producto</h2>
 
           <div className={style.inputContainer}>
             {" "}
