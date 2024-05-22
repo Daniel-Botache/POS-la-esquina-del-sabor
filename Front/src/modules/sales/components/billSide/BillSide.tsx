@@ -11,7 +11,13 @@ import { searchByBarCode } from "../../services/searchByBarCodeService";
 import { errorMessage, succesMessage } from "../../../auth/hooks/notifications";
 import { postSaleService } from "../../services/postSaleService";
 import { putProductService } from "../../services/putProductService";
-import { DeleteIcon } from "../../../../utils/Icons/icons";
+import {
+  DeleteIcon,
+  CashPaymentIcon,
+  MobilePaymentIcon,
+  MixPaymentIcon,
+  CancelIcon,
+} from "../../../../utils/Icons/icons";
 
 export default function BillSide() {
   const [barCode, setbarCode] = useState("");
@@ -290,17 +296,39 @@ export default function BillSide() {
       {isModalOpen && (
         <div className={style.modalOverlay}>
           <div className={style.modalContent}>
-            <h2>Seleccionar tipo de pago</h2>
-            <button onClick={() => handlePaymentSelection("Efectivo")}>
-              Efectivo
+            <h2 className={style.modalContent_h2}>Seleccionar tipo de pago</h2>
+            <div className={style.modalBtnContainer}>
+              {" "}
+              <button
+                onClick={() => handlePaymentSelection("Efectivo")}
+                className={style.modalBtnContainer__btn}
+              >
+                <CashPaymentIcon className={style.modalBtnContainer__icon} />
+                Efectivo
+              </button>
+              <button
+                onClick={() => handlePaymentSelection("Transaccion")}
+                className={style.modalBtnContainer__btn}
+              >
+                <MobilePaymentIcon className={style.modalBtnContainer__icon} />
+                Transacción
+              </button>
+              <button
+                onClick={() => handlePaymentSelection("Mixto")}
+                className={style.modalBtnContainer__btn}
+              >
+                <MixPaymentIcon className={style.modalBtnContainer__icon} />
+                Mixto
+              </button>
+            </div>
+
+            <button
+              onClick={closeModal}
+              className={style.modalBtnContainer__cancelBtn}
+            >
+              <CancelIcon className={style.modalBtnContainer__cancelIcon} />{" "}
+              Cancelar
             </button>
-            <button onClick={() => handlePaymentSelection("Mixto")}>
-              Mixto
-            </button>
-            <button onClick={() => handlePaymentSelection("Transaccion")}>
-              Transacción
-            </button>
-            <button onClick={closeModal}>Cancelar</button>
           </div>
         </div>
       )}

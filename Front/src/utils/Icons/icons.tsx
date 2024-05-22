@@ -1330,3 +1330,39 @@ export const MixPaymentIcon = ({ className }: any) => {
     </svg>
   );
 };
+
+export const SuplierIcon = ({ className }: any) => {
+  return (
+    <svg
+      className={className}
+      width="48"
+      height="48"
+      viewBox="0 0 48 48"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M8 8V15H15V8H8ZM7 6C6.44772 6 6 6.44771 6 7V16C6 16.5523 6.44771 17 7 17H16C16.5523 17 17 16.5523 17 16V7C17 6.44772 16.5523 6 16 6H7ZM33 33V40H40V33H33ZM32 31C31.4477 31 31 31.4477 31 32V41C31 41.5523 31.4477 42 32 42H41C41.5523 42 42 41.5523 42 41V32C42 31.4477 41.5523 31 41 31H32ZM30.3913 28.9771L27.2071 25.7929L25.7929 27.2071L28.9771 30.3913L30.3913 28.9771ZM21.6774 20.2632L25.6545 24.2403L24.2403 25.6545L20.2632 21.6774V25.8947H18.2632V19.2632V18.2632H19.2632H25.8947V20.2632H21.6774Z"
+        fill="#333333"
+      />
+    </svg>
+  );
+};
+
+export const CancelIcon = ({ className }: any) => {
+  return (
+    <svg
+      className={className}
+      data-name="Livello 1"
+      id="Livello_1"
+      viewBox="0 0 128 128"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <title />
+      <path d="M64,0a64,64,0,1,0,64,64A64.07,64.07,0,0,0,64,0Zm0,122a58,58,0,1,1,58-58A58.07,58.07,0,0,1,64,122Z" />
+      <path d="M92.12,35.79a3,3,0,0,0-4.24,0L64,59.75l-23.87-24A3,3,0,0,0,35.88,40L59.76,64,35.88,88a3,3,0,0,0,4.25,4.24L64,68.25l23.88,24A3,3,0,0,0,92.13,88L68.24,64,92.13,40A3,3,0,0,0,92.12,35.79Z" />
+    </svg>
+  );
+};
