@@ -33,21 +33,11 @@ export class ProductRepository implements IProductRepository {
   }
   public async create(data: any): Promise<boolean> {
     try {
-      const {
-        name,
-        type,
-        volume,
-        maximum,
-        barCode,
-        price,
-        spent,
-        supliers,
-        img,
-      } = data;
+      const { name, volume, maximum, barCode, price, spent, supliers, img } =
+        data;
       const created = (await Product.create({
         barCode,
         name,
-        type,
         volume,
         maximum,
         price,

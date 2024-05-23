@@ -12,10 +12,6 @@ export default (sequelize: Sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    type: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     volume: {
       type: DataTypes.FLOAT,
       allowNull: false,

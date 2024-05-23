@@ -4,7 +4,6 @@ import { SuplierInstance } from "./SuplierAttributes";
 interface ProductAttributes {
   id: string;
   name: string;
-  type: string;
   volume: number;
   maximum: number;
   barCode: string;
