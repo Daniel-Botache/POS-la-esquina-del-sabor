@@ -8,6 +8,7 @@ import { Product } from "../services/postNewProduct";
 import { postNewProduct } from "../services/postNewProduct";
 import { clearProductSearched } from "../../sales/redux/billSlice";
 import { errorMessage } from "../../auth/hooks/notifications";
+import Select from "react-select";
 type CreateProductModalProps = {
   onClose: () => void;
 };
@@ -15,7 +16,9 @@ type CreateProductModalProps = {
 export default function CreateProductModal({
   onClose,
 }: CreateProductModalProps) {
-  const [selectedSuppliers, _setSelectedSuppliers] = useState<string[]>([]);
+  const [suppliersOptions, setSuppliersOptions] = useState<
+    { value: string; label: string }[]
+  >([]);
   const dispatch = useCustomDispatch();
   const suppliers = useCustomSelector((state) => state.createProduct.suppliers);
   const types = useCustomSelector((state) => state.createProduct.types);
@@ -125,7 +128,14 @@ export default function CreateProductModal({
   useEffect(() => {
     dispatch(getTypes());
     dispatch(getSuppliers());
+    const options = suppliers.map((supplier) => ({
+      value: supplier.id,
+      label: supplier.company,
+    }));
+    setSuppliersOptions(options);
+    console.log(suppliersOptions);
   }, [dispatch]);
+
   const handleTypeSelection = (event: React.ChangeEvent<HTMLSelectElement>) => {
     if (newProduct.bale) {
       setNewProduct((prevState) => ({
@@ -140,9 +150,7 @@ export default function CreateProductModal({
     }));
   };
 
-  const handleSupplierSelection = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
+  const handleSupplierSelection = (options: any) => {
     if (newProduct.bale) {
       setNewProduct((prevState) => ({
         ...prevState,
@@ -150,10 +158,7 @@ export default function CreateProductModal({
       }));
       return;
     }
-    const selectedOptions = Array.from(
-      event.target.selectedOptions,
-      (option) => option.value
-    );
+    const selectedOptions = options.map((option: any) => option.value);
     setNewProduct((prevState) => ({
       ...prevState,
       supliers: selectedOptions,
@@ -274,6 +279,7 @@ export default function CreateProductModal({
             </label>
             <div>
               <select
+                defaultValue={""}
                 name="inputType"
                 id="inputType"
                 onChange={handleTypeSelection}
@@ -407,20 +413,12 @@ export default function CreateProductModal({
           <label htmlFor="inputSuppliers" className={style.form__label}>
             Proveedores
           </label>
-          <select
-            disabled={productType == "paca" ? true : false}
-            multiple={true}
-            id="inputSuppliers"
-            value={selectedSuppliers}
+          <Select
+            options={suppliersOptions}
+            isMulti
             onChange={handleSupplierSelection}
-            className={style.form__select}
-          >
-            {suppliers.map((supplier) => (
-              <option key={supplier.id} value={supplier.id}>
-                {supplier.company}
-              </option>
-            ))}
-          </select>
+          />
+
           <button type="submit" className={style.formContainer__btn}>
             Crear producto
           </button>
