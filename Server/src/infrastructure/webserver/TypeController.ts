@@ -3,24 +3,24 @@ import { TypeRepository } from "../repository/TypeRepository";
 import { DefaultController } from "./DefaultController";
 import { Request, Response } from "express";
 
-export class SuplierController extends DefaultController {
+export class TypeController extends DefaultController {
   private typeRepository: TypeRepository;
   constructor() {
-    super(sequelize.models.Suplier);
+    super(sequelize.models.Type);
     this.typeRepository = new TypeRepository();
   }
   findSuplierById = async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
-      const suplierData = await this.typeRepository.findById(id);
-      if (suplierData) {
+      const typeData = await this.typeRepository.findById(id);
+      if (typeData) {
         return res
           .status(200)
-          .json({ success: suplierData, message: "Datos encontrados" });
+          .json({ success: typeData, message: "Datos encontrados" });
       }
       return res
         .status(404)
-        .json({ success: suplierData, message: "Datos no encontrados" });
+        .json({ success: typeData, message: "Datos no encontrados" });
     } catch (error) {
       const err = error as Error;
       return res.status(500).send(err.message);
