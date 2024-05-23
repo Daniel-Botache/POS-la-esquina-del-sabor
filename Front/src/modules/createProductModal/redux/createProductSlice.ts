@@ -9,19 +9,30 @@ export const getSuppliers = createAsyncThunk(
   }
 );
 
+export const getTypes = createAsyncThunk("createProduct/getTypes", async () => {
+  const response = await axios.get("/type");
+  return response.data;
+});
+
 interface suppliers {
   adviser: string;
   tel: string;
   company: string;
   id: string;
 }
+interface types {
+  id: string;
+  name: string;
+}
 
 interface createProductState {
   suppliers: suppliers[];
+  types: types[];
 }
 
 const initialState: createProductState = {
   suppliers: [],
+  types: [],
 };
 
 const createProductSlice = createSlice({
@@ -34,7 +45,11 @@ const createProductSlice = createSlice({
     builder.addCase(getSuppliers.fulfilled, (state, action) => {
       state.suppliers = action.payload;
     });
-    // Manejar otros estados del thunk si es necesario
+    {
+      builder.addCase(getTypes.fulfilled, (state, action) => {
+        state.types = action.payload;
+      });
+    } // Manejar otros estados del thunk si es necesario
   },
 });
 

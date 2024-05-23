@@ -3,7 +3,6 @@ import { Model, Optional } from "sequelize";
 interface BaleAttributes {
   id: string;
   name: string;
-  type: string;
   volume: number;
   maximum: number;
   barCode: string;

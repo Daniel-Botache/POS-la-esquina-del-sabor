@@ -1,7 +1,7 @@
 import style from "../styles/CreateProductModal.module.css";
 import { useState, useEffect } from "react";
 import { useCustomSelector, useCustomDispatch } from "../../../store/hooks";
-import { getSuppliers } from "../redux/createProductSlice";
+import { getSuppliers, getTypes } from "../redux/createProductSlice";
 import { SearchIcon } from "../../../utils/Icons/icons";
 import SearchSide from "../../sales/components/searchSide/SearchSide";
 import { Product } from "../services/postNewProduct";
@@ -18,12 +18,13 @@ export default function CreateProductModal({
   const [selectedSuppliers, _setSelectedSuppliers] = useState<string[]>([]);
   const dispatch = useCustomDispatch();
   const suppliers = useCustomSelector((state) => state.createProduct.suppliers);
+  const types = useCustomSelector((state) => state.createProduct.types);
   const [productType, setProductType] = useState("individual");
   const [isSearchModalopen, setIsSearchModalopen] = useState(true);
   const [newProduct, setNewProduct] = useState<Product>({
     id: null,
     name: "",
-    type: "",
+    typeId: "",
     volume: null,
     maximum: null,
     barCode: "",
@@ -45,8 +46,6 @@ export default function CreateProductModal({
     console.log(newProduct);
     if (
       !newProduct.name ||
-      !newProduct.barCode ||
-      !newProduct.type ||
       !newProduct.volume ||
       !newProduct.maximum ||
       !newProduct.price
@@ -68,7 +67,7 @@ export default function CreateProductModal({
         ...prevState,
         id: null,
         name: "",
-        type: "",
+        typeId: "",
         volume: 0,
         maximum: 0,
         barCode: "",
@@ -88,7 +87,7 @@ export default function CreateProductModal({
       ...prevState,
       id: null,
       name: "",
-      type: "",
+      typeId: "",
       volume: 0,
       maximum: 0,
       barCode: "",
@@ -113,6 +112,7 @@ export default function CreateProductModal({
       ...prevState,
       bale: event.target.value == "individual" ? null : true,
       supliers: event.target.value == "paca" ? null : [],
+      typeId: event.target.value == "paca" ? null : prevState.typeId,
     }));
 
     setProductType(event.target.value);
@@ -123,8 +123,22 @@ export default function CreateProductModal({
   };
 
   useEffect(() => {
+    dispatch(getTypes());
     dispatch(getSuppliers());
   }, [dispatch]);
+  const handleTypeSelection = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    if (newProduct.bale) {
+      setNewProduct((prevState) => ({
+        ...prevState,
+        typeId: null,
+      }));
+      return;
+    }
+    setNewProduct((prevState) => ({
+      ...prevState,
+      typeId: event.target.value,
+    }));
+  };
 
   const handleSupplierSelection = (
     event: React.ChangeEvent<HTMLSelectElement>
@@ -168,7 +182,7 @@ export default function CreateProductModal({
           <div className={style.inputContainer}>
             {" "}
             <label htmlFor="inputBarCode" className={style.form__label}>
-              Cod. Barras *
+              Cod. Barras
             </label>
             <input
               onChange={(e) =>
@@ -259,19 +273,18 @@ export default function CreateProductModal({
               Clasificación *
             </label>
             <div>
-              {" "}
-              <input
-                value={newProduct.type}
-                onChange={(e) =>
-                  setNewProduct((prevState) => ({
-                    ...prevState,
-                    type: e.target.value,
-                  }))
-                }
-                type="text"
+              <select
+                name="inputType"
                 id="inputType"
-                className={style.form__inputText}
-              />
+                onChange={handleTypeSelection}
+              >
+                <option value="">Seleccionar tipo</option>
+                {types.map((type) => (
+                  <option key={type.id} value={type.id}>
+                    {type.name}
+                  </option>
+                ))}
+              </select>
               <button className={style.principalContainer__btn}>
                 <SearchIcon className={style.principalContainer__icon} />
               </button>

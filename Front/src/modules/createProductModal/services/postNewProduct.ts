@@ -4,7 +4,7 @@ export interface Product {
   id: string | null;
   img: string | undefined;
   name: string;
-  type: string;
+  typeId: string | null;
   volume: number | null;
   maximum: number | null;
   barCode: string;
@@ -21,7 +21,6 @@ export async function postNewProduct(product: Product, route: string) {
     try {
       const newBale = await axios.post(`/bale`, {
         name: product.name,
-        type: product.type,
         volume: product.volume,
         maximum: product.maximum,
         price: product.price,

@@ -33,8 +33,17 @@ export class ProductRepository implements IProductRepository {
   }
   public async create(data: any): Promise<boolean> {
     try {
-      const { name, volume, maximum, barCode, price, spent, supliers, img } =
-        data;
+      const {
+        name,
+        volume,
+        maximum,
+        barCode,
+        price,
+        spent,
+        supliers,
+        img,
+        typeId,
+      } = data;
       const created = (await Product.create({
         barCode,
         name,
@@ -43,6 +52,7 @@ export class ProductRepository implements IProductRepository {
         price,
         spent,
         img,
+        typeId,
       })) as ProductInstance;
 
       if (supliers && supliers.length > 0 && created && created.addSupliers) {
