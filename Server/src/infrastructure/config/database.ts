@@ -55,8 +55,8 @@ const {
 Sale.belongsTo(Client, { foreignKey: "clientId" });
 Client.hasMany(Sale, { foreignKey: "clientId" });
 
-Product.belongsTo(Type, { foreignKey: "typeId" });
-Type.hasMany(Product, { foreignKey: "typeId" });
+Product.belongsTo(Type, { foreignKey: "typeId", as: "products" });
+Type.hasMany(Product, { foreignKey: "typeId", as: "products" });
 
 Sale.belongsTo(User, { foreignKey: "userId" });
 User.hasMany(Sale, { foreignKey: "userId" });

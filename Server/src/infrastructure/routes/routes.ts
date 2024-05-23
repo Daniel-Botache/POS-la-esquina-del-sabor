@@ -6,6 +6,7 @@ import { saleRoutes } from "./saleRoutes";
 import { productRoutes } from "./productRoutes";
 import { suplierRoutes } from "./suplierRoutes";
 import { baleRoutes } from "./baleRoutes";
+import { typeRoutes } from "./typeRoutes";
 
 const router = Router();
 
@@ -16,5 +17,6 @@ router.use("/sale", saleRoutes);
 router.use("/product", productRoutes);
 router.use("/suplier", suplierRoutes);
 router.use("/bale", baleRoutes);
+router.use("/type", typeRoutes);
 
 export const routes = router;

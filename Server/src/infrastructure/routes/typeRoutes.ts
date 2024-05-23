@@ -10,4 +10,4 @@ router.post("/", controller.createData);
 router.put("/:id", controller.putData);
 router.delete("/:id", controller.deleteData);
 
-export const suplierRoutes = router;
+export const typeRoutes = router;
