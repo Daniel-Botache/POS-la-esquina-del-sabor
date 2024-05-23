@@ -38,12 +38,25 @@ if (DB_BASE && DB_USER && DB_HOST && DB_PASSWORD) {
 } else {
   throw new Error("Missing database connection details");
 }
-const { Client, Bale, Base, Credit, Expense, Product, Sale, Suplier, User } =
-  sequelize.models;
+const {
+  Client,
+  Bale,
+  Base,
+  Credit,
+  Expense,
+  Product,
+  Sale,
+  Suplier,
+  User,
+  Type,
+} = sequelize.models;
 
 //relations
 Sale.belongsTo(Client, { foreignKey: "clientId" });
 Client.hasMany(Sale, { foreignKey: "clientId" });
+
+Product.belongsTo(Type, { foreignKey: "typeId" });
+Type.hasMany(Product, { foreignKey: "typeId" });
 
 Sale.belongsTo(User, { foreignKey: "userId" });
 User.hasMany(Sale, { foreignKey: "userId" });
@@ -80,4 +93,5 @@ export {
   Sale,
   Suplier,
   User,
+  Type,
 };
