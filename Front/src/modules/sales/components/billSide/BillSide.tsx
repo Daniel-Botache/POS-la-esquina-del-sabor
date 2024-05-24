@@ -1,5 +1,8 @@
 import style from "../../styles/BillSide.module.css";
 import CellList from "./CellList";
+import Ticket from "../print/Ticket";
+import React, { useRef } from "react";
+import { useReactToPrint } from "react-to-print";
 import {
   addProductBill,
   clearProductsBill,
@@ -34,6 +37,12 @@ export default function BillSide() {
   const openModal = () => {
     setIsModalOpen(true);
   };
+
+  const ticketRef = useRef<HTMLDivElement>(null);
+
+  const handlePrint = useReactToPrint({
+    content: () => ticketRef.current,
+  });
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -75,13 +84,13 @@ export default function BillSide() {
         products.push(key);
       }
     });
-    // Configura los datos comunes de la venta.
+
     const saleData = {
       total: totalSale,
       paymentType: paymentType,
       movementType: transactionType,
-      credit: false, // Valor predeterminado
-      clientId: clientIdStatus || null, // Usa null si clientIdStatus está vacío
+      credit: false,
+      clientId: clientIdStatus || null,
       userId: userId,
       products:
         transactionType === "Venta" && products.length > 0 ? products : null,
@@ -99,14 +108,14 @@ export default function BillSide() {
       saleData.valueCash = cashValueConverted;
       saleData.valueTransaction = totalSale - cashValueConverted;
     }
-    // Maneja el caso especial de crédito.
+
     if (transactionType === "Venta" && clientIdStatus !== "") {
       saleData.credit = confirm("¿Es crédito?");
     }
 
-    // Realiza la petición de post venta.
     try {
       await postSaleService(saleData);
+      handlePrint();
       dispatch(clearProductsBill());
       putProductService(productsSelected);
       succesMessage(
@@ -278,6 +287,15 @@ export default function BillSide() {
             <DeleteIcon className={style.billProductContainer__icon} />
           </button>
         </div>
+      </div>
+      <div style={{ display: "none" }}>
+        <Ticket
+          ref={ticketRef}
+          products={productsSelected}
+          total={totalSale}
+          clientIdStatus={clientIdStatus}
+          userId={userId}
+        />
       </div>
       <div className={style.closeSaleContainer} onClick={handleCloseSale}>
         <h3

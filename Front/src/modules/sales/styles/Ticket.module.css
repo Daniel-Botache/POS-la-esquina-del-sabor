@@ -1,0 +1,25 @@
+.ticket {
+  width: 80mm;
+  font-family: Arial, sans-serif;
+}
+
+.ticket h1,
+.ticket h2 {
+  text-align: center;
+}
+
+.ticket p,
+.ticket .product {
+  margin: 0;
+  padding: 2mm 0;
+}
+
+.ticket .products {
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+}
+
+.ticket .product {
+  display: flex;
+  justify-content: space-between;
+}
