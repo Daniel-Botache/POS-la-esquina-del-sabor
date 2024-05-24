@@ -4,14 +4,19 @@ import { useCustomSelector, useCustomDispatch } from "../../../store/hooks";
 import { UserIcon } from "../../../utils/Icons/icons";
 import { cleanUserInfo } from "../../auth/redux/authSlice";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export default function Head() {
   const username = useCustomSelector((state) => state.auth.user);
   const dispatch = useCustomDispatch();
 
+  const location = useLocation();
   const handleLogOut = () => {
     dispatch(cleanUserInfo());
   };
+  if (location.pathname == "/") {
+    return null;
+  }
   return (
     <div className={style.principalContainer}>
       <Link to="/home" className={style.principalContainer__link}>

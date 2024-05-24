@@ -22,6 +22,10 @@ export default function Card(props: any) {
       return;
     }
     let quantityPrompt = Number(prompt("Cantidad"));
+    if (isNaN(quantityPrompt)) {
+      alert("Solo se aceptan valores numericos");
+      return;
+    }
     if (quantityPrompt === 0) {
       quantityPrompt = 1;
     }
@@ -44,7 +48,9 @@ export default function Card(props: any) {
       </div>
       <p className={style.principalContainer__p}>Inv: {props.volume}</p>
       <h2 className={style.principalContainer__h2}>{props.name}</h2>
-      <h2 className={style.principalContainer__h2}>$ {props.price}</h2>
+      <h2 className={style.principalContainer__h2}>
+        $ {new Intl.NumberFormat("es-CO").format(props.price)}
+      </h2>
     </div>
   );
 }

@@ -10,8 +10,13 @@ import {
 } from "../../../utils/Icons/icons";
 import style from "../styles/NavBarLeft.module.css";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export default function NavBarLeft() {
+  const location = useLocation();
+  if (location.pathname == "/") {
+    return null;
+  }
   return (
     <div className={style.principalContainer}>
       <Link to="/sales">

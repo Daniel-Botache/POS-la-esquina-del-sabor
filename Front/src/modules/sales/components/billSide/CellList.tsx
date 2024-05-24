@@ -23,9 +23,13 @@ export default function CellList(props: any) {
       <input type="checkbox" checked={isSelected} onChange={handleSelect} />
       <div className={style.principalContainer__text}>{props.barCode}</div>
       <div className={style.principalContainer__text}>{props.productName}</div>
-      <div className={style.principalContainer__text}>{props.price}</div>
+      <div className={style.principalContainer__text}>
+        {new Intl.NumberFormat("es-CO").format(props.price)}
+      </div>
       <div className={style.principalContainer__text}>{props.quantity}</div>
-      <div className={style.principalContainer__text}>{props.total}</div>
+      <div className={style.principalContainer__text}>
+        {new Intl.NumberFormat("es-CO").format(props.total)}
+      </div>
     </div>
   );
 }

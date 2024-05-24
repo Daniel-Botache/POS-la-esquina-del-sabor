@@ -100,6 +100,11 @@ export default function BillSide() {
     };
     if (paymentType === "Efectivo") {
       saleData.valueCash = totalSale;
+      const totalIn = Number(prompt("Dinero que recibe:"));
+      const cashBack = new Intl.NumberFormat("es-CO").format(
+        totalIn - totalSale
+      );
+      alert(`Debe devolver ${cashBack}`);
     } else if (paymentType === "Transaccion") {
       saleData.valueTransaction = totalSale;
     } else {
@@ -115,9 +120,13 @@ export default function BillSide() {
 
     try {
       await postSaleService(saleData);
-      handlePrint();
-      dispatch(clearProductsBill());
       putProductService(productsSelected);
+
+      const printConfirm = confirm("¿desea realizar la impresion del recibo?");
+      if (printConfirm) {
+        handlePrint();
+      }
+      dispatch(clearProductsBill());
       succesMessage(
         transactionType === "Abono"
           ? "Abono realizado con éxito"
@@ -307,7 +316,7 @@ export default function BillSide() {
           Total:{" "}
           <span className={style.closeSaleContainer__span}>
             {" "}
-            {calculateTotal()}
+            {new Intl.NumberFormat("es-CO").format(calculateTotal())}
           </span>
         </h3>
       </div>

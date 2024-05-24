@@ -296,7 +296,7 @@ export default function CreateProductModal({
             <label htmlFor="inputType" className={style.form__label}>
               Clasificación *
             </label>
-            <div>
+            <div className={style.clasificationContainer}>
               <select
                 className={`${style.form__select} ${style.form__select_clas}`}
                 defaultValue={""}
