@@ -1,4 +1,4 @@
-import { UserRepository } from "../repository/UserRepository";
+import { UserRepository } from "../Repository/UserRepository";
 import { Request, Response } from "express";
 import { sequelize } from "../config/database";
 import bcrypt from "bcrypt";
