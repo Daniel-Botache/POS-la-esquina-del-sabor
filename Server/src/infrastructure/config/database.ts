@@ -16,6 +16,12 @@ if (DB_BASE && DB_USER && DB_HOST && DB_PASSWORD) {
     dialect: "postgres",
     logging: false,
     native: false,
+    dialectOptions: {
+      ssl: {
+        require: true, // Requerir SSL
+        rejectUnauthorized: false, // Ignorar errores de certificado no autorizado
+      },
+    },
   });
   //take the route of this file
   const basename: string = path.basename(__filename);
@@ -26,7 +32,9 @@ if (DB_BASE && DB_USER && DB_HOST && DB_PASSWORD) {
   fs.readdirSync(path.join(__dirname, "/models"))
     .filter(
       (file) =>
-        file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".ts"
+        file.indexOf(".") !== 0 &&
+        file !== basename &&
+        (file.slice(-3) === ".ts" || file.slice(-3) === ".js")
     )
     .forEach((file) => {
       modelDefiners.push(
