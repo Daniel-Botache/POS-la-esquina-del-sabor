@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { DefaultRepository } from "../repository/DefaultRepository";
+import { DefaultRepository } from "../Repository/DefaultRepository";
 
 export class DefaultController extends DefaultRepository {
   getAllData = async (_req: Request, res: Response) => {
