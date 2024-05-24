@@ -2,12 +2,13 @@ import style from "../styles/CreateProductModal.module.css";
 import { useState, useEffect } from "react";
 import { useCustomSelector, useCustomDispatch } from "../../../store/hooks";
 import { getSuppliers, getTypes } from "../redux/createProductSlice";
-import { SearchIcon } from "../../../utils/Icons/icons";
+import { SearchIcon, AddIcon } from "../../../utils/Icons/icons";
 import SearchSide from "../../sales/components/searchSide/SearchSide";
 import { Product } from "../services/postNewProduct";
 import { postNewProduct } from "../services/postNewProduct";
 import { clearProductSearched } from "../../sales/redux/billSlice";
 import { errorMessage } from "../../auth/hooks/notifications";
+import CreateTypeModal from "./CreateTypeModal";
 import Select from "react-select";
 type CreateProductModalProps = {
   onClose: () => void;
@@ -24,6 +25,7 @@ export default function CreateProductModal({
   const types = useCustomSelector((state) => state.createProduct.types);
   const [productType, setProductType] = useState("individual");
   const [isSearchModalopen, setIsSearchModalopen] = useState(true);
+  const [isCreateTypeModalOpen, setIsCreateTypeModalOpen] = useState(true);
   const [newProduct, setNewProduct] = useState<Product>({
     id: null,
     name: "",
@@ -123,6 +125,23 @@ export default function CreateProductModal({
 
   const handleOpenSearchModal = () => {
     setIsSearchModalopen(!isSearchModalopen);
+  };
+  const handleButtonClickSearchModal = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+    handleOpenSearchModal();
+  };
+
+  const handleButtonClickCreateType = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+    handleOpenCreateTypeModal();
+  };
+
+  const handleOpenCreateTypeModal = () => {
+    setIsCreateTypeModalOpen(!isCreateTypeModalOpen);
   };
 
   useEffect(() => {
@@ -279,6 +298,7 @@ export default function CreateProductModal({
             </label>
             <div>
               <select
+                className={`${style.form__select} ${style.form__select_clas}`}
                 defaultValue={""}
                 name="inputType"
                 id="inputType"
@@ -291,8 +311,11 @@ export default function CreateProductModal({
                   </option>
                 ))}
               </select>
-              <button className={style.principalContainer__btn}>
-                <SearchIcon className={style.principalContainer__icon} />
+              <button
+                className={style.principalContainer__btn}
+                onClick={handleButtonClickCreateType}
+              >
+                <AddIcon className={style.principalContainer__icon} />
               </button>
             </div>
           </div>
@@ -382,7 +405,7 @@ export default function CreateProductModal({
                   <button
                     type="button"
                     className={style.principalContainer__btn}
-                    onClick={handleOpenSearchModal}
+                    onClick={handleButtonClickSearchModal}
                   >
                     <SearchIcon className={style.principalContainer__icon} />
                   </button>
@@ -414,6 +437,8 @@ export default function CreateProductModal({
             Proveedores
           </label>
           <Select
+            isDisabled={newProduct.bale ? true : false}
+            className={style.form__select}
             options={suppliersOptions}
             isMulti
             onChange={handleSupplierSelection}
@@ -426,6 +451,9 @@ export default function CreateProductModal({
             <SearchSide onClose={handleOpenSearchModal} isModal={true} />
           )}
         </form>
+        {!isCreateTypeModalOpen && (
+          <CreateTypeModal onClose={handleOpenCreateTypeModal} />
+        )}
       </div>
     </div>
   );
