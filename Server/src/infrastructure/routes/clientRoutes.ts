@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { DefaultController } from "../webserver/DefaultController";
+import { DefaultController } from "../webserver/defaultController";
 import { sequelize } from "../config/database";
 
 const router = Router();
