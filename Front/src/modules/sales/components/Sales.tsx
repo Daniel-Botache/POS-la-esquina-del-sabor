@@ -4,7 +4,7 @@ import BillSide from "./billSide/BillSide";
 export default function Sales() {
   return (
     <div className={style.principalContainer}>
-      <SearchSide />
+      <SearchSide isModal = {false}, onClose={false}  />
       <BillSide />
     </div>
   );
