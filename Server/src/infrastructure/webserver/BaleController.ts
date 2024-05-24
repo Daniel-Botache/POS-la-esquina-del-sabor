@@ -1,4 +1,4 @@
-import { BaleRepository } from "../repository/BaleRepository";
+import { BaleRepository } from "../Repository/BaleRepository";
 import { Request, Response } from "express";
 import { DefaultController } from "./defaultController";
 import { sequelize } from "../config/database";
