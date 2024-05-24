@@ -1,4 +1,4 @@
-import SignUpForm from "./SignUpForm";
+import SignUpForm from "./signUpForm";
 import InfoSoft from "./InfoSoft";
 import styles from "../styles/ViewAuth.module.css";
 
