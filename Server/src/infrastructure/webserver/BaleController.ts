@@ -1,6 +1,6 @@
 import { BaleRepository } from "../repository/BaleRepository";
 import { Request, Response } from "express";
-import { DefaultController } from "./DefaultController";
+import { DefaultController } from "./defaultController";
 import { sequelize } from "../config/database";
 
 export class BaleController extends DefaultController {
