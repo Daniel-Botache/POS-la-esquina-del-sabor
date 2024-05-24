@@ -13,7 +13,7 @@ export default function SignUpForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [access, setAccess] = useState(false);
-  const [errors, setErrors] = useState({ user: "", password: "" });
+  const [_errors, setErrors] = useState({ user: "", password: "" });
   const navigate = useNavigate();
   const dispatch = useCustomDispatch();
 
