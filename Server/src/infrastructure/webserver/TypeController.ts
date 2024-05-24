@@ -1,6 +1,6 @@
 import { sequelize } from "../config/database";
 import { TypeRepository } from "../repository/TypeRepository";
-import { DefaultController } from "./DefaultController";
+import { DefaultController } from "./defaultController";
 import { Request, Response } from "express";
 
 export class TypeController extends DefaultController {
