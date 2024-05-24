@@ -1,4 +1,4 @@
-import { ProductRepository } from "../repository/ProductRepository";
+import { ProductRepository } from "../Repository/ProductRepository";
 import { Request, Response } from "express";
 import { DefaultController } from "./defaultController";
 import { sequelize } from "../config/database";
