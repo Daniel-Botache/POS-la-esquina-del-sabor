@@ -1,6 +1,6 @@
 import { SaleRepository } from "../Repository/SaleRepository";
 import { Request, Response } from "express";
-import { DefaultController } from "./defaultController";
+import { DefaultController } from "./DefaultController";
 import { sequelize } from "../config/database";
 
 export class SaleController extends DefaultController {

@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import { sequelize } from "../config/database";
 import bcrypt from "bcrypt";
 //import User from "../config/models/User";
-import { DefaultController } from "./defaultController";
+import { DefaultController } from "./DefaultController";
 import { UserInstance } from "../../domain/models/UserAttributes";
 
 export class UserController extends DefaultController {

@@ -1,5 +1,5 @@
 import style from "../styles/CreateProductModal.module.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useCustomSelector, useCustomDispatch } from "../../../store/hooks";
 import { getSuppliers, getTypes } from "../redux/createProductSlice";
 import { SearchIcon, AddIcon } from "../../../utils/Icons/icons";
@@ -17,6 +17,7 @@ type CreateProductModalProps = {
 export default function CreateProductModal({
   onClose,
 }: CreateProductModalProps) {
+  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const [suppliersOptions, setSuppliersOptions] = useState<
     { value: string; label: string }[]
   >([]);
@@ -45,6 +46,19 @@ export default function CreateProductModal({
   const individualProductId = useCustomSelector(
     (state) => state.bill.productSearched
   );
+
+  const handleInputEnterBarCode = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    currentIndex: number
+  ) => {
+    if (e.key === "Enter") {
+      const nextIndex = currentIndex + 1;
+      const nextInput = inputRefs.current[nextIndex];
+      if (nextInput) {
+        nextInput.focus();
+      }
+    }
+  };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -200,7 +214,13 @@ export default function CreateProductModal({
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className={style.formContainer}>
+        <form
+          onSubmit={handleSubmit}
+          className={style.formContainer}
+          onKeyDown={(e) => {
+            e.preventDefault();
+          }}
+        >
           <h2 className={style.formContainer__h2}>Crear Producto</h2>
 
           <div className={style.inputContainer}>
@@ -209,6 +229,8 @@ export default function CreateProductModal({
               Cod. Barras
             </label>
             <input
+              ref={(el) => (inputRefs.current[0] = el)}
+              onKeyDown={(e) => handleInputEnterBarCode(e, 0)}
               onChange={(e) =>
                 setNewProduct((prevState) => ({
                   ...prevState,
@@ -226,6 +248,7 @@ export default function CreateProductModal({
               Nombre *
             </label>
             <input
+              ref={(el) => (inputRefs.current[1] = el)}
               value={newProduct.name}
               onChange={(e) =>
                 setNewProduct((prevState) => ({
@@ -312,6 +335,7 @@ export default function CreateProductModal({
                 ))}
               </select>
               <button
+                type="button"
                 className={style.principalContainer__btn}
                 onClick={handleButtonClickCreateType}
               >
