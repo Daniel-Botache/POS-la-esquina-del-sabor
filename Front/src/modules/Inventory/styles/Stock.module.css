@@ -57,3 +57,14 @@
   align-items: center;
   justify-content: space-evenly;
 }
+.titleContainer {
+  display: flex;
+  gap: 2%;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 2px var(--color-background-grey) solid;
+}
+.titleContainer__h3 {
+  width: 10%;
+  font-size: 1em;
+}

@@ -58,6 +58,17 @@ export default function Stock() {
           </div>
         </div>
       </div>
+      <div className={style.titleContainer}>
+        <h3 className={style.titleContainer__h3}>Código:</h3>
+        <h3 className={style.titleContainer__h3}>Nombre:</h3>
+        <h3 className={style.titleContainer__h3}>Proveedor:</h3>
+        <h3 className={style.titleContainer__h3}>Cantidad:</h3>
+        <h3 className={style.titleContainer__h3}>Tope:</h3>
+        <h3 className={style.titleContainer__h3}>Fecha de creación:</h3>
+        <h3 className={style.titleContainer__h3}>Fecha de último ingreso:</h3>
+        <h3 className={style.titleContainer__h3}>Precio:</h3>
+        <h3 className={style.titleContainer__h3}>Acciones:</h3>
+      </div>
     </div>
   );
 }
