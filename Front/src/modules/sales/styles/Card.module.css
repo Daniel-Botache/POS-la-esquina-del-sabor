@@ -10,11 +10,11 @@
   background-color: var(--color-white);
   justify-content: center;
   align-items: center;
-  border: 2px transparent solid;
+  border: 1px transparent solid;
   cursor: pointer;
 }
 .principalContainer:hover {
-  border: 2px var(--color-main-orange) solid;
+  border: 1px var(--color-main-orange) solid;
 }
 .headContainer {
   display: flex;

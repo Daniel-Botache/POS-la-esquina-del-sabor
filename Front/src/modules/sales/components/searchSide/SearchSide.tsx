@@ -34,8 +34,8 @@ export default function SearchSide({ isModal, onClose }: searchProductType) {
           <SeachBar></SeachBar>
           {!isModal && (
             <div className={style.headContainer__button} onClick={toggleModal}>
-              <p className={style.headContainer__button__p}>Crear Producto</p>
               <AddIcon className={style.headContainer__button__icon} />
+              <p className={style.headContainer__button__p}>Crear Producto</p>
             </div>
           )}
         </div>

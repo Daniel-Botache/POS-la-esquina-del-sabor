@@ -25,7 +25,38 @@ export default function Stock() {
             <p className={style.headContainer__button__p}>Filtros</p>
           </div>
         </div>
-        <div className={style.filterContainer}></div>
+      </div>
+      <div className={style.filterContainer}>
+        <div className={style.optionContainer}>
+          <h3>Última fecha de ingreso:</h3>
+          <div className={style.inputContainer}>
+            <label htmlFor="">Desde</label>
+            <input type="date" name="" id="" />
+          </div>
+          <div className={style.inputContainer}>
+            <label htmlFor="">Hasta</label>
+            <input type="date" name="" id="" />
+          </div>
+        </div>
+        <div className={style.optionContainer}>
+          <h3>Proveedor</h3>
+          <select name="" id=""></select>
+        </div>
+        <div className={style.optionContainer}>
+          <h3>Tipo de producto:</h3>
+          <select name="" id=""></select>
+        </div>
+        <div className={style.optionContainer}>
+          <h3>Cantidad en inventario:</h3>
+          <div className={style.inputContainer}>
+            <label htmlFor="">Desde</label>
+            <input type="text" name="" id="" />
+          </div>
+          <div className={style.inputContainer}>
+            <label htmlFor="">Hasta</label>
+            <input type="text" name="" id="" />
+          </div>
+        </div>
       </div>
     </div>
   );

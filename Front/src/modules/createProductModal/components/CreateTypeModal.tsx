@@ -47,10 +47,6 @@ export default function CreateTypeModal({ onClose }: CreateTypeModalProps) {
             />
           </div>
           <div className={style.modalBtnContainer}>
-            <button type="submit" className={style.modalBtnContainer__btn}>
-              <AddIcon className={style.modalBtnContainer__icon} />
-              Crear
-            </button>
             <button
               onClick={handleClose}
               type="button"
@@ -58,6 +54,10 @@ export default function CreateTypeModal({ onClose }: CreateTypeModalProps) {
             >
               <CancelIcon className={style.modalBtnContainer__cancelIcon} />
               Cancelar
+            </button>
+            <button type="submit" className={style.modalBtnContainer__btn}>
+              <AddIcon className={style.modalBtnContainer__icon} />
+              Crear
             </button>
           </div>
         </form>
