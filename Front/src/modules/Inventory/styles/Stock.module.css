@@ -9,6 +9,7 @@
   color: var(--color-main-orange);
   fill: var(--color-main-orange);
   gap: 0.3em;
+  cursor: pointer;
 }
 
 .headContainer__button__icon {
@@ -26,7 +27,7 @@
 }
 
 .principalContainer {
-  padding-top: 3.5em;
+  padding-top: 3em;
   padding-bottom: 2em;
   padding-left: 2.5em;
   padding-right: 2em;
@@ -35,7 +36,7 @@
   height: 6vh;
   display: flex;
   background-color: var(--color-background-grey);
-  border: 2px var(--color-main-orange) solid;
+  border: 1px var(--color-main-orange) solid;
   border-radius: 10px;
   padding: 0.5em;
   align-items: center;
