@@ -167,7 +167,7 @@ export default function CreateProductModal({
     }));
     setSuppliersOptions(options);
     console.log(suppliersOptions);
-  }, [dispatch]);
+  }, [isCreateTypeModalOpen]);
 
   const handleTypeSelection = (event: React.ChangeEvent<HTMLSelectElement>) => {
     if (newProduct.bale) {

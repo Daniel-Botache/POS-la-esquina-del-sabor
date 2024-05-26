@@ -1,0 +1,48 @@
+.headContainer__button {
+  display: flex;
+  border-radius: 10px;
+  border: 1px var(--color-main-orange) solid;
+  padding: 0.3em;
+  height: 1.2em;
+  justify-content: center;
+  align-items: center;
+  color: var(--color-main-orange);
+  fill: var(--color-main-orange);
+  gap: 0.3em;
+}
+
+.headContainer__button__icon {
+  width: 1.5em;
+}
+.headContainer__button__p {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-size: 0.8em;
+}
+
+.headContainer__button:hover {
+  background-color: var(--color-main-orange);
+  color: var(--color-white);
+  fill: var(--color-white);
+}
+
+.principalContainer {
+  padding-top: 3.5em;
+  padding-bottom: 2em;
+  padding-left: 2.5em;
+  padding-right: 2em;
+}
+.searchBarContainer {
+  height: 6vh;
+  display: flex;
+  background-color: var(--color-background-grey);
+  border: 2px var(--color-main-orange) solid;
+  border-radius: 10px;
+  padding: 0.5em;
+  align-items: center;
+}
+.orderContainer {
+  display: flex;
+  width: 80%;
+  justify-content: right;
+  gap: 1em;
+}
