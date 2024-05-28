@@ -6,8 +6,8 @@ type product = {
   supliers: string[];
   volume: number;
   maximum: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   barCode: string;
   price: number;
   img: string;
@@ -33,8 +33,8 @@ export default function CellStock({
       <div className={style.prepertyContainer}>{supliers}</div>
       <div className={style.prepertyContainer}>{volume}</div>
       <div className={style.prepertyContainer}>{maximum}</div>
-      <div className={style.prepertyContainer}>{"Fecha"}</div>
-      <div className={style.prepertyContainer}>{"Fecha"}</div>
+      <div className={style.prepertyContainer}>{createdAt}</div>
+      <div className={style.prepertyContainer}>{updatedAt}</div>
       <div className={style.prepertyContainer}>{price}</div>
       <div className={style.prepertyContainer}></div>
     </div>
