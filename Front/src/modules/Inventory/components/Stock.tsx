@@ -1,6 +1,7 @@
 import style from "../styles/Stock.module.css";
 import SeachBar from "../../searchBar/components/SearchBar";
 import { DeleteIcon, AddIcon, FilterIcon } from "../../../utils/Icons/icons";
+import Table from "./Table";
 
 export default function Stock() {
   return (
@@ -59,7 +60,8 @@ export default function Stock() {
         </div>
       </div>
       <div className={style.titleContainer}>
-        <h3 className={style.titleContainer__h3}>Código:</h3>
+        <h3 className={style.titleContainer__h3}>Id:</h3>
+        <h3 className={style.titleContainer__h3}>Código de barras:</h3>
         <h3 className={style.titleContainer__h3}>Nombre:</h3>
         <h3 className={style.titleContainer__h3}>Proveedor:</h3>
         <h3 className={style.titleContainer__h3}>Cantidad:</h3>
@@ -69,6 +71,7 @@ export default function Stock() {
         <h3 className={style.titleContainer__h3}>Precio:</h3>
         <h3 className={style.titleContainer__h3}>Acciones:</h3>
       </div>
+      <Table />
     </div>
   );
 }
