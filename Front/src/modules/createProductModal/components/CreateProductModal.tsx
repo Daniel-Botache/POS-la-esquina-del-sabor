@@ -10,6 +10,7 @@ import { clearProductSearched } from "../../sales/redux/billSlice";
 import { errorMessage } from "../../auth/hooks/notifications";
 import CreateTypeModal from "./CreateTypeModal";
 import Select from "react-select";
+import { changeDeleteStatus } from "../../Inventory/redux/stockSlice";
 type CreateProductModalProps = {
   onClose: () => void;
 };
@@ -82,6 +83,7 @@ export default function CreateProductModal({
       }));
       await postNewProduct(newProduct, "product");
       dispatch(clearProductSearched());
+      dispatch(changeDeleteStatus());
       setNewProduct((prevState) => ({
         ...prevState,
         id: null,
@@ -102,6 +104,7 @@ export default function CreateProductModal({
 
     await postNewProduct(newProduct, "bale");
     dispatch(clearProductSearched());
+    dispatch(changeDeleteStatus());
     setNewProduct((prevState) => ({
       ...prevState,
       id: null,

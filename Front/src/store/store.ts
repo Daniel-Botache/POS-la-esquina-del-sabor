@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "../modules/auth/redux/authSlice";
 import searchReducer from "../modules/searchBar/redux/searchSlice";
 import billReducer from "../modules/sales/redux/billSlice";
+import stockReducer from "../modules/Inventory/redux/stockSlice";
 import createProductReducer from "../modules/createProductModal/redux/createProductSlice";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
@@ -11,6 +12,11 @@ const persistCreateProductConfig = {
   key: "createProduct",
   storage,
   whitelist: ["suppliers"],
+};
+const persistStockConfig = {
+  key: "Stock",
+  storage,
+  whitelist: ["deleted"],
 };
 
 const peristAuthConfig = {
@@ -45,6 +51,10 @@ export const store = configureStore({
     bill: persistReducer<ReturnType<typeof billReducer>>(
       peristBillConfig,
       billReducer
+    ),
+    stock: persistReducer<ReturnType<typeof stockReducer>>(
+      persistStockConfig,
+      stockReducer
     ),
     createProduct: persistReducer<ReturnType<typeof createProductReducer>>(
       persistCreateProductConfig,

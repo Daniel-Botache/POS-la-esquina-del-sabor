@@ -1,6 +1,8 @@
 import style from "../styles/CellStock.module.css";
 import { EditIcon, DeleteIcon } from "../../../utils/Icons/icons";
 import { deleteProductService } from "../services/deleteProductService";
+import { useCustomDispatch } from "../../../store/hooks";
+import { changeDeleteStatus } from "../redux/stockSlice";
 
 type Suplier = {
   id: string;
@@ -37,6 +39,8 @@ export default function CellStock({
   img,
   lastVolumeDate,
 }: product) {
+  const dispatch = useCustomDispatch();
+
   const arrayStringSuppliers = supliers
     ? supliers.map((suplier: Suplier) => suplier.company).join(", ")
     : "";
@@ -51,7 +55,7 @@ export default function CellStock({
     );
     if (userConfirm) {
       deleteProductService(id);
-      window.location.reload();
+      dispatch(changeDeleteStatus());
       return;
     }
   };

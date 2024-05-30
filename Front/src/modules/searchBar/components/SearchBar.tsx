@@ -5,7 +5,7 @@ import {
   searchAllBale,
 } from "../services/searchAllProductsService";
 import { getProductByName } from "../redux/searchSlice";
-import { useCustomDispatch } from "../../../store/hooks";
+import { useCustomDispatch, useCustomSelector } from "../../../store/hooks";
 import { SearchIcon } from "../../../utils/Icons/icons";
 import { useState, useEffect } from "react";
 import { errorMessage } from "../../auth/hooks/notifications";
@@ -13,10 +13,11 @@ import { errorMessage } from "../../auth/hooks/notifications";
 export default function SeachBar() {
   const [productName, setProductName] = useState("");
   const dispatch = useCustomDispatch();
+  const deleted = useCustomSelector((state) => state.stock.deleted);
 
   useEffect(() => {
     searchByNameHandle();
-  }, [productName]);
+  }, [productName, deleted]);
 
   const searchByNameHandle = async () => {
     if (!productName) {
