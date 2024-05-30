@@ -37,6 +37,9 @@ export default function CellStock({
   const arrayStringSuppliers = supliers
     .map((suplier: Suplier) => suplier.company)
     .join(", ");
+
+  const formattedDateCreate = new Date(createdAt).toLocaleDateString();
+  const formattedDateLast = new Date(lastVolumeDate).toLocaleDateString();
   return (
     <div className={style.principalContainer}>
       <div className={style.prepertyContainer}>{id}</div>
@@ -45,8 +48,8 @@ export default function CellStock({
       <div className={style.prepertyContainer}>{arrayStringSuppliers}</div>
       <div className={style.prepertyContainer}>{volume}</div>
       <div className={style.prepertyContainer}>{maximum}</div>
-      <div className={style.prepertyContainer}>{createdAt}</div>
-      <div className={style.prepertyContainer}>{lastVolumeDate}</div>
+      <div className={style.prepertyContainer}>{formattedDateCreate}</div>
+      <div className={style.prepertyContainer}>{formattedDateLast}</div>
       <div className={style.prepertyContainer}>{price}</div>
       <div className={style.prepertyContainer}></div>
     </div>

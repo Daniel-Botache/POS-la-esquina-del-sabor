@@ -40,7 +40,7 @@ export default (sequelize: Sequelize) => {
         "https://codigogenesis.com/genesis/2022/04/imagen-placeholder-por-defecto-WooCommerce.png",
     },
     lastVolumeDate: {
-      type: DataTypes.DATEONLY,
+      type: DataTypes.DATE,
       allowNull: false,
       defaultValue: NOW,
     },
