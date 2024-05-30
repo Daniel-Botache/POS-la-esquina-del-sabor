@@ -218,7 +218,7 @@ export default function CreateProductModal({
           onSubmit={handleSubmit}
           className={style.formContainer}
           onKeyDown={(e) => {
-            e.preventDefault();
+            if (e.key == "Enter") e.preventDefault();
           }}
         >
           <h2 className={style.formContainer__h2}>Crear Producto</h2>
