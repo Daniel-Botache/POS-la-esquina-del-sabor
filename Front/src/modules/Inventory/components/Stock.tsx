@@ -4,11 +4,17 @@ import { DeleteIcon, AddIcon, FilterIcon } from "../../../utils/Icons/icons";
 import Table from "./Table";
 import CreateSupplierModal from "../../createSupplierModal/components/CreateSupplierModal";
 import { useState } from "react";
+import CreateProductModal from "../../createProductModal/components/CreateProductModal";
 
 export default function Stock() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
+  const [isModalSupplierOpen, setIsModalSupplierOpen] = useState(false);
+  const [isModalProductOpen, setIsModalProductOpen] = useState(false);
+
+  const toggleModalSupplier = () => {
+    setIsModalSupplierOpen(!isModalSupplierOpen);
+  };
+  const toggleModalProduct = () => {
+    setIsModalProductOpen(!isModalProductOpen);
   };
 
   return (
@@ -20,11 +26,17 @@ export default function Stock() {
             <DeleteIcon className={style.headContainer__button__icon} />
             <p className={style.headContainer__button__p}>Eliminar selección</p>
           </div>
-          <div className={style.headContainer__button}>
+          <div
+            className={style.headContainer__button}
+            onClick={toggleModalProduct}
+          >
             <AddIcon className={style.headContainer__button__icon} />
             <p className={style.headContainer__button__p}>Crear Producto</p>
           </div>
-          <div className={style.headContainer__button} onClick={toggleModal}>
+          <div
+            className={style.headContainer__button}
+            onClick={toggleModalSupplier}
+          >
             <AddIcon className={style.headContainer__button__icon} />
             <p className={style.headContainer__button__p}>Crear Proveedor</p>
           </div>
@@ -79,7 +91,12 @@ export default function Stock() {
         <h3 className={style.titleContainer__h3}>Acciones:</h3>
       </div>
       <Table />
-      {isModalOpen && <CreateSupplierModal onClose={toggleModal} />}
+      {isModalSupplierOpen && (
+        <CreateSupplierModal onClose={toggleModalSupplier} />
+      )}
+      {isModalProductOpen && (
+        <CreateProductModal onClose={toggleModalProduct} />
+      )}
     </div>
   );
 }

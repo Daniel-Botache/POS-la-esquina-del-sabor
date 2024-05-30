@@ -1,6 +1,7 @@
 import style from "../styles/CreateSupplierModal.module.css";
 import { useState } from "react";
 import { postNewSupplier } from "../services/postSupplier";
+import { errorMessage } from "../../auth/hooks/notifications";
 
 interface Supplier {
   company: string;
@@ -27,12 +28,10 @@ export default function CreateSupplierModal({
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const capitaliceName = (prevState: Supplier) => ({
-      ...prevState,
-      company: capitalizeFirstLetter(newSupplier.company),
-    });
-    capitaliceName;
-    console.log(newSupplier);
+    if (newSupplier.company == "") {
+      errorMessage("Debe agregar por lo menos el nombre de la empresa");
+      return;
+    }
     const response = await postNewSupplier(newSupplier);
     setNewSupplier({
       company: "",
@@ -61,7 +60,7 @@ export default function CreateSupplierModal({
         <form className={style.formContainer} onSubmit={handleSubmit}>
           <h2> Crear Proveedor</h2>
           <div className={style.inputContainer}>
-            <label htmlFor="compayInput">Empresa:</label>
+            <label htmlFor="compayInput">Empresa: *</label>
             <input
               onChange={(e) =>
                 setNewSupplier((prevState) => ({
@@ -80,7 +79,7 @@ export default function CreateSupplierModal({
               onChange={(e) =>
                 setNewSupplier((prevState) => ({
                   ...prevState,
-                  adviser: e.target.value,
+                  adviser: capitalizeFirstLetter(e.target.value),
                 }))
               }
               type="text"
