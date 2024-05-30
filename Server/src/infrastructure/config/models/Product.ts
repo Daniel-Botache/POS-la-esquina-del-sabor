@@ -1,5 +1,5 @@
 import { ProductInstance } from "../../../domain/models/ProductAttributes";
-import { Sequelize, DataTypes } from "sequelize";
+import { Sequelize, DataTypes, NOW } from "sequelize";
 
 export default (sequelize: Sequelize) => {
   return sequelize.define<ProductInstance>("Product", {
@@ -38,6 +38,11 @@ export default (sequelize: Sequelize) => {
       allowNull: false,
       defaultValue:
         "https://codigogenesis.com/genesis/2022/04/imagen-placeholder-por-defecto-WooCommerce.png",
+    },
+    lastVolumeDate: {
+      type: DataTypes.DATEONLY,
+      allowNull: false,
+      defaultValue: NOW,
     },
   });
 };

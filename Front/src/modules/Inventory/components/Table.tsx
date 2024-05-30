@@ -22,6 +22,7 @@ export default function Table() {
             price={product.price}
             img={product.img}
             supliers={product.supliers}
+            lastVolumeDate={product.lastVolumeDate}
           />
         ))}
       </div>

@@ -16,12 +16,6 @@ if (DB_BASE && DB_USER && DB_HOST && DB_PASSWORD) {
     dialect: "postgres",
     logging: false,
     native: false,
-    dialectOptions: {
-      ssl: {
-        require: true, // Requerir SSL
-        rejectUnauthorized: false, // Ignorar errores de certificado no autorizado
-      },
-    },
   });
   //take the route of this file
   const basename: string = path.basename(__filename);

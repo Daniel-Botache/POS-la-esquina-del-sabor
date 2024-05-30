@@ -11,6 +11,7 @@ interface BaleAttributes {
   img: string;
   spent: boolean;
   bale: boolean;
+  lastVolumeDate: Date;
 }
 interface BaleCreationAttributes extends Optional<BaleAttributes, "barCode"> {}
 

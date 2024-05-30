@@ -1,5 +1,5 @@
 import { BaleInstance } from "../../../domain/models/BaleAttributes";
-import { Sequelize, DataTypes } from "sequelize";
+import { Sequelize, DataTypes, NOW } from "sequelize";
 
 export default (sequelize: Sequelize) => {
   return sequelize.define<BaleInstance>("Bale", {
@@ -47,6 +47,11 @@ export default (sequelize: Sequelize) => {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: true,
+    },
+    lastVolumeDate: {
+      type: DataTypes.DATEONLY,
+      allowNull: false,
+      defaultValue: NOW,
     },
   });
 };

@@ -11,6 +11,7 @@ type product = {
   barCode: string;
   price: number;
   img: string;
+  lastVolumeDate: string;
 };
 
 export default function CellStock({
@@ -20,10 +21,10 @@ export default function CellStock({
   volume,
   maximum,
   createdAt,
-  updatedAt,
   barCode,
   price,
   img,
+  lastVolumeDate,
 }: product) {
   return (
     <div className={style.principalContainer}>
@@ -34,7 +35,7 @@ export default function CellStock({
       <div className={style.prepertyContainer}>{volume}</div>
       <div className={style.prepertyContainer}>{maximum}</div>
       <div className={style.prepertyContainer}>{createdAt}</div>
-      <div className={style.prepertyContainer}>{updatedAt}</div>
+      <div className={style.prepertyContainer}>{lastVolumeDate}</div>
       <div className={style.prepertyContainer}>{price}</div>
       <div className={style.prepertyContainer}></div>
     </div>

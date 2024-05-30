@@ -63,6 +63,7 @@
   align-items: center;
   justify-content: center;
   border-bottom: 2px var(--color-background-grey) solid;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }
 .titleContainer__h3 {
   width: 10%;

@@ -10,6 +10,7 @@ interface ProductAttributes {
   price: number;
   spent: boolean;
   img: string;
+  lastVolumeDate: Date;
 }
 
 interface ProductCreationAttributes
