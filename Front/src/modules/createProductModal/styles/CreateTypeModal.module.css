@@ -81,24 +81,24 @@
 }
 
 .modalBtnContainer__cancelBtn {
-  border: 1px rgb(250, 110, 110) solid;
+  border: 1px var(--color-main-red) solid;
   background: var(--color-background-grey);
   font-size: 1em;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   align-items: center;
   border-radius: 10px;
-  color: rgb(250, 110, 110);
+  color: var(--color-main-red);
   display: flex;
 
   justify-content: center;
   gap: 0.5em;
 }
 .modalBtnContainer__cancelIcon {
-  fill: rgb(250, 110, 110);
+  fill: var(--color-main-red);
   width: 2em;
 }
 .modalBtnContainer__cancelBtn:hover {
-  background-color: rgb(250, 110, 110);
+  background-color: var(--color-main-red);
   color: var(--color-white);
 }
 

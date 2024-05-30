@@ -9,6 +9,11 @@ import CreateProductModal from "../../createProductModal/components/CreateProduc
 export default function Stock() {
   const [isModalSupplierOpen, setIsModalSupplierOpen] = useState(false);
   const [isModalProductOpen, setIsModalProductOpen] = useState(false);
+  const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(false);
+
+  const toggleModalFilters = () => {
+    setIsFiltersModalOpen(!isFiltersModalOpen);
+  };
 
   const toggleModalSupplier = () => {
     setIsModalSupplierOpen(!isModalSupplierOpen);
@@ -40,13 +45,22 @@ export default function Stock() {
             <AddIcon className={style.headContainer__button__icon} />
             <p className={style.headContainer__button__p}>Crear Proveedor</p>
           </div>
-          <div className={style.headContainer__button}>
+          <div
+            className={style.headContainer__button}
+            onClick={toggleModalFilters}
+          >
             <FilterIcon className={style.headContainer__button__icon} />
             <p className={style.headContainer__button__p}>Filtros</p>
           </div>
         </div>
       </div>
-      <div className={style.filterContainer}>
+      <div
+        className={
+          isFiltersModalOpen
+            ? style.filterContainer
+            : style.filterContainer_hidden
+        }
+      >
         <div className={style.optionContainer}>
           <h3>Última fecha de ingreso:</h3>
           <div className={style.inputContainer}>
@@ -79,6 +93,12 @@ export default function Stock() {
         </div>
       </div>
       <div className={style.titleContainer}>
+        <input
+          type="checkbox"
+          name=""
+          id=""
+          className={style.titleContainer__check}
+        />
         <h3 className={style.titleContainer__h3}>Id:</h3>
         <h3 className={style.titleContainer__h3}>Código de barras:</h3>
         <h3 className={style.titleContainer__h3}>Nombre:</h3>

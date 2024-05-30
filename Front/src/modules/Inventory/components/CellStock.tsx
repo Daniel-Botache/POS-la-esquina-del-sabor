@@ -1,4 +1,6 @@
 import style from "../styles/CellStock.module.css";
+import { EditIcon, DeleteIcon } from "../../../utils/Icons/icons";
+
 type Suplier = {
   id: string;
   company: string;
@@ -42,6 +44,9 @@ export default function CellStock({
   const formattedDateLast = new Date(lastVolumeDate).toLocaleDateString();
   return (
     <div className={style.principalContainer}>
+      <div className={style.prepertyContainer__check}>
+        <input type="checkbox" name="" id="" />
+      </div>
       <div className={style.prepertyContainer}>{id}</div>
       <div className={style.prepertyContainer}>{barCode}</div>
       <div className={style.prepertyContainer}>{name}</div>
@@ -51,7 +56,14 @@ export default function CellStock({
       <div className={style.prepertyContainer}>{formattedDateCreate}</div>
       <div className={style.prepertyContainer}>{formattedDateLast}</div>
       <div className={style.prepertyContainer}>{price}</div>
-      <div className={style.prepertyContainer}></div>
+      <div className={style.prepertyContainer_options}>
+        <button className={style.prepertyContainer__btn}>
+          <DeleteIcon className={style.prepertyContainer__deleteIcon} />
+        </button>
+        <button className={style.prepertyContainer__btn}>
+          <EditIcon className={style.prepertyContainer__editIcon} />
+        </button>
+      </div>
     </div>
   );
 }
