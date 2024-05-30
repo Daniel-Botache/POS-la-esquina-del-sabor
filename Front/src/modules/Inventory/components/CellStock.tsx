@@ -1,5 +1,6 @@
 import style from "../styles/CellStock.module.css";
 import { EditIcon, DeleteIcon } from "../../../utils/Icons/icons";
+import { deleteProductService } from "../services/deleteProductService";
 
 type Suplier = {
   id: string;
@@ -37,11 +38,23 @@ export default function CellStock({
   lastVolumeDate,
 }: product) {
   const arrayStringSuppliers = supliers
-    .map((suplier: Suplier) => suplier.company)
-    .join(", ");
+    ? supliers.map((suplier: Suplier) => suplier.company).join(", ")
+    : "";
 
   const formattedDateCreate = new Date(createdAt).toLocaleDateString();
   const formattedDateLast = new Date(lastVolumeDate).toLocaleDateString();
+
+  const handleDeleteProduct = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    const userConfirm = confirm(
+      `¿Seguro desea eliminar el producto con id ${id}?`
+    );
+    if (userConfirm) {
+      deleteProductService(id);
+      window.location.reload();
+      return;
+    }
+  };
   return (
     <div className={style.principalContainer}>
       <div className={style.prepertyContainer__check}>
@@ -57,7 +70,10 @@ export default function CellStock({
       <div className={style.prepertyContainer}>{formattedDateLast}</div>
       <div className={style.prepertyContainer}>{price}</div>
       <div className={style.prepertyContainer_options}>
-        <button className={style.prepertyContainer__btn}>
+        <button
+          className={style.prepertyContainer__btn}
+          onClick={handleDeleteProduct}
+        >
           <DeleteIcon className={style.prepertyContainer__deleteIcon} />
         </button>
         <button className={style.prepertyContainer__btn}>

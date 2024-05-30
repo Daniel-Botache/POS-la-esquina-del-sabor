@@ -16,7 +16,7 @@ export default function SeachBar() {
 
   useEffect(() => {
     searchByNameHandle();
-  }, []);
+  }, [productName]);
 
   const searchByNameHandle = async () => {
     if (!productName) {
