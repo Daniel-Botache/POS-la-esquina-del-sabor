@@ -2,8 +2,15 @@ import style from "../styles/Stock.module.css";
 import SeachBar from "../../searchBar/components/SearchBar";
 import { DeleteIcon, AddIcon, FilterIcon } from "../../../utils/Icons/icons";
 import Table from "./Table";
+import CreateSupplierModal from "../../createSupplierModal/components/CreateSupplierModal";
+import { useState } from "react";
 
 export default function Stock() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
   return (
     <div className={style.principalContainer}>
       <div className={style.searchBarContainer}>
@@ -17,7 +24,7 @@ export default function Stock() {
             <AddIcon className={style.headContainer__button__icon} />
             <p className={style.headContainer__button__p}>Crear Producto</p>
           </div>
-          <div className={style.headContainer__button}>
+          <div className={style.headContainer__button} onClick={toggleModal}>
             <AddIcon className={style.headContainer__button__icon} />
             <p className={style.headContainer__button__p}>Crear Proveedor</p>
           </div>
@@ -72,6 +79,7 @@ export default function Stock() {
         <h3 className={style.titleContainer__h3}>Acciones:</h3>
       </div>
       <Table />
+      {isModalOpen && <CreateSupplierModal onClose={toggleModal} />}
     </div>
   );
 }

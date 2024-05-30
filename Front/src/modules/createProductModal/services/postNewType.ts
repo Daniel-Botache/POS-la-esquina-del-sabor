@@ -16,7 +16,7 @@ export async function postNewTypes(name: string) {
       succesMessage("Tipo de producto creado");
       return response.data.succes;
     } else {
-      succesMessage(response.data.message);
+      errorMessage(response.data.message);
       return response.data.succes;
     }
   } catch (error: any) {

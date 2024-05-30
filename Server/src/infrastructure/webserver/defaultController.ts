@@ -22,7 +22,7 @@ export class DefaultController extends DefaultRepository {
       else
         return res
           .status(400)
-          .json({ message: "Data no creada", succes: createdData });
+          .json({ message: "Data ya existe", succes: createdData });
     } catch (error) {
       console.log(error);
 
