@@ -6,6 +6,7 @@ export default function Table() {
   const products = useCustomSelector(
     (state) => state.search.searchProductByName
   );
+  console.log(products);
   return (
     <div className={style.principalContainer}>
       <div>

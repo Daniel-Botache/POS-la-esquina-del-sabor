@@ -87,6 +87,12 @@ export class ProductRepository implements IProductRepository {
           [Op.iLike]: `%${name}%`,
         },
       },
+      include: [
+        {
+          model: Suplier,
+          as: "supliers",
+        },
+      ],
     });
     return products.map((product) => product as ProductInstance);
   }
@@ -95,6 +101,12 @@ export class ProductRepository implements IProductRepository {
       where: {
         barCode: barCode,
       },
+      include: [
+        {
+          model: Suplier,
+          as: "supliers",
+        },
+      ],
     });
     return product as ProductInstance;
   }
