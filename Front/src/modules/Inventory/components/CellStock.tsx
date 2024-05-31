@@ -3,6 +3,8 @@ import { EditIcon, DeleteIcon } from "../../../utils/Icons/icons";
 import { deleteProductService } from "../services/deleteProductService";
 import { useCustomDispatch } from "../../../store/hooks";
 import { changeDeleteStatus } from "../redux/stockSlice";
+import EditProductModal from "./EditProductModal";
+import { useState } from "react";
 
 type Suplier = {
   id: string;
@@ -40,6 +42,11 @@ export default function CellStock({
   lastVolumeDate,
 }: product) {
   const dispatch = useCustomDispatch();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
 
   const arrayStringSuppliers = supliers
     ? supliers.map((suplier: Suplier) => suplier.company).join(", ")
@@ -80,10 +87,14 @@ export default function CellStock({
         >
           <DeleteIcon className={style.prepertyContainer__deleteIcon} />
         </button>
-        <button className={style.prepertyContainer__btn}>
+        <button
+          className={style.prepertyContainer__btn}
+          onClick={handleOpenModal}
+        >
           <EditIcon className={style.prepertyContainer__editIcon} />
         </button>
       </div>
+      {isModalOpen && <EditProductModal id={id} onClose={handleOpenModal} />}
     </div>
   );
 }
