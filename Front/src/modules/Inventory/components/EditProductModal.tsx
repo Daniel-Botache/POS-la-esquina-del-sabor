@@ -14,6 +14,7 @@ import {
 
 type EditProductModalProps = {
   id: number;
+  bale: boolean | null;
   onClose: () => void;
 };
 

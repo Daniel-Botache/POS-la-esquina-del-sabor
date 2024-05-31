@@ -24,6 +24,8 @@ export default function Table() {
             img={product.img}
             supliers={product.supliers}
             lastVolumeDate={product.lastVolumeDate}
+            bale={product.bale ? true : null}
+            productId={product.productId ? product.productId : null}
           />
         ))}
       </div>

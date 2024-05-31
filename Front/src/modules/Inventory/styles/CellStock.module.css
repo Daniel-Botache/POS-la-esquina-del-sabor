@@ -20,11 +20,13 @@
 .prepertyContainer__btn:hover .prepertyContainer__editIcon {
   fill: var(--color-white);
   background-color: var(--color-main-blue);
+  border-radius: 5px;
 }
 
 .prepertyContainer__btn:hover .prepertyContainer__deleteIcon {
   fill: var(--color-white);
   background-color: var(--color-main-red);
+  border-radius: 5px;
 }
 .prepertyContainer__editIcon {
   width: 1.8em;
