@@ -11,6 +11,7 @@ import {
   getSuppliers,
   getTypes,
 } from "../../createProductModal/redux/createProductSlice";
+import { getBaleByIdService } from "../services/getBaleByIdService";
 
 type EditProductModalProps = {
   id: number;
@@ -21,6 +22,7 @@ type EditProductModalProps = {
 export default function EditProductModal({
   id,
   onClose,
+  bale,
 }: EditProductModalProps) {
   const [newProduct, setNewProduct] = useState<Product>({
     id: null,
@@ -48,27 +50,49 @@ export default function EditProductModal({
   const dispatch = useCustomDispatch();
 
   const handleGetProductById = async () => {
-    const response = await getProductByIdService(id);
+    if (!bale) {
+      const response = await getProductByIdService(id);
+
+      const selectedSuppliers = response.supliers.map((supplier: any) => ({
+        value: supplier.id,
+        label: supplier.company,
+      }));
+      setNewProduct((prevState) => ({
+        ...prevState,
+        id: response.id,
+        name: response.name,
+        typeId: response.typeId,
+        volume: response.volume,
+        maximum: response.maximum,
+        barCode: response.barCode,
+        price: response.price,
+        spent: response.spent,
+        productId: null,
+        individualQuanty: null,
+        img: response.img,
+        supliers: selectedSuppliers,
+      }));
+      return;
+    }
+    const response = await getBaleByIdService(id);
     console.log(response);
-    const selectedSuppliers = response.supliers.map((supplier: any) => ({
-      value: supplier.id,
-      label: supplier.company,
-    }));
     setNewProduct((prevState) => ({
       ...prevState,
       id: response.id,
       name: response.name,
-      typeId: response.typeId,
+      typeId: response.productId,
       volume: response.volume,
       maximum: response.maximum,
       barCode: response.barCode,
       price: response.price,
       spent: response.spent,
-      productId: null,
-      individualQuanty: null,
+      productId: response.productId,
+      individualQuanty: response.individualQuanty,
       img: response.img,
-      supliers: selectedSuppliers,
     }));
+    console.log(newProduct);
+    setProductType("paca");
+    return;
   };
 
   useEffect(() => {
@@ -301,7 +325,7 @@ export default function EditProductModal({
               <label htmlFor="individualRadio">
                 Individual
                 <input
-                  defaultChecked
+                  defaultChecked={!bale}
                   type="radio"
                   name="tipo"
                   id="individualRadio"
@@ -310,7 +334,13 @@ export default function EditProductModal({
               </label>
               <label htmlFor="pacaRadio">
                 Paca
-                <input type="radio" name="tipo" id="pacaRadio" value="paca" />
+                <input
+                  type="radio"
+                  name="tipo"
+                  id="pacaRadio"
+                  value="paca"
+                  defaultChecked={bale ? true : false}
+                />
               </label>
             </div>
           </div>
@@ -334,11 +364,13 @@ export default function EditProductModal({
                     type="text"
                     id="inputIndividualId"
                     className={style.form__inputText}
+                    value={newProduct.productId ? newProduct.productId : ""}
                     disabled
                   />
                   <button
                     type="button"
                     className={style.principalContainer__btn}
+                    onClick={handleButtonClickSearchModal}
                   >
                     <SearchIcon className={style.principalContainer__icon} />
                   </button>
@@ -370,7 +402,7 @@ export default function EditProductModal({
             Proveedores
           </label>
           <Select
-            isDisabled={newProduct.bale ? true : false}
+            isDisabled={bale ? true : false}
             className={style.form__select}
             isMulti
             options={suppliersOptions}

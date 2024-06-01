@@ -63,7 +63,6 @@ export default function CreateProductModal({
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(newProduct);
     if (
       !newProduct.name ||
       !newProduct.volume ||

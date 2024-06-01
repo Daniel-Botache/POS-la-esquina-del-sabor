@@ -5,10 +5,10 @@ export async function getBaleByIdService(id: number) {
   try {
     const response = await axios.get(`/bale/${id}`);
     console.log(response.data);
-    if (response.data.succes) {
-      return response.data.succes;
+    if (response.data) {
+      return response.data;
     }
-    errorMessage("No se encontró prodcuto");
+    errorMessage("No se encontró producto");
     return false;
   } catch (error) {
     errorMessage("Problema con el servidor");
