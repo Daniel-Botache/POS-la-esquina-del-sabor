@@ -15,12 +15,13 @@ interface Product {
   productId: number | null;
   individualQuanty: number | null;
   supliers: string[] | null;
-  lastVolumeDate: string;
+  lastVolumeDate: string | null;
 }
 
 const putProductStockService = async (product: Product, route: string) => {
   if (route == "bale") {
     try {
+      console.log(product);
       const request = await axios.put(`/bale/${product.id}`, {
         name: product.name,
         volume: product.volume,
@@ -47,6 +48,11 @@ const putProductStockService = async (product: Product, route: string) => {
   }
 
   try {
+    const selectedOptions = product.supliers?.map(
+      (option: any) => option.value
+    );
+    console.log(selectedOptions);
+    console.log(product.supliers);
     const request = await axios.put(`/product/${product.id}`, {
       name: product.name,
       volume: product.volume,
@@ -58,6 +64,7 @@ const putProductStockService = async (product: Product, route: string) => {
       spent: product.spent,
       typeId: product.typeId,
       lastVolumeDate: product.lastVolumeDate,
+      supliers: selectedOptions,
     });
     if (request.data.succes) {
       succesMessage(request.data.message);

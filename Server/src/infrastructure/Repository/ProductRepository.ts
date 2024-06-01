@@ -74,7 +74,25 @@ export class ProductRepository implements IProductRepository {
   public async update(id: string, data: any): Promise<boolean> {
     const productData = await this.findById(id);
     if (productData) {
-      productData.update(data);
+      const { supliers, ...productDetails } = data;
+
+      await productData.update(productDetails);
+
+      if (
+        supliers &&
+        supliers.length > 0 &&
+        productData &&
+        productData.setSupliers
+      ) {
+        const suppliersToAssociate = (await Suplier.findAll({
+          where: { id: supliers },
+        })) as SuplierInstance[];
+
+        if (suppliersToAssociate.length > 0) {
+          await productData.setSupliers(suppliersToAssociate);
+        }
+      }
+
       return true;
     }
     return false;

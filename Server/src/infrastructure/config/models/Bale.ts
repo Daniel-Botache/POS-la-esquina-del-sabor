@@ -49,7 +49,7 @@ export default (sequelize: Sequelize) => {
       defaultValue: true,
     },
     lastVolumeDate: {
-      type: DataTypes.DATEONLY,
+      type: DataTypes.DATE,
       allowNull: false,
       defaultValue: NOW,
     },

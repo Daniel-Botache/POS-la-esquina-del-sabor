@@ -24,4 +24,7 @@ export interface ProductInstance
   addSupliers?: (
     supliers: SuplierInstance[] | SuplierInstance
   ) => Promise<void>;
+  setSupliers?: (
+    supliers: SuplierInstance[] | SuplierInstance
+  ) => Promise<void>;
 }

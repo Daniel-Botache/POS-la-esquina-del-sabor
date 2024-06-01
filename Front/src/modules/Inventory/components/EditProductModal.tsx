@@ -12,6 +12,9 @@ import {
   getTypes,
 } from "../../createProductModal/redux/createProductSlice";
 import { getBaleByIdService } from "../services/getBaleByIdService";
+import { errorMessage } from "../../auth/hooks/notifications";
+import { putProductStockService } from "../services/putProductService";
+import { changeDeleteStatus } from "../redux/stockSlice";
 
 type EditProductModalProps = {
   id: number;
@@ -38,6 +41,7 @@ export default function EditProductModal({
     individualQuanty: null,
     img: undefined,
     supliers: null,
+    lastVolumeDate: "",
   });
   const types = useCustomSelector((state) => state.createProduct.types);
   const [productType, setProductType] = useState("individual");
@@ -48,6 +52,30 @@ export default function EditProductModal({
   >([]);
   const suppliers = useCustomSelector((state) => state.createProduct.suppliers);
   const dispatch = useCustomDispatch();
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (
+      !newProduct.name ||
+      !newProduct.volume ||
+      !newProduct.maximum ||
+      !newProduct.price
+    ) {
+      errorMessage(
+        "Para crear un producto debe llenar los campos marcados con el *"
+      );
+      return;
+    }
+    if (newProduct.bale) {
+      await putProductStockService(newProduct, "bale");
+      dispatch(changeDeleteStatus());
+      handleClose();
+      return;
+    }
+    await putProductStockService(newProduct, "product");
+    dispatch(changeDeleteStatus());
+    handleClose();
+  };
 
   const handleGetProductById = async () => {
     if (!bale) {
@@ -71,6 +99,7 @@ export default function EditProductModal({
         individualQuanty: null,
         img: response.img,
         supliers: selectedSuppliers,
+        lastVolumeDate: response.lastVolumeDate,
       }));
       return;
     }
@@ -89,6 +118,8 @@ export default function EditProductModal({
       productId: response.productId,
       individualQuanty: response.individualQuanty,
       img: response.img,
+      lastVolumeDate: response.lastVolumeDate,
+      bale: response.bale,
     }));
     console.log(newProduct);
     setProductType("paca");
@@ -107,7 +138,6 @@ export default function EditProductModal({
         label: supplier.company,
       }));
       setSuppliersOptions(options);
-      console.log(suppliersOptions);
     }
   }, [suppliers]);
   useEffect(() => {
@@ -149,10 +179,10 @@ export default function EditProductModal({
       typeId: value,
     }));
   };
-  const handleSuppliersChange = (selectedOptions: any) => {
+  const handleSuppliersChange = (options: any) => {
     setNewProduct((prevState) => ({
       ...prevState,
-      supliers: selectedOptions,
+      supliers: options,
     }));
   };
   return (
@@ -165,6 +195,7 @@ export default function EditProductModal({
         </div>
 
         <form
+          onSubmit={handleSubmit}
           className={style.formContainer}
           onKeyDown={(e) => {
             if (e.key === "Enter") e.preventDefault();
@@ -226,16 +257,20 @@ export default function EditProductModal({
           </div>
           <div className={style.inputContainer}>
             <label htmlFor="inputVolume" className={style.form__label}>
-              Inventario *
+              Cantidad *
             </label>
             <input
               value={newProduct.volume ?? ""}
-              onChange={(e) =>
+              onChange={(e) => {
+                const now = Date.now();
+                const today = new Date(now);
+                const formatedToday = today.toISOString();
                 setNewProduct((prevState) => ({
                   ...prevState,
                   volume: Number(e.target.value),
-                }))
-              }
+                  lastVolumeDate: formatedToday,
+                }));
+              }}
               type="text"
               id="inputVolume"
               className={style.form__inputText}

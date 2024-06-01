@@ -41,7 +41,6 @@ export default function CellStock({
   createdAt,
   barCode,
   price,
-  img,
   lastVolumeDate,
   bale,
   productId,

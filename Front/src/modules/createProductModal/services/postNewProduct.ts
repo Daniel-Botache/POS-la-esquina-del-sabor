@@ -14,6 +14,7 @@ export interface Product {
   productId: number | null;
   individualQuanty: number | null;
   supliers: string[] | null;
+  lastVolumeDate: string | null;
 }
 
 export async function postNewProduct(product: Product, route: string) {

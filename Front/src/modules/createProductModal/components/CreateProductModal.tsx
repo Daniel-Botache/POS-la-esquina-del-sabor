@@ -42,6 +42,7 @@ export default function CreateProductModal({
     individualQuanty: null,
     img: undefined,
     supliers: null,
+    lastVolumeDate: null,
   });
 
   const individualProductId = useCustomSelector(
@@ -284,7 +285,7 @@ export default function CreateProductModal({
           <div className={style.inputContainer}>
             {" "}
             <label htmlFor="inputVolume" className={style.form__label}>
-              Inventario *
+              Cantidad *
             </label>
             <input
               value={Number(newProduct.volume)}
