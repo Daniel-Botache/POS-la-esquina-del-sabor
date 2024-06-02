@@ -14,7 +14,6 @@ export interface SaleAttributes {
 
 export async function postSaleService(sale: SaleAttributes) {
   try {
-    console.log(sale);
     const newSale = await axios.post("/sale", sale);
     return newSale;
   } catch (error: any) {

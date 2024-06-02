@@ -4,9 +4,9 @@ import { useCustomSelector } from "../../../store/hooks";
 
 export default function Table() {
   const products = useCustomSelector(
-    (state) => state.search.searchProductByName
+    (state) => state.search.searchProductByNameCopy
   );
-  console.log(products);
+
   return (
     <div className={style.principalContainer}>
       <div>

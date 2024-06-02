@@ -13,7 +13,7 @@ export async function deleteProductService(id: number, route: string) {
       return false;
     }
     const response = await axios.delete(`/product/${id}`);
-    console.log(response.data);
+
     if (response.data) {
       succesMessage("Se eliminó completamente el producto");
       return true;

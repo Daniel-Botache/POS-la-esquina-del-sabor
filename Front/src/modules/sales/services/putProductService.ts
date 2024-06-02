@@ -1,7 +1,6 @@
 import axios from "axios";
 
 export async function putProductService(products: any) {
-  console.log(products);
   if (products) {
     const keysArray = Object.keys(products);
     for (const product of keysArray) {
@@ -9,7 +8,7 @@ export async function putProductService(products: any) {
         const itemSearchedBale = await axios.get(`/bale/${product}`);
         const volume =
           itemSearchedBale.data.volume - products[product].quantity;
-        console.log(volume);
+
         const productId = products[product].productId;
         const productIndividual = await axios.get(`/product/${productId}`);
         const volumeIndividual = productIndividual.data.succes.volume;

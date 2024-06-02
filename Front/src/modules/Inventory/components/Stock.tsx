@@ -10,6 +10,7 @@ import {
   getSuppliers,
 } from "../../createProductModal/redux/createProductSlice";
 import { useCustomDispatch, useCustomSelector } from "../../../store/hooks";
+import { getProductByBarNameCopy } from "../../searchBar/redux/searchSlice";
 
 export default function Stock() {
   const [isModalSupplierOpen, setIsModalSupplierOpen] = useState(false);
@@ -17,11 +18,18 @@ export default function Stock() {
   const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(false);
   const suppliers = useCustomSelector((state) => state.createProduct.suppliers);
   const types = useCustomSelector((state) => state.createProduct.types);
+  const products = useCustomSelector(
+    (state) => state.search.searchProductByName
+  );
+  const [filterSuplier, setFilterSuplier] = useState("todos");
+  const [filterType, setFilterType] = useState("todos");
+  const [filterBale, setFilterBale] = useState("todos");
 
   const dispatch = useCustomDispatch();
   useEffect(() => {
     dispatch(getTypes());
     dispatch(getSuppliers());
+    dispatch(getProductByBarNameCopy({ searchProductByNameCopy: products }));
   }, [dispatch]);
 
   const toggleModalFilters = () => {
@@ -35,6 +43,73 @@ export default function Stock() {
     setIsModalProductOpen(!isModalProductOpen);
   };
 
+  const handleBaleFilterSelected = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const baleFilter = event.target.value;
+    setFilterBale(baleFilter);
+
+    const filteredProducts = products.filter((product) => {
+      const matchesType =
+        filterType === "todos" || product.typeId === filterType;
+      const matchesSupplier =
+        filterSuplier === "todos" ||
+        product.supliers.some((s) => s.id === filterSuplier);
+      const matchesBale =
+        baleFilter === "todos" ||
+        (baleFilter === "Paca" ? product.bale === true : product.bale == null);
+
+      return matchesType && matchesSupplier && matchesBale;
+    });
+
+    dispatch(
+      getProductByBarNameCopy({ searchProductByNameCopy: filteredProducts })
+    );
+  };
+
+  const handleTypeSelected = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const typeIdSelected = event.target.value;
+    setFilterType(typeIdSelected);
+    const filteredProducts = products.filter((product) => {
+      const matchesType =
+        typeIdSelected === "todos" || product.typeId === typeIdSelected;
+      const matchesSupplier =
+        filterSuplier === "todos" ||
+        product.supliers.some((s) => s.id === filterSuplier);
+      const matchesBale =
+        filterBale === "todos" ||
+        (filterBale === "Paca" ? product.bale === true : product.bale == null);
+
+      return matchesType && matchesSupplier && matchesBale;
+    });
+
+    dispatch(
+      getProductByBarNameCopy({ searchProductByNameCopy: filteredProducts })
+    );
+  };
+
+  const handleSuplierSelected = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const supplierId = event.target.value;
+    setFilterSuplier(supplierId);
+    const filteredProducts = products.filter((product) => {
+      const matchesType =
+        filterType === "todos" || product.typeId === filterType;
+      const matchesSupplier =
+        supplierId === "todos" ||
+        product.supliers.some((s) => s.id === supplierId);
+      const matchesBale =
+        filterBale === "todos" ||
+        (filterBale === "Paca" ? product.bale === true : product.bale == null);
+
+      return matchesType && matchesSupplier && matchesBale;
+    });
+
+    dispatch(
+      getProductByBarNameCopy({ searchProductByNameCopy: filteredProducts })
+    );
+  };
   return (
     <div className={style.principalContainer}>
       <div className={style.searchBarContainer}>
@@ -103,8 +178,14 @@ export default function Stock() {
         </div>
         <div className={style.optionContainer}>
           <h3 className={style.optionContainer__h3}>Proveedor:</h3>
-          <select name="" id="" className={style.optionContainer__select}>
-            {" "}
+          <select
+            name=""
+            id=""
+            defaultValue={"todos"}
+            className={style.optionContainer__select}
+            onChange={handleSuplierSelected}
+          >
+            <option value="todos">Todos</option>
             {suppliers.map((suplier) => (
               <option key={suplier.id} value={suplier.id}>
                 {suplier.company}
@@ -114,7 +195,14 @@ export default function Stock() {
         </div>
         <div className={style.optionContainer}>
           <h3 className={style.optionContainer__h3}>Tipo de producto:</h3>
-          <select name="" id="" className={style.optionContainer__select}>
+          <select
+            name=""
+            id=""
+            className={style.optionContainer__select}
+            defaultValue={"todos"}
+            onChange={handleTypeSelected}
+          >
+            <option value="todos">Todos</option>
             {types.map((type) => (
               <option key={type.id} value={type.id}>
                 {type.name}
@@ -124,7 +212,14 @@ export default function Stock() {
         </div>
         <div className={style.optionContainer}>
           <h3 className={style.optionContainer__h3}>Cantidad de producto:</h3>
-          <select name="" id="" className={style.optionContainer__select}>
+          <select
+            onChange={handleBaleFilterSelected}
+            name=""
+            id=""
+            defaultValue={"todos"}
+            className={style.optionContainer__select}
+          >
+            <option value="todos">Todos</option>
             <option value="Individual">Individual</option>{" "}
             <option value="Paca">Paca</option>
           </select>

@@ -11,7 +11,7 @@ export async function loginService(user: string, password: string) {
       user: user,
       password: password,
     });
-    console.log(data);
+
     const access = data.data.access;
     if (access) {
       return data.data;
@@ -19,7 +19,6 @@ export async function loginService(user: string, password: string) {
     errorMessage("Usuario no encontrado");
     return false;
   } catch (error: any) {
-    console.log(error);
     errorMessage(error.response.data.message);
     return false;
   }

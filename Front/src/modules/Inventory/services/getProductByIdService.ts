@@ -4,7 +4,7 @@ import { errorMessage } from "../../auth/hooks/notifications";
 export async function getProductByIdService(id: number) {
   try {
     const response = await axios.get(`/product/${id}`);
-    console.log(response.data);
+
     if (response.data.succes) {
       return response.data.succes;
     }

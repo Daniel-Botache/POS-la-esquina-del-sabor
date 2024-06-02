@@ -1,11 +1,12 @@
 import style from "../styles/CellStock.module.css";
 import { EditIcon, DeleteIcon } from "../../../utils/Icons/icons";
 import { deleteProductService } from "../services/deleteProductService";
-import { useCustomDispatch } from "../../../store/hooks";
+import { useCustomDispatch, useCustomSelector } from "../../../store/hooks";
 import { changeDeleteStatus } from "../redux/stockSlice";
 import EditProductModal from "./EditProductModal";
 import { useEffect, useState } from "react";
 import { getProductByIdService } from "../services/getProductByIdService";
+import { updateProduct } from "../../searchBar/redux/searchSlice";
 
 type Suplier = {
   id: string;
@@ -16,7 +17,7 @@ type Suplier = {
   updatedAt: Date;
 };
 
-type product = {
+type Product = {
   id: number;
   name: string;
   supliers: Suplier[];
@@ -44,10 +45,13 @@ export default function CellStock({
   lastVolumeDate,
   bale,
   productId,
-}: product) {
+}: Product) {
   const dispatch = useCustomDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [suplierNames, setSuplierNames] = useState<string>("");
+  const allProducts = useCustomSelector(
+    (state) => state.search.searchProductByName
+  ) as Product[];
 
   useEffect(() => {
     const fetchSupliers = async () => {
@@ -61,6 +65,21 @@ export default function CellStock({
                 .join(", ")
             : "";
           setSuplierNames(arrayStringSuppliers);
+
+          const addSupliersProductBale = allProducts.find(
+            (bale: Product) => bale.id === id
+          );
+
+          if (addSupliersProductBale) {
+            const updatedProduct = {
+              ...addSupliersProductBale,
+              supliers: arraySuppliersFromIndividual,
+              typeId: individualProduct.typeId,
+            };
+
+            // Dispatch the action to update the product in the global state
+            dispatch(updateProduct(updatedProduct));
+          }
         } catch (error) {
           console.error("Error al obtener el producto individual:", error);
         }
@@ -73,7 +92,7 @@ export default function CellStock({
     };
 
     fetchSupliers();
-  }, [bale, productId, supliers]);
+  }, [bale, productId, supliers, allProducts, id, dispatch]);
 
   const fromatedPrice = new Intl.NumberFormat("es-CO").format(price);
 

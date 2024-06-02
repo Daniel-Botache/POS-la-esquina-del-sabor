@@ -9,7 +9,6 @@ export interface response {
 }
 
 export async function postNewTypes(name: string) {
-  console.log(name);
   try {
     const response: response = await axios.post("/type", { name: name });
     if (response.data.succes) {

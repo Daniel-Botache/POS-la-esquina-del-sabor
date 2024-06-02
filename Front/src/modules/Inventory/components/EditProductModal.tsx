@@ -104,7 +104,7 @@ export default function EditProductModal({
       return;
     }
     const response = await getBaleByIdService(id);
-    console.log(response);
+
     setNewProduct((prevState) => ({
       ...prevState,
       id: response.id,
@@ -121,7 +121,7 @@ export default function EditProductModal({
       lastVolumeDate: response.lastVolumeDate,
       bale: response.bale,
     }));
-    console.log(newProduct);
+
     setProductType("paca");
     return;
   };

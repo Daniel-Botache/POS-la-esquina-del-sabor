@@ -169,7 +169,6 @@ export default function CreateProductModal({
       label: supplier.company,
     }));
     setSuppliersOptions(options);
-    console.log(suppliersOptions);
   }, [isCreateTypeModalOpen]);
 
   const handleTypeSelection = (event: React.ChangeEvent<HTMLSelectElement>) => {

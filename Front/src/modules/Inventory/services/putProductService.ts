@@ -21,7 +21,6 @@ interface Product {
 const putProductStockService = async (product: Product, route: string) => {
   if (route == "bale") {
     try {
-      console.log(product);
       const request = await axios.put(`/bale/${product.id}`, {
         name: product.name,
         volume: product.volume,
@@ -51,8 +50,7 @@ const putProductStockService = async (product: Product, route: string) => {
     const selectedOptions = product.supliers?.map(
       (option: any) => option.value
     );
-    console.log(selectedOptions);
-    console.log(product.supliers);
+
     const request = await axios.put(`/product/${product.id}`, {
       name: product.name,
       volume: product.volume,

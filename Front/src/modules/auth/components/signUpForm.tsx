@@ -44,7 +44,6 @@ export default function SignUpForm() {
           succesMessage(`Bienvenido ${response.user}`);
         }
       } catch (error) {
-        console.log(error);
         errorMessage("Error al iniciar sesión.");
       }
     }

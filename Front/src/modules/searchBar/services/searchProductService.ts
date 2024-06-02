@@ -42,7 +42,7 @@ export async function searchProduct(name: string, route: string) {
   }
   try {
     const data: request = await axios.get(`/${route}/search?name=${name}`);
-    console.log(data);
+
     return data.data.success;
   } catch (error: any) {
     return false;
