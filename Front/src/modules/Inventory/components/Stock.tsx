@@ -3,13 +3,26 @@ import SeachBar from "../../searchBar/components/SearchBar";
 import { DeleteIcon, AddIcon, FilterIcon } from "../../../utils/Icons/icons";
 import Table from "./Table";
 import CreateSupplierModal from "../../createSupplierModal/components/CreateSupplierModal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CreateProductModal from "../../createProductModal/components/CreateProductModal";
+import {
+  getTypes,
+  getSuppliers,
+} from "../../createProductModal/redux/createProductSlice";
+import { useCustomDispatch, useCustomSelector } from "../../../store/hooks";
 
 export default function Stock() {
   const [isModalSupplierOpen, setIsModalSupplierOpen] = useState(false);
   const [isModalProductOpen, setIsModalProductOpen] = useState(false);
   const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(false);
+  const suppliers = useCustomSelector((state) => state.createProduct.suppliers);
+  const types = useCustomSelector((state) => state.createProduct.types);
+
+  const dispatch = useCustomDispatch();
+  useEffect(() => {
+    dispatch(getTypes());
+    dispatch(getSuppliers());
+  }, [dispatch]);
 
   const toggleModalFilters = () => {
     setIsFiltersModalOpen(!isFiltersModalOpen);
@@ -66,39 +79,55 @@ export default function Stock() {
             Última fecha de ingreso:
           </h3>
           <div className={style.inputContainer}>
-            <label htmlFor="" className={style.inputContainer__label}>
+            <label htmlFor="desdeDate" className={style.inputContainer__label}>
               Desde:
             </label>
             <input
               type="date"
               name=""
-              id=""
+              id="desdeDate"
               className={style.inputContainer__input}
             />
           </div>
           <div className={style.inputContainer}>
-            <label htmlFor="" className={style.inputContainer__label}>
+            <label htmlFor="hastaDate" className={style.inputContainer__label}>
               Hasta:
             </label>
             <input
               type="date"
               name=""
-              id=""
+              id="hastaDate"
               className={style.inputContainer__input}
             />
           </div>
         </div>
         <div className={style.optionContainer}>
           <h3 className={style.optionContainer__h3}>Proveedor:</h3>
-          <select name="" id=""></select>
+          <select name="" id="" className={style.optionContainer__select}>
+            {" "}
+            {suppliers.map((suplier) => (
+              <option key={suplier.id} value={suplier.id}>
+                {suplier.company}
+              </option>
+            ))}
+          </select>
         </div>
         <div className={style.optionContainer}>
-          <h3 className={style.optionContainer__h3}>Clase de producto:</h3>
-          <select name="" id=""></select>
+          <h3 className={style.optionContainer__h3}>Tipo de producto:</h3>
+          <select name="" id="" className={style.optionContainer__select}>
+            {types.map((type) => (
+              <option key={type.id} value={type.id}>
+                {type.name}
+              </option>
+            ))}
+          </select>
         </div>
         <div className={style.optionContainer}>
           <h3 className={style.optionContainer__h3}>Cantidad de producto:</h3>
-          <select name="" id=""></select>
+          <select name="" id="" className={style.optionContainer__select}>
+            <option value="Individual">Individual</option>{" "}
+            <option value="Paca">Paca</option>
+          </select>
         </div>
         <div className={style.optionContainer}>
           <h3 className={style.optionContainer__h3}>Cantidad en inventario:</h3>
@@ -107,10 +136,10 @@ export default function Stock() {
               Desde:
             </label>
             <input
-              type="text"
+              type="number"
               name=""
               id=""
-              className={style.inputContainer__input}
+              className={style.inputContainer__input_number}
             />
           </div>
           <div className={style.inputContainer}>
@@ -118,10 +147,10 @@ export default function Stock() {
               Hasta:
             </label>
             <input
-              type="text"
+              type="number"
               name=""
               id=""
-              className={style.inputContainer__input}
+              className={style.inputContainer__input_number}
             />
           </div>
         </div>
