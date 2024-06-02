@@ -3,7 +3,7 @@ import SeachBar from "../../searchBar/components/SearchBar";
 import { DeleteIcon, AddIcon, FilterIcon } from "../../../utils/Icons/icons";
 import Table from "./Table";
 import CreateSupplierModal from "../../createSupplierModal/components/CreateSupplierModal";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import CreateProductModal from "../../createProductModal/components/CreateProductModal";
 import {
   getTypes,
@@ -11,6 +11,8 @@ import {
 } from "../../createProductModal/redux/createProductSlice";
 import { useCustomDispatch, useCustomSelector } from "../../../store/hooks";
 import { getProductByBarNameCopy } from "../../searchBar/redux/searchSlice";
+import { SearchIcon } from "../../../utils/Icons/icons";
+import { errorMessage } from "../../auth/hooks/notifications";
 
 export default function Stock() {
   const [isModalSupplierOpen, setIsModalSupplierOpen] = useState(false);
@@ -24,6 +26,8 @@ export default function Stock() {
   const [filterSuplier, setFilterSuplier] = useState("todos");
   const [filterType, setFilterType] = useState("todos");
   const [filterBale, setFilterBale] = useState("todos");
+  const [filterQuantySince, setFilterQuantySince] = useState(0);
+  const [filterQuantyTo, setFilterQuantyTo] = useState(Infinity);
 
   const dispatch = useCustomDispatch();
   useEffect(() => {
@@ -42,6 +46,46 @@ export default function Stock() {
   const toggleModalProduct = () => {
     setIsModalProductOpen(!isModalProductOpen);
   };
+  const handleFilterByQuanty = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    const filteredProducts = products.filter((product) => {
+      const matchVolume =
+        filterQuantySince <= product.volume && product.volume <= filterQuantyTo;
+      const matchesType =
+        filterType === "todos" || product.typeId === filterType;
+      const matchesSupplier =
+        filterSuplier === "todos" ||
+        product.supliers.some((s) => s.id === filterSuplier);
+      const matchesBale =
+        filterBale === "todos" ||
+        (filterBale === "Paca" ? product.bale === true : product.bale == null);
+
+      return matchesType && matchesSupplier && matchesBale && matchVolume;
+    });
+
+    dispatch(
+      getProductByBarNameCopy({ searchProductByNameCopy: filteredProducts })
+    );
+  };
+
+  const handleQuantySinceFilter = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const quanty = Number(event.target.value);
+    if (event.target.value == "") {
+      setFilterQuantySince(0);
+      return;
+    }
+    setFilterQuantySince(quanty);
+  };
+  const handleQuantyToFilter = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const quanty = Number(event.target.value);
+    if (event.target.value == "" || quanty == 0) {
+      setFilterQuantyTo(Infinity);
+      return;
+    }
+    setFilterQuantyTo(quanty);
+  };
 
   const handleBaleFilterSelected = (
     event: React.ChangeEvent<HTMLSelectElement>
@@ -50,6 +94,8 @@ export default function Stock() {
     setFilterBale(baleFilter);
 
     const filteredProducts = products.filter((product) => {
+      const matchVolume =
+        filterQuantySince <= product.volume && product.volume <= filterQuantyTo;
       const matchesType =
         filterType === "todos" || product.typeId === filterType;
       const matchesSupplier =
@@ -59,7 +105,7 @@ export default function Stock() {
         baleFilter === "todos" ||
         (baleFilter === "Paca" ? product.bale === true : product.bale == null);
 
-      return matchesType && matchesSupplier && matchesBale;
+      return matchesType && matchesSupplier && matchesBale && matchVolume;
     });
 
     dispatch(
@@ -71,6 +117,8 @@ export default function Stock() {
     const typeIdSelected = event.target.value;
     setFilterType(typeIdSelected);
     const filteredProducts = products.filter((product) => {
+      const matchVolume =
+        filterQuantySince <= product.volume && product.volume <= filterQuantyTo;
       const matchesType =
         typeIdSelected === "todos" || product.typeId === typeIdSelected;
       const matchesSupplier =
@@ -80,7 +128,7 @@ export default function Stock() {
         filterBale === "todos" ||
         (filterBale === "Paca" ? product.bale === true : product.bale == null);
 
-      return matchesType && matchesSupplier && matchesBale;
+      return matchesType && matchesSupplier && matchesBale && matchVolume;
     });
 
     dispatch(
@@ -94,6 +142,8 @@ export default function Stock() {
     const supplierId = event.target.value;
     setFilterSuplier(supplierId);
     const filteredProducts = products.filter((product) => {
+      const matchVolume =
+        filterQuantySince <= product.volume && product.volume <= filterQuantyTo;
       const matchesType =
         filterType === "todos" || product.typeId === filterType;
       const matchesSupplier =
@@ -103,7 +153,7 @@ export default function Stock() {
         filterBale === "todos" ||
         (filterBale === "Paca" ? product.bale === true : product.bale == null);
 
-      return matchesType && matchesSupplier && matchesBale;
+      return matchesType && matchesSupplier && matchesBale && matchVolume;
     });
 
     dispatch(
@@ -235,7 +285,9 @@ export default function Stock() {
               name=""
               id=""
               className={style.inputContainer__input_number}
+              onChange={handleQuantySinceFilter}
             />
+            <div className={style.inputContainer__div}></div>
           </div>
           <div className={style.inputContainer}>
             <label htmlFor="" className={style.inputContainer__label}>
@@ -246,7 +298,14 @@ export default function Stock() {
               name=""
               id=""
               className={style.inputContainer__input_number}
+              onChange={handleQuantyToFilter}
             />
+            <button
+              className={style.principalContainer__btn}
+              onClick={handleFilterByQuanty}
+            >
+              <SearchIcon className={style.principalContainer__icon} />
+            </button>
           </div>
         </div>
       </div>

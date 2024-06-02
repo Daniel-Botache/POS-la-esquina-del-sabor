@@ -124,3 +124,27 @@ input[type="date"] {
   font-size: 1em;
   outline: none;
 }
+.principalContainer__icon {
+  width: 1.2em;
+  height: 1.3em;
+  margin: auto;
+  fill: var(--color-white);
+}
+
+.principalContainer__btn {
+  border: 1px transparent solid;
+  background-color: var(--color-main-orange);
+  border-radius: 5px;
+
+  width: 3.5em;
+}
+.principalContainer__btn:hover .principalContainer__icon {
+  fill: var(--color-main-orange);
+}
+.principalContainer__btn:hover {
+  background-color: var(--color-white);
+  border: 1px var(--color-main-orange) solid;
+}
+.inputContainer__div {
+  width: 3.2em;
+}
