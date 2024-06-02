@@ -62,33 +62,67 @@ export default function Stock() {
         }
       >
         <div className={style.optionContainer}>
-          <h3>Última fecha de ingreso:</h3>
+          <h3 className={style.optionContainer__h3}>
+            Última fecha de ingreso:
+          </h3>
           <div className={style.inputContainer}>
-            <label htmlFor="">Desde</label>
-            <input type="date" name="" id="" />
+            <label htmlFor="" className={style.inputContainer__label}>
+              Desde:
+            </label>
+            <input
+              type="date"
+              name=""
+              id=""
+              className={style.inputContainer__input}
+            />
           </div>
           <div className={style.inputContainer}>
-            <label htmlFor="">Hasta</label>
-            <input type="date" name="" id="" />
+            <label htmlFor="" className={style.inputContainer__label}>
+              Hasta:
+            </label>
+            <input
+              type="date"
+              name=""
+              id=""
+              className={style.inputContainer__input}
+            />
           </div>
         </div>
         <div className={style.optionContainer}>
-          <h3>Proveedor</h3>
+          <h3 className={style.optionContainer__h3}>Proveedor:</h3>
           <select name="" id=""></select>
         </div>
         <div className={style.optionContainer}>
-          <h3>Tipo de producto:</h3>
+          <h3 className={style.optionContainer__h3}>Clase de producto:</h3>
           <select name="" id=""></select>
         </div>
         <div className={style.optionContainer}>
-          <h3>Cantidad en inventario:</h3>
+          <h3 className={style.optionContainer__h3}>Cantidad de producto:</h3>
+          <select name="" id=""></select>
+        </div>
+        <div className={style.optionContainer}>
+          <h3 className={style.optionContainer__h3}>Cantidad en inventario:</h3>
           <div className={style.inputContainer}>
-            <label htmlFor="">Desde</label>
-            <input type="text" name="" id="" />
+            <label htmlFor="" className={style.inputContainer__label}>
+              Desde:
+            </label>
+            <input
+              type="text"
+              name=""
+              id=""
+              className={style.inputContainer__input}
+            />
           </div>
           <div className={style.inputContainer}>
-            <label htmlFor="">Hasta</label>
-            <input type="text" name="" id="" />
+            <label htmlFor="" className={style.inputContainer__label}>
+              Hasta:
+            </label>
+            <input
+              type="text"
+              name=""
+              id=""
+              className={style.inputContainer__input}
+            />
           </div>
         </div>
       </div>
