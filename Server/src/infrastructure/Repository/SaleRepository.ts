@@ -6,6 +6,22 @@ import { ProductInstance } from "../../domain/models/ProductAttributes";
 import { BaleInstance } from "../../domain/models/BaleAttributes";
 
 export class SaleRepository implements ISaleRepository {
+  public async findAll(): Promise<SaleInstance[]> {
+    const salesData = await Sale.findAll({
+      include: [
+        {
+          model: Product,
+          as: "products",
+        },
+        {
+          model: Bale,
+          as: "bales",
+        },
+      ],
+    });
+    return salesData.map((sale) => sale as SaleInstance);
+  }
+
   public async findById(id: string): Promise<SaleInstance | null> {
     const saleData = await Sale.findByPk(id, {
       include: [
