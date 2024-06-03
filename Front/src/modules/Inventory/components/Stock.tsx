@@ -13,6 +13,31 @@ import { useCustomDispatch, useCustomSelector } from "../../../store/hooks";
 import { getProductByBarNameCopy } from "../../searchBar/redux/searchSlice";
 import { SearchIcon } from "../../../utils/Icons/icons";
 
+interface Suplier {
+  id: string;
+  company: string;
+  tel: string;
+  adviser: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+interface Product {
+  id: number;
+  name: string;
+  type: string;
+  volume: number;
+  maximum: number;
+  barCode: string;
+  price: number;
+  spent: boolean;
+  createdAt: string;
+  updatedAt: Date;
+  productId: number;
+  supliers?: Suplier[];
+  bale: boolean | null;
+  lastVolumeDate: string;
+}
+
 export default function Stock() {
   const [isModalSupplierOpen, setIsModalSupplierOpen] = useState(false);
   const [isModalProductOpen, setIsModalProductOpen] = useState(false);
@@ -22,6 +47,9 @@ export default function Stock() {
   const products = useCustomSelector(
     (state) => state.search.searchProductByName
   );
+  const productsCopy = useCustomSelector(
+    (state) => state.search.searchProductByNameCopy
+  );
 
   const [filterSuplier, setFilterSuplier] = useState("todos");
   const [filterType, setFilterType] = useState("todos");
@@ -30,6 +58,7 @@ export default function Stock() {
   const [filterQuantyTo, setFilterQuantyTo] = useState(Infinity);
   const [filterInitialDate, setFilterInitialDate] = useState(0);
   const [filterFinalDate, setFilterFinalDate] = useState(0);
+  const [typeSort, setTypeSort] = useState("");
 
   const dispatch = useCustomDispatch();
   useEffect(() => {
@@ -48,6 +77,158 @@ export default function Stock() {
   };
   const toggleModalProduct = () => {
     setIsModalProductOpen(!isModalProductOpen);
+  };
+
+  const sortByPrice = (event: React.MouseEvent<HTMLHRElement>) => {
+    event.preventDefault();
+    if (typeSort == "priceSort") {
+      setTypeSort("");
+      const arraySorted = [...productsCopy].sort(
+        (a: Product, b: Product) => b.price - a.price
+      );
+      dispatch(
+        getProductByBarNameCopy({ searchProductByNameCopy: arraySorted })
+      );
+      return;
+    }
+    setTypeSort("priceSort");
+    const arraySorted = [...productsCopy].sort(
+      (a: Product, b: Product) => a.price - b.price
+    );
+    dispatch(getProductByBarNameCopy({ searchProductByNameCopy: arraySorted }));
+  };
+
+  const sortByLastVolumeDate = (event: React.MouseEvent<HTMLHRElement>) => {
+    event.preventDefault();
+    if (typeSort == "lastVolumeDateSort") {
+      setTypeSort("");
+      const arraySorted = [...productsCopy].sort((a: Product, b: Product) =>
+        b.lastVolumeDate?.localeCompare(a.lastVolumeDate)
+      );
+      dispatch(
+        getProductByBarNameCopy({ searchProductByNameCopy: arraySorted })
+      );
+      return;
+    }
+    setTypeSort("lastVolumeDateSort");
+    const arraySorted = [...productsCopy].sort((a: Product, b: Product) =>
+      a.lastVolumeDate?.localeCompare(b.lastVolumeDate)
+    );
+    dispatch(getProductByBarNameCopy({ searchProductByNameCopy: arraySorted }));
+  };
+
+  const sortByCreationDate = (event: React.MouseEvent<HTMLHRElement>) => {
+    event.preventDefault();
+    if (typeSort == "creationDateSort") {
+      setTypeSort("");
+      const arraySorted = [...productsCopy].sort((a: Product, b: Product) =>
+        b.createdAt?.localeCompare(a.createdAt)
+      );
+      dispatch(
+        getProductByBarNameCopy({ searchProductByNameCopy: arraySorted })
+      );
+      return;
+    }
+    setTypeSort("creationDateSort");
+    const arraySorted = [...productsCopy].sort((a: Product, b: Product) =>
+      a.createdAt?.localeCompare(b.createdAt)
+    );
+    dispatch(getProductByBarNameCopy({ searchProductByNameCopy: arraySorted }));
+  };
+
+  const sortByMaximum = (event: React.MouseEvent<HTMLHRElement>) => {
+    event.preventDefault();
+    if (typeSort == "maximumSort") {
+      setTypeSort("");
+      const arraySorted = [...productsCopy].sort(
+        (a: Product, b: Product) => b.maximum - a.maximum
+      );
+      dispatch(
+        getProductByBarNameCopy({ searchProductByNameCopy: arraySorted })
+      );
+      return;
+    }
+    setTypeSort("maximumSort");
+    const arraySorted = [...productsCopy].sort(
+      (a: Product, b: Product) => a.maximum - b.maximum
+    );
+    dispatch(getProductByBarNameCopy({ searchProductByNameCopy: arraySorted }));
+  };
+
+  const sortByVolume = (event: React.MouseEvent<HTMLHRElement>) => {
+    event.preventDefault();
+    if (typeSort == "volumeSort") {
+      setTypeSort("");
+      const arraySorted = [...productsCopy].sort(
+        (a: Product, b: Product) => b.volume - a.volume
+      );
+      dispatch(
+        getProductByBarNameCopy({ searchProductByNameCopy: arraySorted })
+      );
+      return;
+    }
+    setTypeSort("volumeSort");
+    const arraySorted = [...productsCopy].sort(
+      (a: Product, b: Product) => a.volume - b.volume
+    );
+    dispatch(getProductByBarNameCopy({ searchProductByNameCopy: arraySorted }));
+  };
+
+  const sortByName = (event: React.MouseEvent<HTMLHRElement>) => {
+    event.preventDefault();
+    if (typeSort == "nameSort") {
+      setTypeSort("");
+      const arraySorted = [...productsCopy].sort((a: Product, b: Product) =>
+        b.name?.localeCompare(a.name)
+      );
+      dispatch(
+        getProductByBarNameCopy({ searchProductByNameCopy: arraySorted })
+      );
+      return;
+    }
+    setTypeSort("nameSort");
+    const arraySorted = [...productsCopy].sort((a: Product, b: Product) =>
+      a.name?.localeCompare(b.name)
+    );
+    dispatch(getProductByBarNameCopy({ searchProductByNameCopy: arraySorted }));
+  };
+
+  const sortByBarCode = (event: React.MouseEvent<HTMLHRElement>) => {
+    event.preventDefault();
+    if (typeSort == "barCodeSort") {
+      setTypeSort("");
+      const arraySorted = [...productsCopy].sort((a: Product, b: Product) =>
+        b.barCode?.localeCompare(a.barCode)
+      );
+      dispatch(
+        getProductByBarNameCopy({ searchProductByNameCopy: arraySorted })
+      );
+      return;
+    }
+    setTypeSort("barCodeSort");
+    const arraySorted = [...productsCopy].sort((a: Product, b: Product) =>
+      a.barCode?.localeCompare(b.barCode)
+    );
+    dispatch(getProductByBarNameCopy({ searchProductByNameCopy: arraySorted }));
+  };
+
+  const sortById = (event: React.MouseEvent<HTMLHRElement>) => {
+    event.preventDefault();
+    if (typeSort == "idSort") {
+      setTypeSort("");
+      const arraySorted = [...productsCopy].sort((a: Product, b: Product) =>
+        b.id.toString().localeCompare(a.id.toString())
+      );
+      dispatch(
+        getProductByBarNameCopy({ searchProductByNameCopy: arraySorted })
+      );
+      return;
+    }
+    setTypeSort("idSort");
+    const arraySorted = [...productsCopy].sort((a: Product, b: Product) =>
+      a.id.toString().localeCompare(b.id.toString())
+    );
+    dispatch(getProductByBarNameCopy({ searchProductByNameCopy: arraySorted }));
   };
 
   const handleFilterByQuanty = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -365,15 +546,55 @@ export default function Stock() {
           id=""
           className={style.titleContainer__check}
         />
-        <h3 className={style.titleContainer__h3}>Id:</h3>
-        <h3 className={style.titleContainer__h3}>Código de barras:</h3>
-        <h3 className={style.titleContainer__h3}>Nombre:</h3>
+        <h3 className={style.titleContainer__h3} onClick={sortById}>
+          Id:{" "}
+          <span className={style.titleCOntainer__span}>
+            {typeSort == "idSort" ? "▼" : "▶"}
+          </span>
+        </h3>
+        <h3 className={style.titleContainer__h3} onClick={sortByBarCode}>
+          Código de barras:{" "}
+          <span className={style.titleCOntainer__span}>
+            {typeSort == "barCodeSort" ? "▼" : "▶"}
+          </span>
+        </h3>
+        <h3 className={style.titleContainer__h3} onClick={sortByName}>
+          Nombre:{" "}
+          <span className={style.titleCOntainer__span}>
+            {typeSort == "nameSort" ? "▼" : "▶"}
+          </span>
+        </h3>
         <h3 className={style.titleContainer__h3}>Proveedor:</h3>
-        <h3 className={style.titleContainer__h3}>Cantidad:</h3>
-        <h3 className={style.titleContainer__h3}>Tope:</h3>
-        <h3 className={style.titleContainer__h3}>Fecha de creación:</h3>
-        <h3 className={style.titleContainer__h3}>Fecha de último ingreso:</h3>
-        <h3 className={style.titleContainer__h3}>Precio:</h3>
+        <h3 className={style.titleContainer__h3} onClick={sortByVolume}>
+          Cantidad:{" "}
+          <span className={style.titleCOntainer__span}>
+            {typeSort == "volumeSort" ? "▼" : "▶"}
+          </span>
+        </h3>
+        <h3 className={style.titleContainer__h3} onClick={sortByMaximum}>
+          Tope:{" "}
+          <span className={style.titleCOntainer__span}>
+            {typeSort == "maximumSort" ? "▼" : "▶"}
+          </span>
+        </h3>
+        <h3 className={style.titleContainer__h3} onClick={sortByCreationDate}>
+          Fecha de creación:{" "}
+          <span className={style.titleCOntainer__span}>
+            {typeSort == "creationDateSort" ? "▼" : "▶"}
+          </span>
+        </h3>
+        <h3 className={style.titleContainer__h3} onClick={sortByLastVolumeDate}>
+          Fecha de último ingreso:{" "}
+          <span className={style.titleCOntainer__span}>
+            {typeSort == "lastVolumeDateSort" ? "▼" : "▶"}
+          </span>
+        </h3>
+        <h3 className={style.titleContainer__h3} onClick={sortByPrice}>
+          Precio:{" "}
+          <span className={style.titleCOntainer__span}>
+            {typeSort == "priceSort" ? "▼" : "▶"}
+          </span>
+        </h3>
         <h3 className={style.titleContainer__h3}>Acciones:</h3>
       </div>
       <Table />

@@ -69,6 +69,7 @@
 .titleContainer__h3 {
   width: 10%;
   font-size: 1em;
+  cursor: pointer;
 }
 .filterContainer_hidden {
   visibility: hidden;
@@ -147,4 +148,8 @@ input[type="date"] {
 }
 .inputContainer__div {
   width: 3.2em;
+}
+.titleCOntainer__span {
+  font-size: 0.7em;
+  color: var(--color-main-blue);
 }
