@@ -16,6 +16,7 @@ if (DB_BASE && DB_USER && DB_HOST && DB_PASSWORD) {
     dialect: "postgres",
     logging: false,
     native: false,
+    ssl: true
   });
   //take the route of this file
   const basename: string = path.basename(__filename);
