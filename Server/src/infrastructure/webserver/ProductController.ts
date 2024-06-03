@@ -1,6 +1,6 @@
 import { ProductRepository } from "../Repository/ProductRepository";
 import { Request, Response } from "express";
-import { DefaultController } from "./DefaultController";
+import { DefaultController } from "./defaultController";
 import { sequelize } from "../config/database";
 
 export class ProductController extends DefaultController {
