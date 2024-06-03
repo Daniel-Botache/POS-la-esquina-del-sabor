@@ -33,6 +33,23 @@ type Product = {
   productId: number | null;
 };
 
+type ProductProps = {
+  id: number;
+  name: string;
+  supliers: Suplier[];
+  volume: number;
+  maximum: number;
+  createdAt: string;
+  updatedAt: string;
+  barCode: string;
+  price: number;
+  img: string;
+  lastVolumeDate: string;
+  bale: boolean | null;
+  productId: number | null;
+  onCheckboxChange: (product: { id: string; bale: boolean | null }) => void;
+};
+
 export default function CellStock({
   id,
   name,
@@ -45,13 +62,34 @@ export default function CellStock({
   lastVolumeDate,
   bale,
   productId,
-}: Product) {
+  onCheckboxChange,
+}: ProductProps) {
   const dispatch = useCustomDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [suplierNames, setSuplierNames] = useState<string>("");
   const allProducts = useCustomSelector(
     (state) => state.search.searchProductByName
   ) as Product[];
+
+  const [colorBackground, setColorBackground] = useState("");
+
+  const handleCheckboxChange = () => {
+    onCheckboxChange({ id: id.toString(), bale: bale });
+  };
+
+  useEffect(() => {
+    const percentageVolume = 100 / (maximum / volume);
+    if (percentageVolume < 20) {
+      setColorBackground(style.redBackground);
+    }
+    if (percentageVolume > 20 && percentageVolume < 70) {
+      setColorBackground(style.greyBackground);
+    }
+    if (percentageVolume > 70) {
+      setColorBackground(style.greenBackground);
+    }
+    console.log(colorBackground);
+  }, []);
 
   useEffect(() => {
     const fetchSupliers = async () => {
@@ -118,13 +156,15 @@ export default function CellStock({
   return (
     <div className={style.principalContainer}>
       <div className={style.prepertyContainer__check}>
-        <input type="checkbox" name="" id="" />
+        <input type="checkbox" name="" id="" onChange={handleCheckboxChange} />
       </div>
       <div className={style.prepertyContainer}>{id}</div>
       <div className={style.prepertyContainer}>{barCode}</div>
       <div className={style.prepertyContainer}>{name}</div>
       <div className={style.prepertyContainer}>{suplierNames}</div>
-      <div className={style.prepertyContainer}>{volume}</div>
+      <div className={`${style.prepertyContainer} ${colorBackground}`}>
+        {volume}
+      </div>
       <div className={style.prepertyContainer}>{maximum}</div>
       <div className={style.prepertyContainer}>{formattedDateCreate}</div>
       <div className={style.prepertyContainer}>{formattedDateLast}</div>

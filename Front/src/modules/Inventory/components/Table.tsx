@@ -2,7 +2,11 @@ import style from "../styles/Table.module.css";
 import CellStock from "./CellStock";
 import { useCustomSelector } from "../../../store/hooks";
 
-export default function Table() {
+type TableProps = {
+  onCheckboxChange: (product: { id: string; bale: boolean | null }) => void;
+};
+
+export default function Table({ onCheckboxChange }: TableProps) {
   const products = useCustomSelector(
     (state) => state.search.searchProductByNameCopy
   );
@@ -26,6 +30,7 @@ export default function Table() {
             lastVolumeDate={product.lastVolumeDate}
             bale={product.bale ? true : null}
             productId={product.productId ? product.productId : null}
+            onCheckboxChange={onCheckboxChange}
           />
         ))}
       </div>

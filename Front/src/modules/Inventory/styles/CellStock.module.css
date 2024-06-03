@@ -10,6 +10,22 @@
   width: 10%;
   font-size: 1em;
 }
+.redBackground {
+  background-color: var(--color-main-red);
+  border-radius: 10px;
+  color: var(--color-white);
+}
+
+.greyBackground {
+  background-color: var(--color-white);
+}
+
+.greenBackground {
+  background-color: rgb(47, 194, 47);
+  border-radius: 10px;
+  color: var(--color-white);
+}
+
 .prepertyContainer__btn {
   border: 1px transparent solid;
   background-color: transparent;

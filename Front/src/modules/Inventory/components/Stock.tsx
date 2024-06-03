@@ -12,6 +12,8 @@ import {
 import { useCustomDispatch, useCustomSelector } from "../../../store/hooks";
 import { getProductByBarNameCopy } from "../../searchBar/redux/searchSlice";
 import { SearchIcon } from "../../../utils/Icons/icons";
+import { deleteProductService } from "../services/deleteProductService";
+import { changeDeleteStatus } from "../redux/stockSlice";
 
 interface Suplier {
   id: string;
@@ -59,6 +61,47 @@ export default function Stock() {
   const [filterInitialDate, setFilterInitialDate] = useState(0);
   const [filterFinalDate, setFilterFinalDate] = useState(0);
   const [typeSort, setTypeSort] = useState("");
+  const [selectedProductIds, setSelectedProductIds] = useState<
+    CheckedProduct[]
+  >([]);
+  type CheckedProduct = {
+    id: string;
+    bale: boolean | null;
+  };
+
+  const handleCheckboxChange = (productId: {
+    id: string;
+    bale: boolean | null;
+  }) => {
+    setSelectedProductIds((prevSelectedProductIds) =>
+      prevSelectedProductIds.includes(productId)
+        ? prevSelectedProductIds.filter((product) => product.id !== product.id)
+        : [...prevSelectedProductIds, productId]
+    );
+  };
+
+  const handleDeleteProduct = (id: any, bale: boolean | null) => {
+    let route = bale ? "bale" : "product";
+
+    deleteProductService(id, route);
+    dispatch(changeDeleteStatus());
+  };
+
+  const handleDeleteSelectedProducts = () => {
+    const userConfirm = confirm(`¿Seguro desea eliminar los productos?`);
+    if (userConfirm) {
+      selectedProductIds.forEach((id) => {
+        // Encuentra el producto correspondiente
+        const product = products.find(
+          (product) => product.id.toString() === id.id
+        );
+        if (product) {
+          handleDeleteProduct(product.id.toString(), product.bale);
+        }
+      });
+    }
+    setSelectedProductIds([]); // Limpiar los IDs seleccionados después de eliminar
+  };
 
   const dispatch = useCustomDispatch();
   useEffect(() => {
@@ -393,7 +436,10 @@ export default function Stock() {
       <div className={style.searchBarContainer}>
         <SeachBar />
         <div className={style.orderContainer}>
-          <div className={style.headContainer__button}>
+          <div
+            className={style.headContainer__button}
+            onClick={handleDeleteSelectedProducts}
+          >
             <DeleteIcon className={style.headContainer__button__icon} />
             <p className={style.headContainer__button__p}>Eliminar selección</p>
           </div>
@@ -597,7 +643,7 @@ export default function Stock() {
         </h3>
         <h3 className={style.titleContainer__h3}>Acciones:</h3>
       </div>
-      <Table />
+      <Table onCheckboxChange={handleCheckboxChange} />
       {isModalSupplierOpen && (
         <CreateSupplierModal onClose={toggleModalSupplier} />
       )}
