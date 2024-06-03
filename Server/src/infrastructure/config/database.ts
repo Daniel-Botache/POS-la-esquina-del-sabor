@@ -17,7 +17,6 @@ if (DB_BASE && DB_USER && DB_HOST && DB_PASSWORD) {
     logging: false,
     native: false,
     dialectOptions: {
-        project: config.ENDPOINT_ID,
         ssl: {
             require: true,
             rejectUnauthorized: false,
