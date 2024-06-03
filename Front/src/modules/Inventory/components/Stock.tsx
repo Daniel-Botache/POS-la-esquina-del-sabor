@@ -12,7 +12,6 @@ import {
 import { useCustomDispatch, useCustomSelector } from "../../../store/hooks";
 import { getProductByBarNameCopy } from "../../searchBar/redux/searchSlice";
 import { SearchIcon } from "../../../utils/Icons/icons";
-import { errorMessage } from "../../auth/hooks/notifications";
 
 export default function Stock() {
   const [isModalSupplierOpen, setIsModalSupplierOpen] = useState(false);
@@ -23,11 +22,14 @@ export default function Stock() {
   const products = useCustomSelector(
     (state) => state.search.searchProductByName
   );
+
   const [filterSuplier, setFilterSuplier] = useState("todos");
   const [filterType, setFilterType] = useState("todos");
   const [filterBale, setFilterBale] = useState("todos");
   const [filterQuantySince, setFilterQuantySince] = useState(0);
   const [filterQuantyTo, setFilterQuantyTo] = useState(Infinity);
+  const [filterInitialDate, setFilterInitialDate] = useState(0);
+  const [filterFinalDate, setFilterFinalDate] = useState(0);
 
   const dispatch = useCustomDispatch();
   useEffect(() => {
@@ -35,6 +37,7 @@ export default function Stock() {
     dispatch(getSuppliers());
     dispatch(getProductByBarNameCopy({ searchProductByNameCopy: products }));
   }, [dispatch]);
+  useEffect(() => {}, []);
 
   const toggleModalFilters = () => {
     setIsFiltersModalOpen(!isFiltersModalOpen);
@@ -46,9 +49,20 @@ export default function Stock() {
   const toggleModalProduct = () => {
     setIsModalProductOpen(!isModalProductOpen);
   };
+
   const handleFilterByQuanty = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
+    const initialDate = filterInitialDate ? new Date(filterInitialDate) : null;
+    const finalDate = filterFinalDate ? new Date(filterFinalDate) : null;
+    if (initialDate) initialDate.setHours(0, 0, 0, 0);
+    if (finalDate) finalDate.setHours(23, 59, 59, 999);
     const filteredProducts = products.filter((product) => {
+      const productDate = new Date(product.lastVolumeDate);
+      productDate.setHours(0, 0, 0, 0);
+      const matchDate =
+        !initialDate ||
+        !finalDate ||
+        (productDate >= initialDate && productDate <= finalDate);
       const matchVolume =
         filterQuantySince <= product.volume && product.volume <= filterQuantyTo;
       const matchesType =
@@ -59,13 +73,45 @@ export default function Stock() {
       const matchesBale =
         filterBale === "todos" ||
         (filterBale === "Paca" ? product.bale === true : product.bale == null);
-
-      return matchesType && matchesSupplier && matchesBale && matchVolume;
+      return (
+        matchesType &&
+        matchesSupplier &&
+        matchesBale &&
+        matchVolume &&
+        matchDate
+      );
     });
-
     dispatch(
       getProductByBarNameCopy({ searchProductByNameCopy: filteredProducts })
     );
+  };
+
+  const handleFilterDateInitial = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const date = event.target.value;
+    if (date == "") {
+      setFilterInitialDate(0);
+      return;
+    }
+    const isoDate = new Date(date).toISOString();
+    const parseDate = Date.parse(isoDate) + 86400000;
+    console.log(`Esta es la seleccion Inicial${parseDate}`);
+    setFilterInitialDate(parseDate);
+  };
+
+  const handleFilterDateFinal = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const date = event.target.value;
+    if (date == "") {
+      setFilterInitialDate(0);
+      return;
+    }
+    const isoDate = new Date(date).toISOString();
+    const parseDate = Date.parse(isoDate) + 86400000;
+    console.log(`Esta es la seleccion final${isoDate}`);
+    setFilterFinalDate(parseDate);
   };
 
   const handleQuantySinceFilter = (
@@ -78,6 +124,7 @@ export default function Stock() {
     }
     setFilterQuantySince(quanty);
   };
+
   const handleQuantyToFilter = (event: React.ChangeEvent<HTMLInputElement>) => {
     const quanty = Number(event.target.value);
     if (event.target.value == "" || quanty == 0) {
@@ -208,6 +255,7 @@ export default function Stock() {
               Desde:
             </label>
             <input
+              onChange={handleFilterDateInitial}
               type="date"
               name=""
               id="desdeDate"
@@ -219,6 +267,7 @@ export default function Stock() {
               Hasta:
             </label>
             <input
+              onChange={handleFilterDateFinal}
               type="date"
               name=""
               id="hastaDate"

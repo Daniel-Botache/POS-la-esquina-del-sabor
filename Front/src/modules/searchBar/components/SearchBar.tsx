@@ -4,7 +4,10 @@ import {
   searchAllProducts,
   searchAllBale,
 } from "../services/searchAllProductsService";
-import { getProductByName } from "../redux/searchSlice";
+import {
+  getProductByName,
+  getProductByBarNameCopy,
+} from "../redux/searchSlice";
 import { useCustomDispatch, useCustomSelector } from "../../../store/hooks";
 import { SearchIcon } from "../../../utils/Icons/icons";
 import { useState, useEffect } from "react";
@@ -26,6 +29,9 @@ export default function SeachBar() {
       const responseAll = responseBales.concat(responseProducts);
       if (responseAll) {
         dispatch(getProductByName({ searchProductByName: responseAll }));
+        dispatch(
+          getProductByBarNameCopy({ searchProductByNameCopy: responseAll })
+        );
         return;
       }
     }
@@ -35,15 +41,24 @@ export default function SeachBar() {
       const response = responseProduct.concat(responseBale);
       if (response) {
         dispatch(getProductByName({ searchProductByName: response }));
+        dispatch(
+          getProductByBarNameCopy({ searchProductByNameCopy: response })
+        );
         return;
       }
     }
     if (responseProduct && !responseBale) {
       dispatch(getProductByName({ searchProductByName: responseProduct }));
+      dispatch(
+        getProductByBarNameCopy({ searchProductByNameCopy: responseProduct })
+      );
       return;
     }
     if (!responseProduct && responseBale) {
       dispatch(getProductByName({ searchProductByName: responseBale }));
+      dispatch(
+        getProductByBarNameCopy({ searchProductByNameCopy: responseBale })
+      );
       return;
     }
     errorMessage("Datos no encontrados");
