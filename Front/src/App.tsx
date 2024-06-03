@@ -1,7 +1,7 @@
 import ViewAuth from "./modules/auth/components/ViewAuth";
 import Footer from "./modules/footer/components/Footer";
 import Home from "./modules/home/components/home";
-import NavBarLeft from "./modules/navBarLeft/components/NavBarLeft";
+import NavBarLeft from "./modules/navBarLeft/components/navBarLeft";
 import Sales from "./modules/sales/components/Sales";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
