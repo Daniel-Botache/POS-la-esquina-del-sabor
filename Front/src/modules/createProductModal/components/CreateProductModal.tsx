@@ -361,6 +361,7 @@ export default function CreateProductModal({
               type="text"
               id="inputImg"
               className={style.form__inputText}
+              maxLength={Infinity}
             />
           </div>
           <div className={style.inputContainer}>

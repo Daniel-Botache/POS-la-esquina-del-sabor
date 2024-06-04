@@ -104,12 +104,12 @@ export default function Stock() {
   };
 
   const dispatch = useCustomDispatch();
+
   useEffect(() => {
     dispatch(getTypes());
     dispatch(getSuppliers());
     dispatch(getProductByBarNameCopy({ searchProductByNameCopy: products }));
   }, [dispatch]);
-  useEffect(() => {}, []);
 
   const toggleModalFilters = () => {
     setIsFiltersModalOpen(!isFiltersModalOpen);

@@ -16,6 +16,11 @@ import { errorMessage } from "../../auth/hooks/notifications";
 import { putProductStockService } from "../services/putProductService";
 import { changeDeleteStatus } from "../redux/stockSlice";
 
+type OptionType = {
+  value: string;
+  label: string;
+};
+
 type EditProductModalProps = {
   id: number;
   bale: boolean | null;
@@ -47,10 +52,9 @@ export default function EditProductModal({
   const [productType, setProductType] = useState("individual");
   const [isSearchModalopen, setIsSearchModalopen] = useState(true);
   const [isCreateTypeModalOpen, setIsCreateTypeModalOpen] = useState(true);
-  const [suppliersOptions, setSuppliersOptions] = useState<
-    { value: string; label: string }[]
-  >([]);
+  const [suppliersOptions, setSuppliersOptions] = useState<OptionType[]>([]);
   const suppliers = useCustomSelector((state) => state.createProduct.suppliers);
+  const [selectedSupliers, setSelectedSupleirs] = useState<OptionType[]>([]);
   const dispatch = useCustomDispatch();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -81,10 +85,13 @@ export default function EditProductModal({
     if (!bale) {
       const response = await getProductByIdService(id);
 
-      const selectedSuppliers = response.supliers.map((supplier: any) => ({
-        value: supplier.id,
-        label: supplier.company,
-      }));
+      const selectedSuppliers: OptionType[] = response.supliers.map(
+        (supplier: any) => ({
+          value: supplier.id,
+          label: supplier.company,
+        })
+      );
+      setSelectedSupleirs(selectedSuppliers);
       setNewProduct((prevState) => ({
         ...prevState,
         id: response.id,
@@ -98,7 +105,7 @@ export default function EditProductModal({
         productId: null,
         individualQuanty: null,
         img: response.img,
-        supliers: selectedSuppliers,
+        supliers: response.supliers,
         lastVolumeDate: response.lastVolumeDate,
       }));
       return;
@@ -184,6 +191,11 @@ export default function EditProductModal({
       ...prevState,
       supliers: options,
     }));
+    const newSelectedSuppliers = [...selectedSupliers, ...options];
+    const uniqueSelectedSuppliers = Array.from(
+      new Set(newSelectedSuppliers.map((supplier) => JSON.stringify(supplier)))
+    ).map((supplier) => JSON.parse(supplier));
+    setSelectedSupleirs(uniqueSelectedSuppliers);
   };
   return (
     <div className={style.modalOverlay}>
@@ -336,6 +348,7 @@ export default function EditProductModal({
               type="text"
               id="inputImg"
               className={style.form__inputText}
+              maxLength={Infinity}
             />
           </div>
           <div className={style.inputContainer}>
@@ -441,7 +454,7 @@ export default function EditProductModal({
             className={style.form__select}
             isMulti
             options={suppliersOptions}
-            value={newProduct.supliers}
+            value={selectedSupliers}
             onChange={handleSuppliersChange}
           />
 

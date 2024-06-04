@@ -114,8 +114,6 @@ export default function CellStock({
               supliers: arraySuppliersFromIndividual,
               typeId: individualProduct.typeId,
             };
-
-            // Dispatch the action to update the product in the global state
             dispatch(updateProduct(updatedProduct));
           }
         } catch (error) {
