@@ -6,7 +6,6 @@ import { changeDeleteStatus } from "../redux/stockSlice";
 import EditProductModal from "./EditProductModal";
 import { useEffect, useState } from "react";
 import { getProductByIdService } from "../services/getProductByIdService";
-import { updateProduct } from "../../searchBar/redux/searchSlice";
 
 type Suplier = {
   id: string;
@@ -15,22 +14,6 @@ type Suplier = {
   adviser: string;
   createdAt: Date;
   updatedAt: Date;
-};
-
-type Product = {
-  id: number;
-  name: string;
-  supliers: Suplier[];
-  volume: number;
-  maximum: number;
-  createdAt: string;
-  updatedAt: string;
-  barCode: string;
-  price: number;
-  img: string;
-  lastVolumeDate: string;
-  bale: boolean | null;
-  productId: number | null;
 };
 
 type ProductProps = {
@@ -48,6 +31,7 @@ type ProductProps = {
   bale: boolean | null;
   productId: number | null;
   onCheckboxChange: (product: { id: string; bale: boolean | null }) => void;
+  percentage: number;
 };
 
 export default function CellStock({
@@ -63,13 +47,13 @@ export default function CellStock({
   bale,
   productId,
   onCheckboxChange,
+  percentage,
 }: ProductProps) {
   const dispatch = useCustomDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [suplierNames, setSuplierNames] = useState<string>("");
-  const allProducts = useCustomSelector(
-    (state) => state.search.searchProductByName
-  ) as Product[];
+
+  const deleteStatus = useCustomSelector((state) => state.stock.deleted);
 
   const [colorBackground, setColorBackground] = useState("");
 
@@ -79,17 +63,17 @@ export default function CellStock({
 
   useEffect(() => {
     const percentageVolume = 100 / (maximum / volume);
-    if (percentageVolume < 20) {
+    if (percentage < 20) {
       setColorBackground(style.redBackground);
     }
-    if (percentageVolume > 20 && percentageVolume < 70) {
+    if (percentage > 20 && percentageVolume < 70) {
       setColorBackground(style.greyBackground);
     }
-    if (percentageVolume > 70) {
+    if (percentage > 70) {
       setColorBackground(style.greenBackground);
     }
     console.log(colorBackground);
-  }, []);
+  }, [percentage]);
 
   useEffect(() => {
     const fetchSupliers = async () => {
@@ -103,19 +87,6 @@ export default function CellStock({
                 .join(", ")
             : "";
           setSuplierNames(arrayStringSuppliers);
-
-          const addSupliersProductBale = allProducts.find(
-            (bale: Product) => bale.id === id
-          );
-
-          if (addSupliersProductBale) {
-            const updatedProduct = {
-              ...addSupliersProductBale,
-              supliers: arraySuppliersFromIndividual,
-              typeId: individualProduct.typeId,
-            };
-            dispatch(updateProduct(updatedProduct));
-          }
         } catch (error) {
           console.error("Error al obtener el producto individual:", error);
         }
@@ -128,7 +99,7 @@ export default function CellStock({
     };
 
     fetchSupliers();
-  }, [bale, productId, supliers, allProducts, id, dispatch]);
+  }, [deleteStatus]);
 
   const fromatedPrice = new Intl.NumberFormat("es-CO").format(price);
 

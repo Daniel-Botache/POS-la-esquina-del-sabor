@@ -64,6 +64,7 @@ export default function Stock() {
   const [selectedProductIds, setSelectedProductIds] = useState<
     CheckedProduct[]
   >([]);
+
   type CheckedProduct = {
     id: string;
     bale: boolean | null;
@@ -91,7 +92,6 @@ export default function Stock() {
     const userConfirm = confirm(`¿Seguro desea eliminar los productos?`);
     if (userConfirm) {
       selectedProductIds.forEach((id) => {
-        // Encuentra el producto correspondiente
         const product = products.find(
           (product) => product.id.toString() === id.id
         );

@@ -12,6 +12,7 @@ import { useCustomDispatch, useCustomSelector } from "../../../store/hooks";
 import { SearchIcon } from "../../../utils/Icons/icons";
 import { useState, useEffect } from "react";
 import { errorMessage } from "../../auth/hooks/notifications";
+import { getProductByIdService } from "../../Inventory/services/getProductByIdService";
 
 export default function SeachBar() {
   const [productName, setProductName] = useState("");
@@ -20,12 +21,40 @@ export default function SeachBar() {
 
   useEffect(() => {
     searchByNameHandle();
-  }, [productName, deleted]);
+  }, [deleted, productName]);
 
   const searchByNameHandle = async () => {
     if (!productName) {
       const responseBales = await searchAllBale();
+      if (responseBales.length > 0) {
+        for (let i = 0; i < responseBales.length; i++) {
+          try {
+            const individualProduct = await getProductByIdService(
+              responseBales[i].productId
+            );
+            const arraySuppliersFromIndividual = individualProduct.supliers;
+            responseBales[i].supliers = arraySuppliersFromIndividual;
+            const arrayTypeProductFromIndividual = individualProduct.typeId;
+            const percentageVolume =
+              100 / (responseBales[i].maximum / responseBales[i].volume);
+            responseBales[i].percentage = percentageVolume;
+            responseBales[i].typeId = arrayTypeProductFromIndividual;
+          } catch (error) {
+            console.log(error);
+          }
+        }
+      }
+
       const responseProducts = await searchAllProducts();
+      if (responseProducts) {
+        if (responseProducts.length > 0) {
+          for (let i = 0; i < responseProducts.length; i++) {
+            const percentageVolume =
+              100 / (responseProducts[i].maximum / responseProducts[i].volume);
+            responseProducts[i].percentage = percentageVolume;
+          }
+        }
+      }
       const responseAll = responseBales.concat(responseProducts);
       if (responseAll) {
         dispatch(getProductByName({ searchProductByName: responseAll }));
@@ -36,7 +65,37 @@ export default function SeachBar() {
       }
     }
     const responseProduct = await searchProduct(productName, "product");
+    if (responseProduct) {
+      if (responseProduct.length > 0) {
+        for (let i = 0; i < responseProduct.length; i++) {
+          const percentageVolume =
+            100 / (responseProduct[i].maximum / responseProduct[i].volume);
+          responseProduct[i].percentage = percentageVolume;
+        }
+      }
+    }
     const responseBale = await searchProduct(productName, "bale");
+    if (responseBale) {
+      if (responseBale.length > 0) {
+        for (let i = 0; i < responseBale.length; i++) {
+          try {
+            const individualProduct = await getProductByIdService(
+              responseBale[i].productId
+            );
+            const arraySuppliersFromIndividual = individualProduct.supliers;
+            const arrayTypeProductFromIndividual = individualProduct.typeId;
+            responseBale[i].typeId = arrayTypeProductFromIndividual;
+            responseBale[i].supliers = arraySuppliersFromIndividual;
+            const percentageVolume =
+              100 / (responseBale[i].maximum / responseBale[i].volume);
+            responseBale[i].percentage = percentageVolume;
+          } catch (error) {
+            console.log(error);
+          }
+        }
+      }
+    }
+
     if (responseProduct && responseBale) {
       const response = responseProduct.concat(responseBale);
       if (response) {

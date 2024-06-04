@@ -121,6 +121,7 @@ export default function CreateProductModal({
       supliers: null,
     }));
   };
+
   const handleClose = () => {
     if (onClose) {
       onClose();

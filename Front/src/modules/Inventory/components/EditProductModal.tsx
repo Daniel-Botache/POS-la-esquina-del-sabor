@@ -79,6 +79,7 @@ export default function EditProductModal({
     await putProductStockService(newProduct, "product");
     dispatch(changeDeleteStatus());
     handleClose();
+    return;
   };
 
   const handleGetProductById = async () => {

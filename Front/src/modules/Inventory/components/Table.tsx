@@ -30,6 +30,7 @@ export default function Table({ onCheckboxChange }: TableProps) {
             lastVolumeDate={product.lastVolumeDate}
             bale={product.bale ? true : null}
             productId={product.productId ? product.productId : null}
+            percentage={product.percentage}
             onCheckboxChange={onCheckboxChange}
           />
         ))}

@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 type Suplier = {
   id: string;
   company: string;
@@ -44,18 +44,9 @@ const searchSlice = createSlice({
     getProductByBarNameCopy: (state, action) => {
       state.searchProductByNameCopy = action.payload.searchProductByNameCopy;
     },
-    updateProduct(state, action: PayloadAction<Product>) {
-      const updatedProduct = action.payload;
-      const index = state.searchProductByName.findIndex(
-        (product) => product.id === updatedProduct.id
-      );
-      if (index !== -1) {
-        state.searchProductByName[index] = updatedProduct;
-      }
-    },
   },
 });
 
 export default searchSlice.reducer;
-export const { getProductByName, getProductByBarNameCopy, updateProduct } =
+export const { getProductByName, getProductByBarNameCopy } =
   searchSlice.actions;
