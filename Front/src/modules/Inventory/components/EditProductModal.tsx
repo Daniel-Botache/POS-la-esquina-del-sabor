@@ -463,10 +463,12 @@ export default function EditProductModal({
             Editar producto
           </button>
           {!isSearchModalopen && (
-            <SearchSide onClose={handleClose} isModal={true} />
+            <SearchSide onClose={handleOpenSearchModal} isModal={true} />
           )}
         </form>
-        {!isCreateTypeModalOpen && <CreateTypeModal onClose={handleClose} />}
+        {!isCreateTypeModalOpen && (
+          <CreateTypeModal onClose={handleOpenCreateTypeModal} />
+        )}
       </div>
     </div>
   );

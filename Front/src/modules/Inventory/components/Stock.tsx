@@ -52,6 +52,7 @@ export default function Stock() {
   const productsCopy = useCustomSelector(
     (state) => state.search.searchProductByNameCopy
   );
+  const deleted = useCustomSelector((state) => state.stock.deleted);
 
   const [filterSuplier, setFilterSuplier] = useState("todos");
   const [filterType, setFilterType] = useState("todos");
@@ -75,8 +76,10 @@ export default function Stock() {
     bale: boolean | null;
   }) => {
     setSelectedProductIds((prevSelectedProductIds) =>
-      prevSelectedProductIds.includes(productId)
-        ? prevSelectedProductIds.filter((product) => product.id !== product.id)
+      prevSelectedProductIds.some((product) => product.id === productId.id)
+        ? prevSelectedProductIds.filter(
+            (product) => product.id !== productId.id
+          )
         : [...prevSelectedProductIds, productId]
     );
   };
@@ -109,7 +112,7 @@ export default function Stock() {
     dispatch(getTypes());
     dispatch(getSuppliers());
     dispatch(getProductByBarNameCopy({ searchProductByNameCopy: products }));
-  }, [dispatch]);
+  }, [deleted, dispatch]);
 
   const toggleModalFilters = () => {
     setIsFiltersModalOpen(!isFiltersModalOpen);

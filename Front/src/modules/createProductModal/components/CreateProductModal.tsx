@@ -28,6 +28,7 @@ export default function CreateProductModal({
   const [productType, setProductType] = useState("individual");
   const [isSearchModalopen, setIsSearchModalopen] = useState(true);
   const [isCreateTypeModalOpen, setIsCreateTypeModalOpen] = useState(true);
+  const [selectedSuppliers, setSelectedSuppliers] = useState<any[]>([]);
   const [newProduct, setNewProduct] = useState<Product>({
     id: null,
     name: "",
@@ -84,6 +85,7 @@ export default function CreateProductModal({
       await postNewProduct(newProduct, "product");
       dispatch(clearProductSearched());
       dispatch(changeDeleteStatus());
+      setSelectedSuppliers([]);
       setNewProduct((prevState) => ({
         ...prevState,
         id: null,
@@ -105,6 +107,7 @@ export default function CreateProductModal({
     await postNewProduct(newProduct, "bale");
     dispatch(clearProductSearched());
     dispatch(changeDeleteStatus());
+    setSelectedSuppliers([]);
     setNewProduct((prevState) => ({
       ...prevState,
       id: null,
@@ -187,6 +190,8 @@ export default function CreateProductModal({
   };
 
   const handleSupplierSelection = (options: any) => {
+    setSelectedSuppliers(options);
+
     if (newProduct.bale) {
       setNewProduct((prevState) => ({
         ...prevState,
@@ -325,7 +330,7 @@ export default function CreateProductModal({
             <div className={style.clasificationContainer}>
               <select
                 className={`${style.form__select} ${style.form__select_clas}`}
-                defaultValue={""}
+                value={newProduct.typeId ? newProduct.typeId : ""}
                 name="inputType"
                 id="inputType"
                 onChange={handleTypeSelection}
@@ -470,6 +475,7 @@ export default function CreateProductModal({
             options={suppliersOptions}
             isMulti
             onChange={handleSupplierSelection}
+            value={selectedSuppliers}
           />
 
           <button type="submit" className={style.formContainer__btn}>
