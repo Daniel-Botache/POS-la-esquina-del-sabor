@@ -1,4 +1,4 @@
-import MenuCard from "./MenuCard";
+import MenuCard from "./menuCard";
 import salesImg from "../../../utils/images/ventas.jpg";
 import stockImg from "../../../utils/images/inventario.jpg";
 import creditImg from "../../../utils/images/creditos.jpg";

@@ -7,7 +7,7 @@ import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import axios from "axios";
 axios.defaults.baseURL = "https://pos-la-esquina-del-sabor.onrender.com";
-import Head from "./modules/head/components/Head";
+import Head from "./modules/head/components/head";
 import Stock from "./modules/Inventory/components/Stock";
 
 function App() {
