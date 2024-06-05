@@ -122,10 +122,10 @@ export default function SeachBar() {
     }
     errorMessage("Datos no encontrados");
   };
+
   const handleInputEnter = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       searchByNameHandle();
-      setProductName("");
     }
   };
   return (
