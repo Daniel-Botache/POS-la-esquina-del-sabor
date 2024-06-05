@@ -10,6 +10,7 @@
   fill: var(--color-main-orange);
   gap: 0.3em;
   cursor: pointer;
+  transition: 0.5s;
 }
 
 .headContainer__button__icon {
@@ -172,18 +173,22 @@ input[type="date"] {
 }
 @keyframes openBlur {
   from {
+    transform: translateY(-20%);
     opacity: 0;
   }
   to {
+    transform: translateY(0);
     opacity: 100;
   }
 }
 @keyframes closeBlur {
   from {
+    transform: translateY(-0%);
     display: flex;
     opacity: 100%;
   }
   to {
+    transform: translateY(-20%);
     display: none;
     opacity: 0%;
   }

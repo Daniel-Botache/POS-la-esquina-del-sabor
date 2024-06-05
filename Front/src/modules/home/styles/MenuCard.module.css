@@ -8,9 +8,13 @@
   padding: 0.5em;
   border-radius: 10px;
   border: 1px #e7e7e7 solid;
+  transition: 0.5s;
+  animation: scale-in;
+  animation-duration: 0.5s;
 }
 .principalContainer:hover {
   background-color: var(--color-background-grey);
+  scale: 120%;
 }
 .principalContainer__Img {
   width: 10em;
@@ -21,4 +25,14 @@
   font-size: 1.3em;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   color: var(--color-main-text);
+}
+@keyframes scale-in {
+  from {
+    scale: 0;
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+    scale: 100%;
+  }
 }
