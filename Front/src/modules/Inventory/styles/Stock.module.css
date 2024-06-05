@@ -64,7 +64,7 @@
   animation-name: openBlur;
   animation-duration: 1s;
   position: sticky;
-  top: 15vh;
+  top: 13.5vh;
   z-index: 200;
 }
 .filterContainer_hidden {
