@@ -125,7 +125,8 @@ export default function SeachBar() {
 
   const handleInputEnter = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      searchByNameHandle();
+      await searchByNameHandle();
+      setProductName("");
     }
   };
   return (
