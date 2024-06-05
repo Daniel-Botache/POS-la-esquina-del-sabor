@@ -22,7 +22,7 @@
   border: 1px transparent solid;
   background-color: var(--color-main-orange);
   border-radius: 10px;
-
+  transition: 0.5s;
   width: 10%;
 }
 .principalContainer__btn:hover .principalContainer__icon {

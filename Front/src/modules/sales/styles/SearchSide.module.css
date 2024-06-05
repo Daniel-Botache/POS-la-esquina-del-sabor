@@ -9,6 +9,8 @@
   margin-top: 1.5em;
   margin-bottom: auto;
   margin-left: 1.5em;
+  animation-name: slide-in;
+  animation-duration: 1s;
 }
 .headContainer {
   display: flex;
@@ -28,6 +30,7 @@
   color: var(--color-main-orange);
   fill: var(--color-main-orange);
   gap: 0.3em;
+  transition: 0.5s;
 }
 
 .headContainer__button__icon {
@@ -42,6 +45,7 @@
   background-color: var(--color-main-orange);
   color: var(--color-white);
   fill: var(--color-white);
+  box-shadow: 0 0 10px var(--color-main-orange);
 }
 .modalContainer {
   position: fixed;
@@ -78,4 +82,14 @@
 .closeButton:hover {
   border: 1px var(--color-main-orange) solid;
   cursor: pointer;
+}
+@keyframes slide-in {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }

@@ -16,6 +16,8 @@
   position: fixed;
   width: 100vw;
   z-index: 500;
+  animation-name: slide-in;
+  animation-duration: 1s;
 }
 
 .logoContainer {
@@ -70,6 +72,8 @@
   display: none;
   width: 5em;
   z-index: 500;
+  animation-name: slide-in-menu;
+  animation-duration: 0.5s;
 }
 
 .logoutMenu__link {
@@ -87,6 +91,7 @@
   align-items: center;
   justify-content: center;
   border: 1px transparent solid;
+  transition: 0.5s;
 }
 
 .optionContainer__p {
@@ -95,4 +100,26 @@
 .principalContainer__link {
   text-decoration: none;
   color: var(--color-main-orange);
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateY(-200%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-menu {
+  from {
+    transform: translateY(-50%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }

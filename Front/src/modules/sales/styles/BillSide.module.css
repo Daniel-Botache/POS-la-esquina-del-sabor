@@ -13,6 +13,8 @@
   padding-top: 0;
   gap: 0.5em;
   z-index: 100;
+  animation-name: slide-in;
+  animation-duration: 1s;
 }
 
 .titleContainer {
@@ -86,12 +88,14 @@
   padding-left: 0.5em;
   padding-right: 0.5em;
   cursor: pointer;
+  transition: 0.5s;
 }
 .closeSaleContainer:hover {
   background-color: var(--color-main-orange);
+  box-shadow: 0 0 10px var(--color-main-orange);
+  scale: 105%;
 }
 .closeSaleContainer:hover .closeSaleContainer__h3_title {
-  background-color: var(--color-main-orange);
   color: var(--color-white);
 }
 .closeSaleContainer:hover .closeSaleContainer__span {
@@ -99,11 +103,9 @@
 }
 .closeSaleContainer__h3 {
   font-size: 1.2em;
+  transition: 0.5s;
 }
 
-.closeSaleContainer__h3_title {
-  color: var(--color-main-orange);
-}
 .closeSaleContainer__span {
   color: #9c9c9c;
 }
@@ -123,6 +125,7 @@
   font-size: 1em;
   color: var(--color-main-orange);
   cursor: pointer;
+  transition: 0.5s;
 }
 
 .cancelSaleContainer__btn:hover {
@@ -139,6 +142,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  animation-name: openScale;
 }
 
 .modalContent {
@@ -152,6 +156,8 @@
   border: 1px var(--color-main-orange) solid;
   align-items: center;
   justify-content: center;
+  animation-name: openScale;
+  animation-duration: 0.5s;
 }
 
 .modalContent_h2 {
@@ -175,6 +181,7 @@
   border-radius: 10px;
   color: var(--color-main-orange);
   display: flex;
+  transition: 0.5s;
 }
 .modalBtnContainer__btn:hover {
   background-color: var(--color-main-orange);
@@ -201,6 +208,7 @@
   width: 40%;
   justify-content: center;
   gap: 0.5em;
+  transition: 0.5s;
 }
 .modalBtnContainer__cancelIcon {
   fill: rgb(250, 110, 110);
@@ -237,4 +245,23 @@
 
 .billProductContainer__btn:hover .billProductContainer__icon {
   fill: var(--color-main-orange);
+}
+
+@keyframes openScale {
+  from {
+    opacity: 0%;
+  }
+  to {
+    opacity: 100%;
+  }
+}
+@keyframes slide-in {
+  from {
+    transform: translateX(200%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }

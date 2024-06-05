@@ -9,13 +9,28 @@
   background-color: var(--color-background-grey);
   justify-content: center;
   align-items: center;
+  animation-duration: 1s;
+  animation-name: slide-in;
 }
 
 .principalContainer__icon {
   width: 1.5em;
   height: 1.5em;
   fill: var(--color-icon-grey);
+  transition: 0.5s;
 }
 .principalContainer__icon:hover {
   fill: var(--color-main-orange);
+  scale: 150%;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(-200%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
