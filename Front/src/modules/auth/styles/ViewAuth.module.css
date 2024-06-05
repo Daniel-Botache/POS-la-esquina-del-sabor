@@ -1,27 +1,25 @@
-.componentsContainer{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: auto;
-    margin-left: 10vw;
-    margin-top: 10vh;
-   
-
+.componentsContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
 }
-.principalContainer{
-    background-color: var(--color-white);
-    height: 95vh;
-    position: relative;
-    overflow: hidden;
+.principalContainer {
+  background-color: var(--color-white);
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: right;
+  align-items: center;
 }
-.colorBackContainer{
-    background-color: var(--color-main-orange);
-    position: absolute;
-    width: 120vw;
-    height: 130vh;
-    rotate: 155deg;
-    left: 5vw;  
-    top: 40vh;  
-    object-fit: cover;
-    
+.colorBackContainer {
+  background-color: var(--color-main-orange);
+  position: absolute;
+  width: 120vw;
+  height: 130vh;
+  rotate: 155deg;
+  left: 5vw;
+  top: 40vh;
+  object-fit: cover;
 }

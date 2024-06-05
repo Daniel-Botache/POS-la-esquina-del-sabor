@@ -4,12 +4,12 @@
   justify-content: space-around;
   align-items: center;
   background-color: var(--color-background-grey);
-  overflow: hidden;
   font-size: 0.8em;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  width: 98%;
+  position: fixed;
   bottom: 0;
-  position: absolute;
-  width: 100%;
+  overflow: hidden;
 }
 .principalContainer__link {
   text-decoration: none;

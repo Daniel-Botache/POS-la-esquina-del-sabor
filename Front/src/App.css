@@ -1,14 +1,11 @@
 #root {
-  margin: 0;
-  padding: 0;
   text-align: center;
   --color-main-text: rgb(61, 61, 61);
   --color-main-orange: #ff9966;
   --color-white: #ffffff;
   --color-main-blue: #6699cc;
-  --color-background-grey: rgba(236, 236, 236, 0.541);
+  --color-background-grey: rgb(248, 248, 248);
   --color-secondary-orange: #db7d26;
   --color-icon-grey: rgb(182, 182, 182);
   --color-main-red: rgb(250, 110, 110);
-  height: 100%;
 }

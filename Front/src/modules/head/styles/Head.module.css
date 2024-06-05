@@ -8,7 +8,7 @@
 .principalContainer {
   display: flex;
   background-color: var(--color-background-grey);
-  height: 6vh;
+  height: 2em;
   color: var(--color-main-orange);
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   align-items: center;

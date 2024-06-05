@@ -1,7 +1,7 @@
 .principalContainer {
   display: flex;
   flex-wrap: wrap;
-  width: 80vw;
+  width: 82vw;
   margin-left: 10vw;
   gap: 2em;
   padding: 2em;
@@ -9,4 +9,5 @@
 }
 .principalContainer__Link {
   text-decoration: none;
+  height: 12em;
 }
