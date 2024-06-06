@@ -42,7 +42,7 @@
   padding: 0.5em;
   align-items: center;
   position: sticky;
-  top: 3em;
+  top: 2em;
   z-index: 200;
 }
 .orderContainer {
