@@ -34,3 +34,7 @@
     opacity: 1;
   }
 }
+.principalContainer__icon_scale {
+  scale: 150%;
+  fill: var(--color-main-orange);
+}
