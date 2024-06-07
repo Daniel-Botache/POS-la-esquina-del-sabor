@@ -154,9 +154,9 @@ input[type="date"] {
   border: 1px transparent solid;
   background-color: var(--color-main-orange);
   border-radius: 5px;
-
   width: 3.5em;
 }
+
 .principalContainer__btn:hover .principalContainer__icon {
   fill: var(--color-main-orange);
 }

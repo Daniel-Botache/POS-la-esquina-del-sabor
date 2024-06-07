@@ -9,6 +9,7 @@ import axios from "axios";
 axios.defaults.baseURL = "https://pos-la-esquina-del-sabor.onrender.com";
 import Head from "./modules/head/components/Head";
 import Stock from "./modules/Inventory/components/Stock";
+import Profit from "./modules/profit/components/Profit";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/sales" element={<Sales />} />
         <Route path="/stock" element={<Stock />} />
+        <Route path="/profit" element={<Profit />} />
       </Routes>
       <Footer />
     </>

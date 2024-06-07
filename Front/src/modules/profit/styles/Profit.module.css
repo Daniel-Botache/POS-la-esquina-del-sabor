@@ -1,0 +1,114 @@
+.principalContainer {
+  padding-top: 3em;
+  padding-bottom: 2em;
+  padding-left: 2.5em;
+  padding-right: 2em;
+}
+
+.principalContainer__btn {
+  border: 1px transparent solid;
+  background-color: var(--color-main-orange);
+  border-radius: 5px;
+  font-family: "Franklin Gothic ", "Arial Narrow", Arial, sans-serif;
+  transition: 0.5s;
+  font-size: 1em;
+  color: var(--color-white);
+}
+
+.principalContainer__btn:hover {
+  background-color: var(--color-white);
+  border: 1px var(--color-main-orange) solid;
+  color: var(--color-main-orange);
+}
+
+.optionContainer__input {
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  outline: none;
+  width: 100%;
+  margin-left: 0;
+  background-color: var(--color-white);
+  font-size: 1.2em;
+}
+
+.searchContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border: 1px var(--color-main-orange) solid;
+  border-radius: 10px;
+  background-color: var(--color-background-grey);
+  padding: 1em;
+}
+
+.optionContainer {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: baseline;
+  gap: 0.5em;
+}
+.optionContainer__search {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+}
+.buttonsContainer {
+  display: flex;
+  width: 70%;
+  gap: 1em;
+}
+.inputContainer {
+  display: flex;
+  justify-content: space-evenly;
+  width: 70%;
+}
+.inputContainer__label {
+  font-size: 0.8em;
+}
+.optionContainer__h3 {
+  font-size: 1em;
+  margin: 0.3em 0 0.8em 0;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+input[type="date"] {
+  &::-webkit-calendar-picker-indicator {
+    font-size: 1.5em;
+  }
+}
+.inputContainer__input {
+  border: 1px var(--color-main-orange) solid;
+  border-radius: 5px;
+  outline: none;
+  appearance: none;
+  font-size: 1em;
+}
+
+.inputContainer__input_chk {
+  cursor: pointer;
+  width: 15px;
+  height: 15px;
+  border-radius: 5px;
+}
+.titleContainer {
+  display: flex;
+  gap: 2%;
+  align-items: baseline;
+  justify-content: center;
+  border-bottom: 2px var(--color-background-grey) solid;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+.titleContainer__h3 {
+  width: 10%;
+  font-size: 1em;
+  cursor: pointer;
+}
+.titleCOntainer__span {
+  font-size: 0.7em;
+  color: var(--color-main-blue);
+}

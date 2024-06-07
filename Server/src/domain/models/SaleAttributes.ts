@@ -1,7 +1,7 @@
 import { Model, Optional } from "sequelize";
 import { ProductInstance } from "./ProductAttributes";
 interface SaleAttributes {
-  id: string;
+  id: number;
   total: number;
   paymentType: string;
   movementType: string;

@@ -4,8 +4,8 @@ import { SaleInstance } from "../../../domain/models/SaleAttributes";
 export default (sequelize: Sequelize) => {
   return sequelize.define<SaleInstance>("Sale", {
     id: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
       primaryKey: true,
     },
 
