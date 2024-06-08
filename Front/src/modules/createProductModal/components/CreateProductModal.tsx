@@ -173,7 +173,7 @@ export default function CreateProductModal({
       label: supplier.company,
     }));
     setSuppliersOptions(options);
-  }, [isCreateTypeModalOpen, suppliers, types]);
+  }, [isCreateTypeModalOpen]);
 
   const handleTypeSelection = (event: React.ChangeEvent<HTMLSelectElement>) => {
     if (newProduct.bale) {

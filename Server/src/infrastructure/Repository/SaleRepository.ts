@@ -118,6 +118,7 @@ export class SaleRepository implements ISaleRepository {
           model: Product,
           as: "products",
         },
+        { model: Bale, as: "bales" },
       ],
     });
 
@@ -144,6 +145,7 @@ export class SaleRepository implements ISaleRepository {
           model: Product,
           as: "products",
         },
+        { model: Bale, as: "bales" },
       ],
     });
 
