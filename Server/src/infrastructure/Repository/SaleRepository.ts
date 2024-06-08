@@ -4,6 +4,7 @@ import { Product, Bale } from "../config/database";
 import { ISaleRepository } from "../../application/repositories/ISaleRepository";
 import { ProductInstance } from "../../domain/models/ProductAttributes";
 import { BaleInstance } from "../../domain/models/BaleAttributes";
+const { Op } = require("sequelize");
 
 export class SaleRepository implements ISaleRepository {
   public async findAll(): Promise<SaleInstance[]> {
@@ -98,5 +99,54 @@ export class SaleRepository implements ISaleRepository {
   public async delete(id: number): Promise<boolean> {
     const data = await Sale.destroy({ where: { id } });
     return !data;
+  }
+  public async findByDateNow(): Promise<SaleInstance[]> {
+    const startOfDay = new Date();
+    startOfDay.setHours(0, 0, 0, 0);
+    const endOfDay = new Date();
+    endOfDay.setHours(23, 59, 59, 999);
+
+    const data = await Sale.findAll({
+      where: {
+        createdAt: {
+          [Op.gte]: startOfDay,
+          [Op.lte]: endOfDay,
+        },
+      },
+      include: [
+        {
+          model: Product,
+          as: "products",
+        },
+      ],
+    });
+
+    return data.map((sale) => sale as SaleInstance);
+  }
+
+  public async findByDate(
+    since: string,
+    until: string
+  ): Promise<SaleInstance[]> {
+    const startOfDay = new Date(since);
+    startOfDay.setHours(0, 0, 0, 0);
+    const endOfDay = new Date(until);
+    endOfDay.setHours(23, 59, 59, 999);
+    const data = await Sale.findAll({
+      where: {
+        createdAt: {
+          [Op.gte]: startOfDay,
+          [Op.lte]: endOfDay,
+        },
+      },
+      include: [
+        {
+          model: Product,
+          as: "products",
+        },
+      ],
+    });
+
+    return data.map((sale) => sale as SaleInstance);
   }
 }
