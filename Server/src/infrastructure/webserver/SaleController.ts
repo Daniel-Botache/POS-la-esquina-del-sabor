@@ -56,4 +56,20 @@ export class SaleController extends DefaultController {
       return res.status(500).send(err.message);
     }
   };
+  findSaleByDateNow = async (_req: Request, res: Response) => {
+    try {
+      const saleData = await this.saleRepository.findByDateNow();
+      if (saleData.length > 0) {
+        return res
+          .status(200)
+          .json({ success: saleData, message: "Datos encontrados" });
+      }
+      return res
+        .status(404)
+        .json({ success: false, message: "Datos no encontrados" });
+    } catch (error) {
+      const err = error as Error;
+      return res.status(500).send(err.message);
+    }
+  };
 }

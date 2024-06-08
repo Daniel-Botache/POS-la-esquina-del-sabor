@@ -5,6 +5,7 @@ const router = Router();
 const controller = new SaleController();
 
 router.get("/", controller.findAllSales);
+router.get("/saleToday", controller.findSaleByDateNow);
 router.get("/:id", controller.findSaleById);
 router.post("/", controller.createSale);
 router.delete("/:id", controller.deleteData);
