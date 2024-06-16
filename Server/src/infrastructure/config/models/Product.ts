@@ -4,7 +4,7 @@ import { Sequelize, DataTypes, NOW } from "sequelize";
 export default (sequelize: Sequelize) => {
   return sequelize.define<ProductInstance>("Product", {
     id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.BIGINT,
       primaryKey: true,
       autoIncrement: true,
     },

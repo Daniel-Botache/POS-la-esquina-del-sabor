@@ -14,7 +14,7 @@ export class ProductRepository implements IProductRepository {
         },
         {
           model: Bale,
-          as: "bales", // Asegúrate de que 'as' coincida con cómo definiste la asociación en tu modelo
+          as: "bales",
         },
       ],
     });

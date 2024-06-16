@@ -29,7 +29,7 @@ export default function BillSide() {
   const [clientIdStatus, setClientIdStatus] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [_selectedPaymentType, setSelectedPaymentType] = useState("Efectivo");
-
+  const [totalSpent, setTotalSpent] = useState(0);
   const dispatch = useCustomDispatch();
   const productsSelected = useCustomSelector((state) => state.bill.products);
   const userId = useCustomSelector((state) => state.auth.userId);
@@ -96,8 +96,10 @@ export default function BillSide() {
         transactionType === "Venta" && products.length > 0 ? products : null,
       valueCash: 0,
       valueTransaction: 0,
+      valueSpent: totalSpent,
       bales: transactionType === "Venta" && bales.length > 0 ? bales : null,
     };
+    console.log(saleData);
     if (paymentType === "Efectivo") {
       saleData.valueCash = totalSale;
       const totalIn = Number(prompt("Dinero que recibe:"));
@@ -203,19 +205,27 @@ export default function BillSide() {
       return total + product.price * product.quantity;
     }, 0);
   };
+
   const calculateTotalProduct = () => {
     return Object.values(productsSelected).reduce((total, product) => {
       return total + product.quantity;
     }, 0);
   };
+
   useEffect(() => {
     const total = Object.values(productsSelected).reduce((sum, product) => {
       return sum + product.price * product.quantity;
     }, 0);
-
     setTotalSale(total);
+    const spent = Object.values(productsSelected).reduce((sum, product) => {
+      if (product.spent && !product.bale) {
+        return sum + product.price * product.quantity;
+      }
+      return 0;
+    }, 0);
+    setTotalSpent(spent);
+    console.log(totalSpent);
   }, [productsSelected]);
-
   const handleCloseSale = () => {
     openModal();
   };

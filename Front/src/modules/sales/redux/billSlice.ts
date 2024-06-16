@@ -33,6 +33,7 @@ export interface ProductState {
   bale: boolean;
   productId: number;
   individualQuanty: number;
+  spent: boolean;
 }
 
 const initialState: BillState = {
@@ -63,6 +64,7 @@ const billSlice = createSlice({
           bale: product.bale,
           productId: product.productId,
           individualQuanty: product.individualQuanty,
+          spent: product.spent,
         };
       }
     },

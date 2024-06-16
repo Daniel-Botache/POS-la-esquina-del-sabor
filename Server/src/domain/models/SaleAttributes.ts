@@ -9,6 +9,7 @@ interface SaleAttributes {
   clientId: number;
   valueCash: number;
   valueTransaction: number;
+  valueSpent: number;
 }
 interface SaleCreationAttributes extends Optional<SaleAttributes, "id"> {}
 

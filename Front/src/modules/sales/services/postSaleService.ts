@@ -10,6 +10,8 @@ export interface SaleAttributes {
   clientId: string | null;
   userId: string;
   valueCash: number;
+  valueSpent: number;
+  bales: string[] | null;
 }
 
 export async function postSaleService(sale: SaleAttributes) {

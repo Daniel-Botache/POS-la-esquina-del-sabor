@@ -15,6 +15,7 @@ export default function Cards({ isModal, onClose }: searchProductType) {
       <div className={style.container}>
         {productSearched.map((product: any) => (
           <Card
+            spent={product.spent}
             onClose={onClose}
             isModal={isModal}
             barCode={product.barCode}

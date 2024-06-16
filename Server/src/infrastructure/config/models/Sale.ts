@@ -4,7 +4,7 @@ import { SaleInstance } from "../../../domain/models/SaleAttributes";
 export default (sequelize: Sequelize) => {
   return sequelize.define<SaleInstance>("Sale", {
     id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.BIGINT,
       autoIncrement: true,
       primaryKey: true,
     },
@@ -35,6 +35,10 @@ export default (sequelize: Sequelize) => {
       allowNull: true,
     },
     valueTransaction: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    valueSpent: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },

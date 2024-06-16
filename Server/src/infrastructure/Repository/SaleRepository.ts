@@ -49,6 +49,7 @@ export class SaleRepository implements ISaleRepository {
         userId,
         valueTransaction,
         valueCash,
+        valueSpent,
       } = data;
       const products = data.products;
       const bales = data.bales;
@@ -62,6 +63,7 @@ export class SaleRepository implements ISaleRepository {
           userId,
           valueTransaction,
           valueCash,
+          valueSpent,
         },
         {
           include: [
