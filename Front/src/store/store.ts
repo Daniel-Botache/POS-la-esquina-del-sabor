@@ -4,6 +4,7 @@ import searchReducer from "../modules/searchBar/redux/searchSlice";
 import billReducer from "../modules/sales/redux/billSlice";
 import stockReducer from "../modules/Inventory/redux/stockSlice";
 import createProductReducer from "../modules/createProductModal/redux/createProductSlice";
+import profitReducer from "../modules/profit/redux/profitSlice";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
@@ -35,6 +36,11 @@ const peristBillConfig = {
   storage,
   whitelist: ["products"],
 };
+const persistProfitConfig = {
+  key: "profit",
+  storage,
+  whitelist: ["sales"],
+};
 
 //store donde se van a comunicar los reducer, se hace una key con la configuracion de persistencia y
 //se le pasa como segundo argumento el reducer
@@ -59,6 +65,10 @@ export const store = configureStore({
     createProduct: persistReducer<ReturnType<typeof createProductReducer>>(
       persistCreateProductConfig,
       createProductReducer
+    ),
+    profit: persistReducer<ReturnType<typeof profitReducer>>(
+      persistProfitConfig,
+      profitReducer
     ),
   },
   middleware: (DefaultSerializer) =>

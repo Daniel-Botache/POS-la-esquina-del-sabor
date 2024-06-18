@@ -50,3 +50,18 @@ type Sales = {
 export interface profitState {
   sales: Sales[];
 }
+const initialState: profitState = {
+  sales: [],
+};
+
+const profitSlice = createSlice({
+  name: "Profit",
+  initialState,
+  reducers: {
+    addSales: (state, action) => {
+      state.sales = action.payload.sales;
+    },
+  },
+});
+export default profitSlice.reducer;
+export const { addSales } = profitSlice.actions;
