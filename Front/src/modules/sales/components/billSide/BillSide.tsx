@@ -219,9 +219,10 @@ export default function BillSide() {
     setTotalSale(total);
     const spent = Object.values(productsSelected).reduce((sum, product) => {
       if (product.spent && !product.bale) {
+        console.log(sum);
         return sum + product.price * product.quantity;
       }
-      return 0;
+      return sum;
     }, 0);
     setTotalSpent(spent);
     console.log(totalSpent);
