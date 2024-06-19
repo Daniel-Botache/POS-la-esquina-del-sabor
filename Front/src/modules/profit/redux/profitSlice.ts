@@ -31,7 +31,7 @@ type Bales = {
   bale: boolean;
 };
 
-type Sales = {
+export type Sales = {
   id: number;
   paymentType: string;
   movementType: string;

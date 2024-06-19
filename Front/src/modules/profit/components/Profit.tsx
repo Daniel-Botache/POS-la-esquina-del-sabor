@@ -1,8 +1,22 @@
 import style from "../styles/Profit.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getSalesToday } from "../services/getSalesToday";
+import { addSales } from "../redux/profitSlice";
+import { useCustomDispatch } from "../../../store/hooks";
 
 export default function Profit() {
+  const dispatch = useCustomDispatch();
   const [typeSort, setTypeSort] = useState("");
+
+  const getSalesTodayHandler = async () => {
+    const data = await getSalesToday();
+    dispatch(addSales(data));
+  };
+
+  useEffect(() => {
+    getSalesTodayHandler();
+  }, []);
+
   return (
     <div className={style.principalContainer}>
       <div className={style.searchContainer}>
