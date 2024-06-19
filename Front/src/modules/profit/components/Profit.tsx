@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { getSalesToday } from "../services/getSalesToday";
 import { addSales } from "../redux/profitSlice";
 import { useCustomDispatch } from "../../../store/hooks";
+import TableProfit from "./TablePorfit";
 
 export default function Profit() {
   const dispatch = useCustomDispatch();
@@ -10,7 +11,7 @@ export default function Profit() {
 
   const getSalesTodayHandler = async () => {
     const data = await getSalesToday();
-    dispatch(addSales(data));
+    dispatch(addSales({ sales: data }));
   };
 
   useEffect(() => {
@@ -178,7 +179,7 @@ export default function Profit() {
 
         <h3 className={style.titleContainer__h3}>Acciones:</h3>
       </div>
-      <div className={style.titleContainer}></div>
+      <TableProfit />
     </div>
   );
 }
