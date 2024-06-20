@@ -57,6 +57,8 @@ const {
   Suplier,
   User,
   Type,
+  ProductSale,
+  BaleSale,
 } = sequelize.models;
 
 //relations
@@ -78,11 +80,31 @@ User.hasMany(Expense, { foreignKey: "userId" });
 Product.belongsToMany(Expense, { through: "product-expense" });
 Expense.belongsToMany(Product, { through: "product-expense" });
 
-Product.belongsToMany(Sale, { through: "product-sale", as: "sales" });
-Sale.belongsToMany(Product, { through: "product-sale", as: "products" });
+Product.belongsToMany(Sale, {
+  through: ProductSale,
+  as: "sales",
+  foreignKey: "productId",
+  otherKey: "saleId",
+});
+Sale.belongsToMany(Product, {
+  through: ProductSale,
+  as: "products",
+  foreignKey: "saleId",
+  otherKey: "productId",
+});
 
-Bale.belongsToMany(Sale, { through: "bale-sale", as: "sales" });
-Sale.belongsToMany(Bale, { through: "bale-sale", as: "bales" });
+Bale.belongsToMany(Sale, {
+  through: BaleSale,
+  as: "sales",
+  foreignKey: "baleId",
+  otherKey: "saleId",
+});
+Sale.belongsToMany(Bale, {
+  through: BaleSale,
+  as: "bales",
+  foreignKey: "saleId",
+  otherKey: "baleId",
+});
 
 Product.belongsToMany(Suplier, { through: "product-suplier", as: "supliers" });
 Suplier.belongsToMany(Product, { through: "product-suplier", as: "products" });
@@ -102,4 +124,6 @@ export {
   Suplier,
   User,
   Type,
+  BaleSale,
+  ProductSale,
 };

@@ -13,6 +13,7 @@
   transition: 0.5s;
   font-size: 1em;
   color: var(--color-white);
+  cursor: pointer;
 }
 
 .principalContainer__btn:hover {

@@ -1,9 +1,10 @@
 import { SaleInstance } from "../../domain/models/SaleAttributes";
 import { Sale } from "../config/database";
-import { Product, Bale } from "../config/database";
+import { Product, Bale, ProductSale, BaleSale } from "../config/database";
 import { ISaleRepository } from "../../application/repositories/ISaleRepository";
 import { ProductInstance } from "../../domain/models/ProductAttributes";
 import { BaleInstance } from "../../domain/models/BaleAttributes";
+
 const { Op } = require("sequelize");
 
 export class SaleRepository implements ISaleRepository {
@@ -53,6 +54,7 @@ export class SaleRepository implements ISaleRepository {
       } = data;
       const products = data.products;
       const bales = data.bales;
+
       const created = (await Sale.create(
         {
           paymentType,
@@ -73,22 +75,35 @@ export class SaleRepository implements ISaleRepository {
         }
       )) as SaleInstance;
 
-      if (products && products.length > 0 && created && created.addProducts) {
-        const productsToAssociate = (await Product.findAll({
-          where: { id: products },
-        })) as ProductInstance[];
+      if (products && products.length > 0 && created && created.id) {
+        for (const product of products) {
+          const { id, quantity } = product; // Asegúrate de que cada producto en el array tenga id y quantity
 
-        if (productsToAssociate.length > 0) {
-          await created.addProducts(productsToAssociate);
+          const productInstance = (await Product.findByPk(
+            id
+          )) as ProductInstance;
+          if (productInstance) {
+            await ProductSale.create({
+              saleId: created.id,
+              productId: productInstance.id,
+              quantity: quantity,
+            });
+          }
         }
       }
-      if (bales && bales.length > 0 && created && created.addBales) {
-        const balesToAssociate = (await Bale.findAll({
-          where: { id: bales },
-        })) as BaleInstance[];
 
-        if (balesToAssociate.length > 0) {
-          await created.addBales(balesToAssociate);
+      if (bales && bales.length > 0 && created && created.id) {
+        for (const bale of bales) {
+          const { id, quantity } = bale; // Asegúrate de que cada producto en el array tenga id y quantity
+
+          const baleInstance = (await Bale.findByPk(id)) as BaleInstance;
+          if (baleInstance) {
+            await BaleSale.create({
+              saleId: created.id,
+              baleId: baleInstance.id,
+              quantity: quantity,
+            });
+          }
         }
       }
       return true;
