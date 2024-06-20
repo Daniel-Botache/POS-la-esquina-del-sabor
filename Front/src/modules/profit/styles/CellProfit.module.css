@@ -22,7 +22,7 @@
 
 .prepertyContainer__btn:hover .prepertyContainer__detailIcon {
   fill: var(--color-white);
-  background-color: var(--color-main-blue);
+  background-color: var(--color-main-green);
   border-radius: 5px;
 }
 
@@ -30,7 +30,7 @@
   width: 1.8em;
   height: 2em;
   margin: auto;
-  fill: var(--color-main-blue);
+  fill: var(--color-main-green);
 }
 .prepertyContainer_options {
   width: 10%;

@@ -26,13 +26,14 @@ export default function CellProfit({
   products,
   bales,
 }: CellProfitProps) {
+  const formattedDateCreate = new Date(createdAt).toLocaleDateString();
   return (
     <div className={style.principalContainer}>
       <div className={style.prepertyContainer}>{id}</div>
       <div className={style.prepertyContainer}>{clientId}</div>
       <div className={style.prepertyContainer}>{movementType}</div>
       <div className={style.prepertyContainer}>{paymentType}</div>
-      <div className={style.prepertyContainer}>{"createdAt"}</div>
+      <div className={style.prepertyContainer}>{formattedDateCreate}</div>
       <div className={style.prepertyContainer}>{valueCash}</div>
       <div className={style.prepertyContainer}>{valueTransaction}</div>
       <div className={style.prepertyContainer}>{total}</div>
