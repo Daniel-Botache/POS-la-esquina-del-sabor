@@ -6,12 +6,12 @@ export interface SaleAttributes {
   paymentType: string;
   movementType: string;
   credit: boolean;
-  products: string[] | null;
+  products: { id: string; quantity: number }[] | null;
   clientId: string | null;
   userId: string;
   valueCash: number;
   valueSpent: number;
-  bales: string[] | null;
+  bales: { id: string; quantity: number }[] | null;
 }
 
 export async function postSaleService(sale: SaleAttributes) {

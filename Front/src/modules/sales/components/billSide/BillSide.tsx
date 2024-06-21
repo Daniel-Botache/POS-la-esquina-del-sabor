@@ -75,13 +75,13 @@ export default function BillSide() {
       );
       return;
     }
-    const bales: string[] = [];
-    const products: string[] = [];
+    const bales: { id: string; quantity: number }[] = [];
+    const products: { id: string; quantity: number }[] = [];
     Object.entries(productsSelected).forEach(([key, value]) => {
       if (value.bale) {
-        bales.push(key);
+        bales.push({ id: key, quantity: value.quantity });
       } else {
-        products.push(key);
+        products.push({ id: key, quantity: value.quantity });
       }
     });
 

@@ -5,6 +5,7 @@ import { addProductBill, addProductCreateBale } from "../../redux/billSlice";
 
 export default function Card(props: any) {
   const dispatch = useCustomDispatch();
+
   const handleAddItem = () => {
     if (props.isModal && !props.bale) {
       dispatch(
@@ -26,9 +27,7 @@ export default function Card(props: any) {
       alert("Solo se aceptan valores numericos");
       return;
     }
-    if (quantityPrompt === 0) {
-      quantityPrompt = 1;
-    }
+
     dispatch(addProductBill({ product: props, quantity: quantityPrompt }));
   };
   return (

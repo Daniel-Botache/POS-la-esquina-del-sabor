@@ -1,5 +1,7 @@
 import style from "../styles/CellProfit.module.css";
 import { DetailIcon } from "../../../utils/Icons/icons";
+import { useState } from "react";
+import ProfitDetail from "./ProfitDetail";
 
 type CellProfitProps = {
   id: number;
@@ -26,6 +28,12 @@ export default function CellProfit({
   products,
   bales,
 }: CellProfitProps) {
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleModalOpen = () => {
+    setModalOpen(!modalOpen);
+  };
+
   const formattedDateCreate = new Date(createdAt).toLocaleDateString();
   return (
     <div className={style.principalContainer}>
@@ -38,9 +46,24 @@ export default function CellProfit({
       <div className={style.prepertyContainer}>{valueTransaction}</div>
       <div className={style.prepertyContainer}>{total}</div>
       <div className={style.prepertyContainer_options}>
-        <button className={style.prepertyContainer__btn}>
+        <button
+          className={style.prepertyContainer__btn}
+          onClick={handleModalOpen}
+        >
           <DetailIcon className={style.prepertyContainer__detailIcon} />
         </button>
+        {modalOpen && (
+          <ProfitDetail
+            id={id}
+            clientId={clientId}
+            total={total}
+            products={products}
+            bales={bales}
+            movementType={movementType}
+            createdAt={createdAt}
+            closeModal={handleModalOpen}
+          />
+        )}
       </div>
     </div>
   );
