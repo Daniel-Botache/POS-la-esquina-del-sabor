@@ -168,4 +168,22 @@ export class SaleRepository implements ISaleRepository {
 
     return data.map((sale) => sale as SaleInstance);
   }
+  public async findByClient(id: string): Promise<SaleInstance[]> {
+    const salesData = await Sale.findAll({
+      where: {
+        clientId: id,
+      },
+      include: [
+        {
+          model: Product,
+          as: "products",
+        },
+        {
+          model: Bale,
+          as: "bales",
+        },
+      ],
+    });
+    return salesData.map((sale) => sale as SaleInstance);
+  }
 }

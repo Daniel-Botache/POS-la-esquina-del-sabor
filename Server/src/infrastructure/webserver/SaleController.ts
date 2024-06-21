@@ -90,4 +90,22 @@ export class SaleController extends DefaultController {
       return res.status(500).send(err.message);
     }
   };
+  findSaleByClientId = async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    try {
+      const salesData = await this.saleRepository.findByClient(id);
+      if (salesData.length > 0) {
+        return res
+          .status(200)
+          .json({ success: salesData, message: "Datos encontrados" });
+      }
+      return res
+        .status(404)
+        .json({ success: false, message: "Datos no encontrados" });
+    } catch (error) {
+      const err = error as Error;
+      return res.status(500).send(err.message);
+    }
+  };
 }

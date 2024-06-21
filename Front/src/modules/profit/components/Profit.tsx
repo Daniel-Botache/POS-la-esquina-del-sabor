@@ -2,17 +2,20 @@ import style from "../styles/Profit.module.css";
 import { useEffect, useState } from "react";
 import { getSalesToday } from "../services/getSalesToday";
 import { addSales } from "../redux/profitSlice";
-import { useCustomDispatch } from "../../../store/hooks";
+import { useCustomDispatch, useCustomSelector } from "../../../store/hooks";
 import TableProfit from "./TablePorfit";
 
 export default function Profit() {
   const dispatch = useCustomDispatch();
   const [typeSort, setTypeSort] = useState("");
+  const sales = useCustomSelector((state) => state.profit.sales);
 
   const getSalesTodayHandler = async () => {
     const data = await getSalesToday();
     dispatch(addSales({ sales: data }));
   };
+
+  const searchByClienIdHandle = () => {};
 
   useEffect(() => {
     getSalesTodayHandler();

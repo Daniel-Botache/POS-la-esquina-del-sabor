@@ -7,4 +7,5 @@ export interface ISaleRepository {
   delete(id: number): Promise<boolean>;
   findByDateNow(): Promise<SaleInstance[]>;
   findByDate(since: string, until: string): Promise<SaleInstance[]>;
+  findByClient(id: string): Promise<SaleInstance[]>;
 }
