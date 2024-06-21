@@ -44,7 +44,12 @@ export default function ProfitDetail({
     content: () => ticketRef.current,
   });
   const formattedDateCreate = new Date(createdAt).toLocaleString();
-  const arrayProductsBales = products.concat(bales);
+
+  const concatProductsAndBales = () => {
+    const arrayProductsAndBales = products.concat(bales);
+    return arrayProductsAndBales;
+  };
+
   return (
     <div className={style.modalOverlay}>
       <div className={style.principalContainer}>
@@ -71,7 +76,7 @@ export default function ProfitDetail({
             <h3 className={style.billTitleContainer__h3}>Total</h3>
           </div>
           <div className={style.billProductContainer}>
-            {arrayProductsBales.map((product) => (
+            {concatProductsAndBales().map((product) => (
               <CellList
                 key={product.id}
                 id={product.id}
@@ -95,10 +100,11 @@ export default function ProfitDetail({
         <div style={{ display: "none" }}>
           <Ticket
             ref={ticketRef}
-            products={products}
+            products={concatProductsAndBales()}
             total={total}
             clientIdStatus={clientId}
             userId={"000"}
+            history={true}
           />
         </div>
         <div className={style.closeSaleContainer} onClick={handlePrint}>

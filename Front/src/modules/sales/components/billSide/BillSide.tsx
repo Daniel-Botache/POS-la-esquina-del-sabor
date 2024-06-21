@@ -315,6 +315,7 @@ export default function BillSide() {
           total={totalSale}
           clientIdStatus={clientIdStatus}
           userId={userId}
+          history={false}
         />
       </div>
       <div className={style.closeSaleContainer} onClick={handleCloseSale}>

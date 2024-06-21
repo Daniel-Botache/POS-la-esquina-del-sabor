@@ -6,10 +6,12 @@ interface TicketProps {
   total: number;
   clientIdStatus: string;
   userId: string;
+  history: boolean;
 }
 
 const Ticket = forwardRef<HTMLDivElement, TicketProps>(
-  ({ products, total, clientIdStatus, userId }, ref) => {
+  ({ products, total, clientIdStatus, userId, history }, ref) => {
+    console.log(products);
     return (
       <div className={style.ticket} ref={ref}>
         <h1>Ticket de Compra</h1>
@@ -21,9 +23,22 @@ const Ticket = forwardRef<HTMLDivElement, TicketProps>(
             <div key={productId} className={style.product}>
               <span>{productData.name}</span>
               <span>
-                {productData.quantity} x ${productData.price}
+                {history
+                  ? productData.bale
+                    ? productData.BaleSale.quantity
+                    : productData.ProductSale.quantity
+                  : productData.quantity}{" "}
+                x ${productData.price}
               </span>
-              <span>Total: ${productData.price * productData.quantity}</span>
+              <span>
+                Total: $
+                {productData.price *
+                  (history
+                    ? productData.bale
+                      ? productData.BaleSale.quantity
+                      : productData.ProductSale.quantity
+                    : productData.quantity)}
+              </span>
             </div>
           ))}
         </div>
