@@ -9,11 +9,13 @@ type Products = {
   name: string;
   price: number;
   barCode: string;
+  bale: boolean | null;
   ProductSale: {
     productId: string;
     quantity: number;
     saleId: string;
   };
+  BaleSale: { baleId: string; quantity: number; saleId: string };
 };
 
 type ProfitDetailProps = {
@@ -42,7 +44,7 @@ export default function ProfitDetail({
     content: () => ticketRef.current,
   });
   const formattedDateCreate = new Date(createdAt).toLocaleString();
-
+  const arrayProductsBales = products.concat(bales);
   return (
     <div className={style.modalOverlay}>
       <div className={style.principalContainer}>
@@ -69,15 +71,23 @@ export default function ProfitDetail({
             <h3 className={style.billTitleContainer__h3}>Total</h3>
           </div>
           <div className={style.billProductContainer}>
-            {products.map((product) => (
+            {arrayProductsBales.map((product) => (
               <CellList
                 key={product.id}
                 id={product.id}
                 barCode={product.barCode}
                 productName={product.name}
-                quantity={product.ProductSale.quantity}
+                quantity={
+                  product.bale
+                    ? product.BaleSale.quantity
+                    : product.ProductSale.quantity
+                }
                 price={product.price}
-                total={product.price * product.ProductSale.quantity}
+                total={
+                  !product.bale
+                    ? product.price * product.ProductSale.quantity
+                    : product.price * product.BaleSale.quantity
+                }
               />
             ))}
           </div>
@@ -91,7 +101,7 @@ export default function ProfitDetail({
             userId={"000"}
           />
         </div>
-        <div className={style.closeSaleContainer}>
+        <div className={style.closeSaleContainer} onClick={handlePrint}>
           <h3
             className={`${style.closeSaleContainer__h3} ${style.closeSaleContainer__h3_title}`}
           >
