@@ -1,6 +1,8 @@
 import style from "../styles/Profit.module.css";
 import { useEffect, useState } from "react";
 import { getSalesToday } from "../services/getSalesToday";
+import { getSaleByClientId } from "../services/getSaleByClientId";
+import { getSaleBySaleId } from "../services/getSaleBySaleId";
 import { addSales } from "../redux/profitSlice";
 import { useCustomDispatch, useCustomSelector } from "../../../store/hooks";
 import TableProfit from "./TablePorfit";
@@ -8,6 +10,7 @@ import TableProfit from "./TablePorfit";
 export default function Profit() {
   const dispatch = useCustomDispatch();
   const [typeSort, setTypeSort] = useState("");
+  const [inputId, setInputId] = useState("");
   const sales = useCustomSelector((state) => state.profit.sales);
 
   const getSalesTodayHandler = async () => {
@@ -15,7 +18,15 @@ export default function Profit() {
     dispatch(addSales({ sales: data }));
   };
 
-  const searchByClienIdHandle = () => {};
+  const searchByClienIdHandle = async () => {
+    const data = await getSaleByClientId(inputId);
+    dispatch(addSales({ sales: data }));
+  };
+
+  const searchBySaleIdHandle = async () => {
+    const data = await getSaleBySaleId(inputId);
+    dispatch(addSales({ sales: data }));
+  };
 
   useEffect(() => {
     getSalesTodayHandler();
@@ -32,12 +43,19 @@ export default function Profit() {
             id="inputSaleId"
             placeholder="Buscar Factura"
             className={style.optionContainer__input}
+            onChange={(e) => setInputId(e.target.value)}
           />
           <div className={style.buttonsContainer}>
-            <button className={style.principalContainer__btn}>
+            <button
+              className={style.principalContainer__btn}
+              onClick={searchByClienIdHandle}
+            >
               Buscar por ID cliente
             </button>
-            <button className={style.principalContainer__btn}>
+            <button
+              className={style.principalContainer__btn}
+              onClick={searchBySaleIdHandle}
+            >
               Buscar por ID factura
             </button>
           </div>
@@ -66,6 +84,9 @@ export default function Profit() {
               className={style.inputContainer__input}
             />
           </div>
+          <button className={style.principalContainer__btn}>
+            Buscar por Fecha
+          </button>
         </div>
         <div className={style.optionContainer}>
           <h3 className={style.optionContainer__h3}>Tipo de factura:</h3>
