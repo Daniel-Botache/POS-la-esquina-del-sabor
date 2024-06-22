@@ -75,6 +75,7 @@ export class SaleController extends DefaultController {
   findSaleByDate = async (req: Request, res: Response) => {
     const since = req.body.since;
     const until = req.body.until;
+    console.log(since, until);
     try {
       const saleData = await this.saleRepository.findByDate(since, until);
       if (saleData.length > 0) {

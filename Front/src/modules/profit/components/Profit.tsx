@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { getSalesToday } from "../services/getSalesToday";
 import { getSaleByClientId } from "../services/getSaleByClientId";
 import { getSaleBySaleId } from "../services/getSaleBySaleId";
+import { getSalesByDate } from "../services/getSalesByDate";
 import { addSales } from "../redux/profitSlice";
 import { useCustomDispatch, useCustomSelector } from "../../../store/hooks";
 import TableProfit from "./TablePorfit";
@@ -12,6 +13,8 @@ export default function Profit() {
   const [typeSort, setTypeSort] = useState("");
   const [inputId, setInputId] = useState("");
   const sales = useCustomSelector((state) => state.profit.sales);
+  const [filterInitialDate, setFilterInitialDate] = useState("");
+  const [filterFinalDate, setFilterFinalDate] = useState("");
 
   const getSalesTodayHandler = async () => {
     const data = await getSalesToday();
@@ -25,6 +28,11 @@ export default function Profit() {
 
   const searchBySaleIdHandle = async () => {
     const data = await getSaleBySaleId(inputId);
+    dispatch(addSales({ sales: data }));
+  };
+
+  const searchByDateHandle = async () => {
+    const data = await getSalesByDate(filterInitialDate, filterFinalDate);
     dispatch(addSales({ sales: data }));
   };
 
@@ -71,6 +79,7 @@ export default function Profit() {
               name=""
               id="desdeDate"
               className={style.inputContainer__input}
+              onChange={(e) => setFilterInitialDate(e.target.value)}
             />
           </div>
           <div className={style.inputContainer}>
@@ -82,9 +91,13 @@ export default function Profit() {
               name=""
               id="hastaDate"
               className={style.inputContainer__input}
+              onChange={(e) => setFilterFinalDate(e.target.value)}
             />
           </div>
-          <button className={style.principalContainer__btn}>
+          <button
+            className={style.principalContainer__btn}
+            onClick={searchByDateHandle}
+          >
             Buscar por Fecha
           </button>
         </div>

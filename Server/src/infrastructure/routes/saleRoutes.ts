@@ -5,7 +5,7 @@ const router = Router();
 const controller = new SaleController();
 
 router.get("/", controller.findAllSales);
-router.get("/saleDate", controller.findSaleByDate);
+router.post("/saleDate", controller.findSaleByDate);
 router.get("/salesClient/:id", controller.findSaleByClientId);
 router.get("/saleToday", controller.findSaleByDateNow);
 router.get("/:id", controller.findSaleById);

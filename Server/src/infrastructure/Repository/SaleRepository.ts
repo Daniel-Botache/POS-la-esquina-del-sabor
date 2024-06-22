@@ -146,15 +146,21 @@ export class SaleRepository implements ISaleRepository {
     since: string,
     until: string
   ): Promise<SaleInstance[]> {
-    const startOfDay = new Date(since);
-    startOfDay.setHours(0, 0, 0, 0);
-    const endOfDay = new Date(until);
-    endOfDay.setHours(23, 59, 59, 999);
+    const startOfDay = new Date(since).toISOString();
+
+    const parseDateInitial = Date.parse(startOfDay) + 86400000;
+    const startOfDayChanged = new Date(parseDateInitial);
+    startOfDayChanged.setHours(0, 0, 0, 0);
+    const endOfDay = new Date(until).toISOString();
+    const parseDateFinal = Date.parse(endOfDay) + 86400000;
+    const finalOfDayChanged = new Date(parseDateFinal);
+    finalOfDayChanged.setHours(23, 59, 59, 999);
+    console.log(endOfDay);
     const data = await Sale.findAll({
       where: {
         createdAt: {
-          [Op.gte]: startOfDay,
-          [Op.lte]: endOfDay,
+          [Op.gte]: startOfDayChanged,
+          [Op.lte]: finalOfDayChanged,
         },
       },
       include: [
