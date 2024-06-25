@@ -49,9 +49,11 @@ export type Sales = {
 
 export interface profitState {
   sales: Sales[];
+  salesCopy: Sales[];
 }
 const initialState: profitState = {
   sales: [],
+  salesCopy: [],
 };
 
 const profitSlice = createSlice({
@@ -61,7 +63,10 @@ const profitSlice = createSlice({
     addSales: (state, action) => {
       state.sales = action.payload.sales;
     },
+    addSalesCopy: (state, action) => {
+      state.salesCopy = action.payload.salesCopy;
+    },
   },
 });
 export default profitSlice.reducer;
-export const { addSales } = profitSlice.actions;
+export const { addSales, addSalesCopy } = profitSlice.actions;

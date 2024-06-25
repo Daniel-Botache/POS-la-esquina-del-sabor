@@ -4,7 +4,7 @@ import { getSalesToday } from "../services/getSalesToday";
 import { getSaleByClientId } from "../services/getSaleByClientId";
 import { getSaleBySaleId } from "../services/getSaleBySaleId";
 import { getSalesByDate } from "../services/getSalesByDate";
-import { addSales } from "../redux/profitSlice";
+import { addSales, addSalesCopy } from "../redux/profitSlice";
 import { useCustomDispatch, useCustomSelector } from "../../../store/hooks";
 import TableProfit from "./TablePorfit";
 
@@ -12,6 +12,11 @@ export default function Profit() {
   const dispatch = useCustomDispatch();
   const [typeSort, setTypeSort] = useState("");
   const [inputId, setInputId] = useState("");
+  const [filterByBillTypeSales, setFilterBillTypeSales] = useState(true);
+  const [filterByBillTypePayment, setFilterBillTypePayment] = useState(true);
+  const [filterCash, setFilterCash] = useState(true);
+  const [filterTransaction, setFilterTransaction] = useState(true);
+  const [filterMix, setFilterMix] = useState(true);
   const sales = useCustomSelector((state) => state.profit.sales);
   const [filterInitialDate, setFilterInitialDate] = useState("");
   const [filterFinalDate, setFilterFinalDate] = useState("");
@@ -19,21 +24,88 @@ export default function Profit() {
   const getSalesTodayHandler = async () => {
     const data = await getSalesToday();
     dispatch(addSales({ sales: data }));
+    dispatch(addSalesCopy({ salesCopy: data }));
   };
 
   const searchByClienIdHandle = async () => {
     const data = await getSaleByClientId(inputId);
     dispatch(addSales({ sales: data }));
+    dispatch(addSalesCopy({ salesCopy: data }));
   };
 
   const searchBySaleIdHandle = async () => {
     const data = await getSaleBySaleId(inputId);
     dispatch(addSales({ sales: data }));
+    dispatch(addSalesCopy({ salesCopy: data }));
   };
 
   const searchByDateHandle = async () => {
     const data = await getSalesByDate(filterInitialDate, filterFinalDate);
     dispatch(addSales({ sales: data }));
+    dispatch(addSalesCopy({ salesCopy: data }));
+  };
+
+  const filterByBillTypeSalesHandle = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setFilterBillTypeSales(event.target.checked);
+    if (event.target.checked && !filterByBillTypePayment && !filterCash) {
+      const filteredSales = sales.filter(
+        (product) => product.movementType == "Venta"
+      );
+      dispatch(addSalesCopy({ salesCopy: filteredSales }));
+      return;
+    } else if (event.target.checked && !filterByBillTypePayment && filterCash) {
+      const filteredSales = sales.filter(
+        (product) =>
+          product.movementType == "Venta" && product.paymentType == "Efectivo"
+      );
+      dispatch(addSalesCopy({ salesCopy: filteredSales }));
+      return;
+    } else if (event.target.checked && filterByBillTypePayment && !filterCash) {
+      const filteredSales = sales.filter(
+        (product) =>
+          product.movementType == "Venta" && product.paymentType !== "Efectivo"
+      );
+      dispatch(addSalesCopy({ salesCopy: filteredSales }));
+      return;
+    } else if (event.target.checked && filterByBillTypePayment && filterCash) {
+      dispatch(addSalesCopy({ salesCopy: sales }));
+      return;
+    }
+
+    const filteredSales = sales.filter(
+      (product) => product.movementType == "Abono"
+    );
+    dispatch(addSalesCopy({ salesCopy: filteredSales }));
+  };
+
+  const filterByBillTypePaymentHandle = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setFilterBillTypePayment(event.target.checked);
+    if (event.target.checked && !filterByBillTypeSales) {
+      const filteredSales = sales.filter(
+        (product) => product.movementType == "Abono"
+      );
+      dispatch(addSalesCopy({ salesCopy: filteredSales }));
+      return;
+    } else if (event.target.checked && filterByBillTypeSales) {
+      dispatch(addSalesCopy({ salesCopy: sales }));
+      return;
+    }
+
+    const filteredSales = sales.filter(
+      (product) => product.movementType == "Venta"
+    );
+    dispatch(addSalesCopy({ salesCopy: filteredSales }));
+  };
+
+  const filterByPayTypeCashHandle = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const checked = event.target.checked;
+    setFilterCash(checked);
   };
 
   useEffect(() => {
@@ -109,7 +181,8 @@ export default function Profit() {
               Ventas
             </label>
             <input
-              defaultChecked
+              checked={filterByBillTypeSales}
+              onChange={filterByBillTypeSalesHandle}
               type="checkbox"
               name="optionRadio"
               id="saleRadio"
@@ -121,7 +194,8 @@ export default function Profit() {
               Abonos
             </label>
             <input
-              defaultChecked
+              onChange={filterByBillTypePaymentHandle}
+              checked={filterByBillTypePayment}
               type="checkbox"
               name="optionRadio"
               id="payment"
@@ -130,13 +204,14 @@ export default function Profit() {
           </div>
         </div>
         <div className={style.optionContainer}>
-          <h3 className={style.optionContainer__h3}>Tipo de factura:</h3>
+          <h3 className={style.optionContainer__h3}>Tipo de pago:</h3>
           <div className={style.inputContainer}>
             <label htmlFor="cash" className={style.inputContainer__label}>
               Efectivo
             </label>
             <input
-              defaultChecked
+              onChange={filterByPayTypeCashHandle}
+              checked={filterCash}
               type="checkbox"
               name="optionCheck"
               id="cash"

@@ -39,7 +39,7 @@ const peristBillConfig = {
 const persistProfitConfig = {
   key: "profit",
   storage,
-  whitelist: ["sales"],
+  whitelist: ["sales", "salesCopy"],
 };
 
 //store donde se van a comunicar los reducer, se hace una key con la configuracion de persistencia y
