@@ -49,35 +49,15 @@ export default function Profit() {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setFilterBillTypeSales(event.target.checked);
-    if (event.target.checked && !filterByBillTypePayment && !filterCash) {
-      const filteredSales = sales.filter(
-        (product) => product.movementType == "Venta"
-      );
-      dispatch(addSalesCopy({ salesCopy: filteredSales }));
-      return;
-    } else if (event.target.checked && !filterByBillTypePayment && filterCash) {
-      const filteredSales = sales.filter(
-        (product) =>
-          product.movementType == "Venta" && product.paymentType == "Efectivo"
-      );
-      dispatch(addSalesCopy({ salesCopy: filteredSales }));
-      return;
-    } else if (event.target.checked && filterByBillTypePayment && !filterCash) {
-      const filteredSales = sales.filter(
-        (product) =>
-          product.movementType == "Venta" && product.paymentType !== "Efectivo"
-      );
-      dispatch(addSalesCopy({ salesCopy: filteredSales }));
-      return;
-    } else if (event.target.checked && filterByBillTypePayment && filterCash) {
-      dispatch(addSalesCopy({ salesCopy: sales }));
-      return;
-    }
 
-    const filteredSales = sales.filter(
-      (product) => product.movementType == "Abono"
-    );
-    dispatch(addSalesCopy({ salesCopy: filteredSales }));
+    const filteredProducts = sales.filter((sale) => {
+      const matchSales =
+        filterByBillTypeSales === false || sale.movementType !== "Venta";
+
+      return matchSales;
+    });
+
+    dispatch(addSalesCopy({ salesCopy: filteredProducts }));
   };
 
   const filterByBillTypePaymentHandle = (
@@ -106,6 +86,20 @@ export default function Profit() {
   ) => {
     const checked = event.target.checked;
     setFilterCash(checked);
+  };
+
+  const filterByPayTypeTransaHandle = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const checked = event.target.checked;
+    setFilterTransaction(checked);
+  };
+
+  const filterByPayTypeMixHandle = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const checked = event.target.checked;
+    setFilterMix(checked);
   };
 
   useEffect(() => {
@@ -223,7 +217,8 @@ export default function Profit() {
               Transaccion
             </label>
             <input
-              defaultChecked
+              onChange={filterByPayTypeTransaHandle}
+              checked={filterTransaction}
               type="checkbox"
               name="optionCheck"
               id="trans"
@@ -235,7 +230,8 @@ export default function Profit() {
               Mixto
             </label>
             <input
-              defaultChecked
+              onChange={filterByPayTypeMixHandle}
+              checked={filterMix}
               type="checkbox"
               name="optionCheck"
               id="mix"
