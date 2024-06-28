@@ -21,6 +21,7 @@ export default function Profit() {
   const sales = useCustomSelector((state) => state.profit.sales);
   const [filterInitialDate, setFilterInitialDate] = useState("");
   const [filterFinalDate, setFilterFinalDate] = useState("");
+  const salesCopy = useCustomSelector((state) => state.profit.salesCopy);
 
   const getSalesTodayHandler = async () => {
     const data = await getSalesToday();
@@ -162,7 +163,7 @@ export default function Profit() {
 
   const calculateTotal = () => {
     let total = 0;
-    sales.forEach((sale) => {
+    salesCopy.forEach((sale) => {
       total = sale.total + total;
     });
     return total;
@@ -170,7 +171,7 @@ export default function Profit() {
 
   const calculateTotalSpent = () => {
     let totalSpent = 0;
-    sales.forEach((sale) => {
+    salesCopy.forEach((sale) => {
       totalSpent = totalSpent + sale.valueSpent;
     });
     return totalSpent;

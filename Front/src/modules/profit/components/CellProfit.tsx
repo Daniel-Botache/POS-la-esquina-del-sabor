@@ -33,6 +33,11 @@ export default function CellProfit({
   const handleModalOpen = () => {
     setModalOpen(!modalOpen);
   };
+  const fromatedPrice = new Intl.NumberFormat("es-CO").format(total);
+  const formatedCash = new Intl.NumberFormat("es-CO").format(valueCash);
+  const formatedTransaction = new Intl.NumberFormat("es-CO").format(
+    valueTransaction
+  );
 
   const formattedDateCreate = new Date(createdAt).toLocaleDateString();
   return (
@@ -42,9 +47,9 @@ export default function CellProfit({
       <div className={style.prepertyContainer}>{movementType}</div>
       <div className={style.prepertyContainer}>{paymentType}</div>
       <div className={style.prepertyContainer}>{formattedDateCreate}</div>
-      <div className={style.prepertyContainer}>{valueCash}</div>
-      <div className={style.prepertyContainer}>{valueTransaction}</div>
-      <div className={style.prepertyContainer}>{total}</div>
+      <div className={style.prepertyContainer}>{formatedCash}</div>
+      <div className={style.prepertyContainer}>{formatedTransaction}</div>
+      <div className={style.prepertyContainer}>{fromatedPrice}</div>
       <div className={style.prepertyContainer_options}>
         <button
           className={style.prepertyContainer__btn}

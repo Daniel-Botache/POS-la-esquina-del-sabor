@@ -1,0 +1,45 @@
+.principalContainer {
+  display: flex;
+  justify-content: space-evenly;
+  position: sticky;
+  bottom: 2em;
+  background-color: var(--color-background-grey);
+  align-items: center;
+}
+
+.principalContainer__btn {
+  border: 1px transparent solid;
+  background-color: var(--color-main-orange);
+  border-radius: 5px;
+  font-family: "Franklin Gothic ", "Arial Narrow", Arial, sans-serif;
+  transition: 0.5s;
+  font-size: 1em;
+  color: var(--color-white);
+  cursor: pointer;
+}
+
+.principalContainer__btn:hover {
+  background-color: var(--color-white);
+  border: 1px var(--color-main-orange) solid;
+  color: var(--color-main-orange);
+}
+
+.principalContainer_h3 {
+  font-size: 1.5em;
+  margin: 0.3em 0 0.8em 0;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+.principalContainer_span_blue {
+  color: var(--color-main-blue);
+  font-style: italic;
+  font-weight: lighter;
+}
+.principalContainer_span_red {
+  color: var(--color-main-red);
+  font-style: italic;
+  font-weight: lighter;
+}
+.principalContainer_span {
+  font-style: italic;
+  font-weight: lighter;
+}
