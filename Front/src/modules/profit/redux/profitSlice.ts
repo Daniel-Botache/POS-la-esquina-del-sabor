@@ -45,6 +45,7 @@ export type Sales = {
   userId: string;
   products: Products[];
   bales: Bales[];
+  valueSpent: number;
 };
 
 export interface profitState {

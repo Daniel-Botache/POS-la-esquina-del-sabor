@@ -7,6 +7,7 @@ import { getSalesByDate } from "../services/getSalesByDate";
 import { addSales, addSalesCopy } from "../redux/profitSlice";
 import { useCustomDispatch, useCustomSelector } from "../../../store/hooks";
 import TableProfit from "./TablePorfit";
+import TotalFooter from "./TotalFooter";
 
 export default function Profit() {
   const dispatch = useCustomDispatch();
@@ -157,6 +158,22 @@ export default function Profit() {
     });
 
     dispatch(addSalesCopy({ salesCopy: filteredProducts }));
+  };
+
+  const calculateTotal = () => {
+    let total = 0;
+    sales.forEach((sale) => {
+      total = sale.total + total;
+    });
+    return total;
+  };
+
+  const calculateTotalSpent = () => {
+    let totalSpent = 0;
+    sales.forEach((sale) => {
+      totalSpent = totalSpent + sale.valueSpent;
+    });
+    return totalSpent;
   };
 
   useEffect(() => {
@@ -345,6 +362,11 @@ export default function Profit() {
         <h3 className={style.titleContainer__h3}>Acciones:</h3>
       </div>
       <TableProfit />
+      <TotalFooter
+        total={calculateTotal()}
+        totalSales={calculateTotal() - calculateTotalSpent()}
+        totalSpent={calculateTotalSpent()}
+      />
     </div>
   );
 }
