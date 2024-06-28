@@ -53,8 +53,16 @@ export default function Profit() {
     const filteredProducts = sales.filter((sale) => {
       const matchSales =
         filterByBillTypeSales === false || sale.movementType !== "Venta";
+      const matchPayments =
+        filterByBillTypePayment == true || sale.movementType !== "Abono";
+      const matchCash = filterCash == true || sale.paymentType !== "Efectivo";
+      const matchTransaction =
+        filterTransaction == true || sale.paymentType !== "Transaccion";
+      const matchMix = filterMix == true || sale.paymentType !== "Mixto";
 
-      return matchSales;
+      return (
+        matchSales && matchPayments && matchCash && matchTransaction && matchMix
+      );
     });
 
     dispatch(addSalesCopy({ salesCopy: filteredProducts }));
@@ -64,21 +72,22 @@ export default function Profit() {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setFilterBillTypePayment(event.target.checked);
-    if (event.target.checked && !filterByBillTypeSales) {
-      const filteredSales = sales.filter(
-        (product) => product.movementType == "Abono"
-      );
-      dispatch(addSalesCopy({ salesCopy: filteredSales }));
-      return;
-    } else if (event.target.checked && filterByBillTypeSales) {
-      dispatch(addSalesCopy({ salesCopy: sales }));
-      return;
-    }
+    const filteredProducts = sales.filter((sale) => {
+      const matchSales =
+        filterByBillTypeSales === true || sale.movementType !== "Venta";
+      const matchPayments =
+        filterByBillTypePayment == false || sale.movementType !== "Abono";
+      const matchCash = filterCash == true || sale.paymentType !== "Efectivo";
+      const matchTransaction =
+        filterTransaction == true || sale.paymentType !== "Transaccion";
+      const matchMix = filterMix == true || sale.paymentType !== "Mixto";
 
-    const filteredSales = sales.filter(
-      (product) => product.movementType == "Venta"
-    );
-    dispatch(addSalesCopy({ salesCopy: filteredSales }));
+      return (
+        matchSales && matchPayments && matchCash && matchTransaction && matchMix
+      );
+    });
+
+    dispatch(addSalesCopy({ salesCopy: filteredProducts }));
   };
 
   const filterByPayTypeCashHandle = (
@@ -86,6 +95,22 @@ export default function Profit() {
   ) => {
     const checked = event.target.checked;
     setFilterCash(checked);
+    const filteredProducts = sales.filter((sale) => {
+      const matchSales =
+        filterByBillTypeSales === true || sale.movementType !== "Venta";
+      const matchPayments =
+        filterByBillTypePayment == true || sale.movementType !== "Abono";
+      const matchCash = filterCash == false || sale.paymentType !== "Efectivo";
+      const matchTransaction =
+        filterTransaction == true || sale.paymentType !== "Transaccion";
+      const matchMix = filterMix == true || sale.paymentType !== "Mixto";
+
+      return (
+        matchSales && matchPayments && matchCash && matchTransaction && matchMix
+      );
+    });
+
+    dispatch(addSalesCopy({ salesCopy: filteredProducts }));
   };
 
   const filterByPayTypeTransaHandle = (
@@ -93,6 +118,22 @@ export default function Profit() {
   ) => {
     const checked = event.target.checked;
     setFilterTransaction(checked);
+    const filteredProducts = sales.filter((sale) => {
+      const matchSales =
+        filterByBillTypeSales === true || sale.movementType !== "Venta";
+      const matchPayments =
+        filterByBillTypePayment == true || sale.movementType !== "Abono";
+      const matchCash = filterCash == true || sale.paymentType !== "Efectivo";
+      const matchTransaction =
+        filterTransaction == false || sale.paymentType !== "Transaccion";
+      const matchMix = filterMix == true || sale.paymentType !== "Mixto";
+
+      return (
+        matchSales && matchPayments && matchCash && matchTransaction && matchMix
+      );
+    });
+
+    dispatch(addSalesCopy({ salesCopy: filteredProducts }));
   };
 
   const filterByPayTypeMixHandle = (
@@ -100,6 +141,22 @@ export default function Profit() {
   ) => {
     const checked = event.target.checked;
     setFilterMix(checked);
+    const filteredProducts = sales.filter((sale) => {
+      const matchSales =
+        filterByBillTypeSales === true || sale.movementType !== "Venta";
+      const matchPayments =
+        filterByBillTypePayment == true || sale.movementType !== "Abono";
+      const matchCash = filterCash == true || sale.paymentType !== "Efectivo";
+      const matchTransaction =
+        filterTransaction == true || sale.paymentType !== "Transaccion";
+      const matchMix = filterMix == false || sale.paymentType !== "Mixto";
+
+      return (
+        matchSales && matchPayments && matchCash && matchTransaction && matchMix
+      );
+    });
+
+    dispatch(addSalesCopy({ salesCopy: filteredProducts }));
   };
 
   useEffect(() => {
