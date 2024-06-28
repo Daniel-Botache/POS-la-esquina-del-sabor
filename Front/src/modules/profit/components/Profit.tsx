@@ -163,18 +163,22 @@ export default function Profit() {
 
   const calculateTotal = () => {
     let total = 0;
+    let totalSpent = 0;
+    let totalCash = 0;
+    let totalTrans = 0;
     salesCopy.forEach((sale) => {
       total = sale.total + total;
+      totalSpent = sale.valueSpent + totalSpent;
+      totalCash = totalCash + sale.valueCash;
+      totalTrans = totalTrans + sale.valueTransaction;
     });
-    return total;
-  };
-
-  const calculateTotalSpent = () => {
-    let totalSpent = 0;
-    salesCopy.forEach((sale) => {
-      totalSpent = totalSpent + sale.valueSpent;
-    });
-    return totalSpent;
+    const totals = {
+      total: total,
+      totalSpent: totalSpent,
+      totalCash: totalCash,
+      totalTrans: totalTrans,
+    };
+    return totals;
   };
 
   useEffect(() => {
@@ -363,11 +367,7 @@ export default function Profit() {
         <h3 className={style.titleContainer__h3}>Acciones:</h3>
       </div>
       <TableProfit />
-      <TotalFooter
-        total={calculateTotal()}
-        totalSales={calculateTotal() - calculateTotalSpent()}
-        totalSpent={calculateTotalSpent()}
-      />
+      <TotalFooter totals={calculateTotal()} />
     </div>
   );
 }
