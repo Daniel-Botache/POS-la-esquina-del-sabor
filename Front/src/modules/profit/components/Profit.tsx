@@ -233,6 +233,56 @@ export default function Profit() {
     dispatch(addSalesCopy({ salesCopy: arraySorted }));
   };
 
+  const sortByCash = (event: React.MouseEvent<HTMLHRElement>) => {
+    event.preventDefault();
+    if (typeSort == "cashSort") {
+      setTypeSort("");
+      const arraySorted = [...salesCopy].sort(
+        (a: Sales, b: Sales) => b.valueCash - a.valueCash
+      );
+      dispatch(addSalesCopy({ salesCopy: arraySorted }));
+      return;
+    }
+    setTypeSort("cashSort");
+    const arraySorted = [...salesCopy].sort(
+      (a: Sales, b: Sales) => a.valueCash - b.valueCash
+    );
+    dispatch(addSalesCopy({ salesCopy: arraySorted }));
+  };
+
+  const sortByTrans = (event: React.MouseEvent<HTMLHRElement>) => {
+    event.preventDefault();
+    if (typeSort == "transSort") {
+      setTypeSort("");
+      const arraySorted = [...salesCopy].sort(
+        (a: Sales, b: Sales) => b.valueTransaction - a.valueTransaction
+      );
+      dispatch(addSalesCopy({ salesCopy: arraySorted }));
+      return;
+    }
+    setTypeSort("transSort");
+    const arraySorted = [...salesCopy].sort(
+      (a: Sales, b: Sales) => a.valueTransaction - b.valueTransaction
+    );
+    dispatch(addSalesCopy({ salesCopy: arraySorted }));
+  };
+  const sortByTotal = (event: React.MouseEvent<HTMLHRElement>) => {
+    event.preventDefault();
+    if (typeSort == "totalSort") {
+      setTypeSort("");
+      const arraySorted = [...salesCopy].sort(
+        (a: Sales, b: Sales) => b.total - a.total
+      );
+      dispatch(addSalesCopy({ salesCopy: arraySorted }));
+      return;
+    }
+    setTypeSort("totalSort");
+    const arraySorted = [...salesCopy].sort(
+      (a: Sales, b: Sales) => a.total - b.total
+    );
+    dispatch(addSalesCopy({ salesCopy: arraySorted }));
+  };
+
   return (
     <div className={style.principalContainer}>
       <div className={style.searchContainer}>
@@ -378,22 +428,22 @@ export default function Profit() {
             {typeSort == "creationDateSort" ? "▼" : "▶"}
           </span>
         </h3>
-        <h3 className={style.titleContainer__h3}>
+        <h3 className={style.titleContainer__h3} onClick={sortByCash}>
           Valor Efectivo:{" "}
           <span className={style.titleCOntainer__span}>
-            {typeSort == "maximumSort" ? "▼" : "▶"}
+            {typeSort == "cashSort" ? "▼" : "▶"}
           </span>
         </h3>
-        <h3 className={style.titleContainer__h3}>
+        <h3 className={style.titleContainer__h3} onClick={sortByTrans}>
           Valor Transferencia:{" "}
           <span className={style.titleCOntainer__span}>
-            {typeSort == "creationDateSort" ? "▼" : "▶"}
+            {typeSort == "transSort" ? "▼" : "▶"}
           </span>
         </h3>
-        <h3 className={style.titleContainer__h3}>
+        <h3 className={style.titleContainer__h3} onClick={sortByTotal}>
           Total:{" "}
           <span className={style.titleCOntainer__span}>
-            {typeSort == "lastVolumeDateSort" ? "▼" : "▶"}
+            {typeSort == "totalSort" ? "▼" : "▶"}
           </span>
         </h3>
 
