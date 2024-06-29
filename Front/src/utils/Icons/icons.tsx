@@ -1415,6 +1415,7 @@ export const FilterIcon = ({ className }: any) => {
     </svg>
   );
 };
+
 export const DetailIcon = ({ className }: any) => {
   return (
     <svg

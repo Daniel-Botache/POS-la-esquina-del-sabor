@@ -3,3 +3,17 @@
   flex-direction: column;
   position: relative;
 }
+.principalContainer_icon {
+  width: 3em;
+}
+
+.principalContainer_notFound {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2em;
+}
+.principalContainer_h3 {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  color: var(--color-main-red);
+}
