@@ -10,6 +10,7 @@ axios.defaults.baseURL = "http://localhost:3000";
 import Head from "./modules/head/components/head";
 import Stock from "./modules/Inventory/components/Stock";
 import Profit from "./modules/profit/components/Profit";
+import Expenses from "./modules/spents/components/Expenses";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/sales" element={<Sales />} />
         <Route path="/stock" element={<Stock />} />
         <Route path="/profit" element={<Profit />} />
+        <Route path="/expenses" element={<Expenses />} />
       </Routes>
       <Footer />
     </>
