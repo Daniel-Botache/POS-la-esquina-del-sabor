@@ -161,26 +161,56 @@ export default function Profit() {
     dispatch(addSalesCopy({ salesCopy: filteredProducts }));
   };
 
+  interface IndexArrayData {
+    time: string;
+    value: number;
+  }
+
   const calculateTotal = () => {
     let total = 0;
     let totalSpent = 0;
     let totalCash = 0;
     let totalTrans = 0;
+    let grahpArrayData: IndexArrayData[] = [];
+
     salesCopy.forEach((sale) => {
-      total = sale.total + total;
-      totalSpent = sale.valueSpent + totalSpent;
-      totalCash = totalCash + sale.valueCash;
-      totalTrans = totalTrans + sale.valueTransaction;
+      total += sale.total;
+      totalSpent += sale.valueSpent;
+      totalCash += sale.valueCash;
+      totalTrans += sale.valueTransaction;
+
+      const formattedDateCreate = new Date(sale.createdAt);
+      const year = formattedDateCreate.getFullYear();
+      const month = String(formattedDateCreate.getMonth() + 1).padStart(2, "0"); // Los meses son base 0 en JavaScript
+      const day = String(formattedDateCreate.getDate()).padStart(2, "0");
+      const formatedToChartDate = `${year}-${month}-${day}`;
+
+      const objectData = {
+        time: formatedToChartDate,
+        value: total - totalSpent,
+      };
+
+      grahpArrayData.push(objectData);
     });
+
+    // Ordenar grahpArrayData según la fecha y eliminar duplicados
+    grahpArrayData.sort(
+      (a, b) => new Date(a.time).getTime() - new Date(b.time).getTime()
+    );
+    grahpArrayData = grahpArrayData.filter(
+      (item, index, self) => index === 0 || item.time !== self[index - 1].time
+    );
+
     const totals = {
       total: total,
       totalSpent: totalSpent,
       totalCash: totalCash,
       totalTrans: totalTrans,
+      grahpArrayData: grahpArrayData,
     };
+
     return totals;
   };
-
   useEffect(() => {
     getSalesTodayHandler();
   }, []);

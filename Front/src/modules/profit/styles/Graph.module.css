@@ -1,0 +1,18 @@
+.principalContainer_chart {
+  width: 80%;
+  height: 400px;
+  border-radius: 5px;
+  border: 1px var(--color-main-orange) solid;
+}
+.principalContainer {
+  height: 680px;
+  width: 90%;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  bottom: 4em;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+}

@@ -1,4 +1,11 @@
 import style from "../styles/TotalFooter.module.css";
+import Graph from "./Graph";
+import { useState } from "react";
+
+interface IndexArrayData {
+  time: string;
+  value: number;
+}
 
 type TotalFooterProps = {
   totals: {
@@ -6,10 +13,13 @@ type TotalFooterProps = {
     totalSpent: number;
     totalCash: number;
     totalTrans: number;
+    grahpArrayData: IndexArrayData[];
   };
 };
 
 export default function TotalFooter({ totals }: TotalFooterProps) {
+  const [graphOpen, setGraphOpen] = useState(false);
+
   const fromatedPrice = new Intl.NumberFormat("es-CO").format(totals.total);
   const formatedSpent = new Intl.NumberFormat("es-CO").format(
     totals.totalSpent
@@ -21,6 +31,11 @@ export default function TotalFooter({ totals }: TotalFooterProps) {
     totals.totalTrans
   );
   const fotmatedCash = new Intl.NumberFormat("es-CO").format(totals.totalCash);
+
+  const openGraphHandle = () => {
+    setGraphOpen(!graphOpen);
+  };
+
   return (
     <div className={style.principalContainer}>
       <h3 className={style.principalContainer_h3}>
@@ -47,7 +62,13 @@ export default function TotalFooter({ totals }: TotalFooterProps) {
         Total:{" "}
         <span className={style.principalContainer_span}>{fromatedPrice}</span>{" "}
       </h3>
-      <button className={style.principalContainer__btn}>Mostrar Gráfico</button>
+      <button
+        className={style.principalContainer__btn}
+        onClick={openGraphHandle}
+      >
+        Mostrar Gráfico
+      </button>
+      {graphOpen ? <Graph data={totals.grahpArrayData} /> : null}
     </div>
   );
 }
