@@ -8,6 +8,7 @@ import { addSales, addSalesCopy } from "../redux/profitSlice";
 import { useCustomDispatch, useCustomSelector } from "../../../store/hooks";
 import TableProfit from "./TablePorfit";
 import TotalFooter from "./TotalFooter";
+import { Sales } from "../redux/profitSlice";
 
 export default function Profit() {
   const dispatch = useCustomDispatch();
@@ -215,6 +216,23 @@ export default function Profit() {
     getSalesTodayHandler();
   }, []);
 
+  const sortByCreationDate = (event: React.MouseEvent<HTMLHRElement>) => {
+    event.preventDefault();
+    if (typeSort == "creationDateSort") {
+      setTypeSort("");
+      const arraySorted = [...salesCopy].sort((a: Sales, b: Sales) =>
+        b.createdAt?.localeCompare(a.createdAt)
+      );
+      dispatch(addSalesCopy({ salesCopy: arraySorted }));
+      return;
+    }
+    setTypeSort("creationDateSort");
+    const arraySorted = [...salesCopy].sort((a: Sales, b: Sales) =>
+      a.createdAt?.localeCompare(b.createdAt)
+    );
+    dispatch(addSalesCopy({ salesCopy: arraySorted }));
+  };
+
   return (
     <div className={style.principalContainer}>
       <div className={style.searchContainer}>
@@ -350,29 +368,14 @@ export default function Profit() {
         </div>
       </div>
       <div className={style.titleContainer}>
-        <h3 className={style.titleContainer__h3}>
-          Id:{" "}
-          <span className={style.titleCOntainer__span}>
-            {typeSort == "idSort" ? "▼" : "▶"}
-          </span>
-        </h3>
-        <h3 className={style.titleContainer__h3}>
-          Cliente:{" "}
-          <span className={style.titleCOntainer__span}>
-            {typeSort == "barCodeSort" ? "▼" : "▶"}
-          </span>
-        </h3>
-        <h3 className={style.titleContainer__h3}>
-          Descripcion:{" "}
-          <span className={style.titleCOntainer__span}>
-            {typeSort == "nameSort" ? "▼" : "▶"}
-          </span>
-        </h3>
+        <h3 className={style.titleContainer__h3}>Id:</h3>
+        <h3 className={style.titleContainer__h3}>Cliente:</h3>
+        <h3 className={style.titleContainer__h3}>Descripcion:</h3>
         <h3 className={style.titleContainer__h3}>Tipo de pago:</h3>
-        <h3 className={style.titleContainer__h3}>
+        <h3 className={style.titleContainer__h3} onClick={sortByCreationDate}>
           Fecha:{" "}
           <span className={style.titleCOntainer__span}>
-            {typeSort == "volumeSort" ? "▼" : "▶"}
+            {typeSort == "creationDateSort" ? "▼" : "▶"}
           </span>
         </h3>
         <h3 className={style.titleContainer__h3}>

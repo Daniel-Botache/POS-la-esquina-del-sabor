@@ -9,10 +9,11 @@ import style from "../styles/Graph.module.css";
 
 interface ChartProps {
   data: LineData[];
+  onClose: () => void;
 }
 const textColor = "black";
 
-export default function Graph({ data }: ChartProps) {
+export default function Graph({ data, onClose }: ChartProps) {
   const chartContainerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (chartContainerRef.current) {
@@ -53,8 +54,19 @@ export default function Graph({ data }: ChartProps) {
     }
   }, [data]);
 
+  const handleClose = () => {
+    if (onClose) {
+      onClose();
+    }
+  };
+
   return (
     <div className={style.principalContainer}>
+      <div className={style.closeButtonContainer}>
+        <button className={style.closeButton} onClick={handleClose}>
+          X
+        </button>
+      </div>
       <div className={style.principalContainer_chart} ref={chartContainerRef} />
     </div>
   );

@@ -15,4 +15,22 @@
   justify-content: center;
   align-items: center;
   z-index: 200;
+  flex-direction: column;
+}
+.closeButtonContainer {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  width: 80%;
+}
+.closeButton {
+  color: var(--color-main-orange);
+  border: 1px transparent solid;
+  text-align: center;
+  border-radius: 5px;
+  font-size: 1em;
+}
+.closeButton:hover {
+  border: 1px var(--color-main-orange) solid;
+  cursor: pointer;
 }

@@ -36,6 +36,10 @@ export default function TotalFooter({ totals }: TotalFooterProps) {
     setGraphOpen(!graphOpen);
   };
 
+  const onClose = () => {
+    setGraphOpen(!graphOpen);
+  };
+
   return (
     <div className={style.principalContainer}>
       <h3 className={style.principalContainer_h3}>
@@ -68,7 +72,9 @@ export default function TotalFooter({ totals }: TotalFooterProps) {
       >
         Mostrar Gráfico
       </button>
-      {graphOpen ? <Graph data={totals.grahpArrayData} /> : null}
+      {graphOpen ? (
+        <Graph data={totals.grahpArrayData} onClose={onClose} />
+      ) : null}
     </div>
   );
 }

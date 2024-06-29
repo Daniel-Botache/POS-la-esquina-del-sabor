@@ -31,7 +31,7 @@ type Bales = {
   bale: boolean;
 };
 
-export type Sales = {
+export interface Sales {
   id: number;
   paymentType: string;
   movementType: string;
@@ -40,13 +40,13 @@ export type Sales = {
   clientId: string | null;
   valueCash: number;
   valueTransaction: number;
-  createdAt: Date;
+  createdAt: string;
   updatedAt: Date;
   userId: string;
   products: Products[];
   bales: Bales[];
   valueSpent: number;
-};
+}
 
 export interface profitState {
   sales: Sales[];
