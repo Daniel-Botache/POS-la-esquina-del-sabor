@@ -1,6 +1,6 @@
 import { ExpenseInstance } from "../../domain/models/ExpenseAttributes";
 
 export interface IExpenseRepository {
-  findById(id: string): Promise<ExpenseInstance | null>;
-  create(data: ExpenseInstance): Promise<boolean>;
+  findByDate(since: string, until: string): Promise<ExpenseInstance[]>;
+  findByDateNow(): Promise<ExpenseInstance[]>;
 }

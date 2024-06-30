@@ -1,49 +1,53 @@
 import { Expense } from "../config/database";
-import { Product } from "../config/database";
+
 import { IExpenseRepository } from "../../application/repositories/IExpenseRepository";
-import { ProductInstance } from "../../domain/models/ProductAttributes";
+
 import { ExpenseInstance } from "../../domain/models/ExpenseAttributes";
 
-export class SaleRepository implements IExpenseRepository {
-  public async findById(id: string): Promise<ExpenseInstance | null> {
-    const expenseData = await Expense.findByPk(id, {
-      include: [
-        {
-          model: Product,
-          as: "products",
+const { Op } = require("sequelize");
+
+export class ExpenseRepository implements IExpenseRepository {
+  public async findByDate(
+    since: string,
+    until: string
+  ): Promise<ExpenseInstance[]> {
+    const startOfDay = new Date(since).toISOString();
+
+    const parseDateInitial = Date.parse(startOfDay) + 86400000;
+    const startOfDayChanged = new Date(parseDateInitial);
+    startOfDayChanged.setHours(0, 0, 0, 0);
+    const endOfDay = new Date(until).toISOString();
+    const parseDateFinal = Date.parse(endOfDay) + 86400000;
+    const finalOfDayChanged = new Date(parseDateFinal);
+    finalOfDayChanged.setHours(23, 59, 59, 999);
+    console.log(endOfDay);
+    const data = await Expense.findAll({
+      where: {
+        createdAt: {
+          [Op.gte]: startOfDayChanged,
+          [Op.lte]: finalOfDayChanged,
         },
-      ],
+      },
     });
-    return expenseData as ExpenseInstance;
+
+    return data.map((expense) => expense as ExpenseInstance);
   }
-  public async create(data: any): Promise<boolean> {
-    try {
-      const { description, type, date, total, products } = data;
-      const created = (await Expense.create(
-        {
-          description,
-          type,
-          total,
-          date,
+
+  public async findByDateNow(): Promise<ExpenseInstance[]> {
+    const startOfDay = new Date();
+    startOfDay.setHours(0, 0, 0, 0);
+    const endOfDay = new Date();
+    endOfDay.setHours(23, 59, 59, 999);
+
+    const data = await Expense.findAll({
+      where: {
+        createdAt: {
+          [Op.gte]: startOfDay,
+          [Op.lte]: endOfDay,
         },
-        {
-          include: [{ model: Product, as: "products" }], // Esto incluye el modelo durante la creación si es necesario
-        }
-      )) as ExpenseInstance;
+      },
+    });
 
-      if (products && products.length > 0 && created && created.addProducts) {
-        const productsToAssociate = (await Product.findAll({
-          where: { id: products },
-        })) as ProductInstance[];
-
-        if (productsToAssociate.length > 0) {
-          await created.addProducts(productsToAssociate);
-        }
-      }
-      return true;
-    } catch (error) {
-      console.error("Failed to create sale with products:", error);
-      return false;
-    }
+    return data.map((expense) => expense as ExpenseInstance);
   }
 }

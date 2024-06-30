@@ -3,7 +3,7 @@ import style from "../styles/createExpenseModal.module.css";
 type CreateExpenseModalProps = {
   onClose: () => void;
 };
-export default function createExpenseModal({
+export default function CreateExpenseModal({
   onClose,
 }: CreateExpenseModalProps) {
   const handleClose = () => {
@@ -20,34 +20,48 @@ export default function createExpenseModal({
             X
           </button>
         </div>
-        <form>
-          <h2> Crear Proveedor</h2>
+        <form className={style.formContainer}>
+          <h2> Crear Gasto</h2>
           <div className={style.inputContainer}>
-            <label htmlFor="compayInput">Empresa: *</label>
+            <label htmlFor="descriptionInput">Descripción: *</label>
             <input
               type="text"
-              id="compayInput"
+              id="descriptionInput"
               className={style.form__inputText}
             />
           </div>
           <div className={style.inputContainer}>
-            <label htmlFor="adviserInput">Asesor:</label>
-            <input
-              type="text"
-              id="adviserInput"
+            <label htmlFor="typeSelect">Tipo:</label>
+            <select
+              name="typeSelect"
+              id="typeSelect"
               className={style.form__inputText}
-            />
+            >
+              <option value="">Seleccionar tipo</option>
+              <option value="Pago proveedor">Pago proveedor</option>
+              <option value="Nomina">Nómina</option>
+              <option value="Pago externo">Pago externo</option>
+            </select>
           </div>
           <div className={style.inputContainer}>
-            <label htmlFor="telInput">Teléfono:</label>
+            <label htmlFor="suplierInput">Proveedor:</label>
+            <select
+              name=""
+              id="suplierInput"
+              className={style.form__inputText}
+            ></select>
+          </div>
+          <div className={style.inputContainer}>
+            <label htmlFor="totalInput">Total: *</label>
             <input
-              type="text"
-              id="telInput"
+              type="number"
+              id="totalInput"
               className={style.form__inputText}
             />
           </div>
+
           <button type="submit" className={style.principalContainer__btn}>
-            Crear proveedor
+            Crear Gasto
           </button>
         </form>
       </div>
