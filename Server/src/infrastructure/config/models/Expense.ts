@@ -8,16 +8,12 @@ export default (sequelize: Sequelize) => {
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-    date: {
-      type: DataTypes.DATE,
-      allowNull: false,
-    },
     description: {
       type: DataTypes.STRING,
       allowNull: true,
     },
     type: {
-      type: DataTypes.STRING,
+      type: DataTypes.ENUM("Nomina", "Pago proveedor", "Pago externo"),
       allowNull: false,
     },
     total: {

@@ -77,6 +77,9 @@ User.hasMany(Base, { foreignKey: "userId" });
 Expense.belongsTo(User, { foreignKey: "userId" });
 User.hasMany(Expense, { foreignKey: "userId" });
 
+Expense.belongsTo(Suplier, { foreignKey: "suplierId" });
+Suplier.hasMany(Expense, { foreignKey: "suplierId" });
+
 Product.belongsToMany(Expense, { through: "product-expense" });
 Expense.belongsToMany(Product, { through: "product-expense" });
 

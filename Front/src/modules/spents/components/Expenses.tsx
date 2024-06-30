@@ -1,5 +1,6 @@
 import style from "../styles/Spents.module.css";
 import { AddIcon, SearchIcon } from "../../../utils/Icons/icons";
+import createExpenseModal from "./createExpenseModal";
 
 export default function Expenses() {
   return (

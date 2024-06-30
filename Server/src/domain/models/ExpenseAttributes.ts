@@ -4,7 +4,6 @@ interface ExpenseAttribute {
   id: string;
   description: string;
   type: string;
-  date: Date;
   total: number;
 }
 

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { errorMessage } from "../../auth/hooks/notifications";
+import { Sales } from "../redux/profitSlice";
 
 export async function getSaleBySaleId(id: string) {
   try {
@@ -7,7 +8,10 @@ export async function getSaleBySaleId(id: string) {
     const arraySale = [];
     arraySale.push(sales.data);
     if (arraySale.length > 0) {
-      return arraySale;
+      const arrayFiltered = arraySale.filter(
+        (sale: Sales) => sale.credit == false
+      );
+      return arrayFiltered;
     }
     return errorMessage("Datos no encontrados");
   } catch (error: any) {
