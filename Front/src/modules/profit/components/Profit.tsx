@@ -194,7 +194,6 @@ export default function Profit() {
       grahpArrayData.push(objectData);
     });
 
-    // Ordenar grahpArrayData según la fecha y eliminar duplicados
     grahpArrayData.sort(
       (a, b) => new Date(a.time).getTime() - new Date(b.time).getTime()
     );

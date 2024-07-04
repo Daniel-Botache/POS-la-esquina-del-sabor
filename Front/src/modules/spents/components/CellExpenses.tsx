@@ -9,7 +9,7 @@ type CellExpenseProps = {
   type: string;
   suplierId: string;
   description: string;
-  createdAt: Date;
+  createdAt: string;
   total: number;
   userId: string;
 };

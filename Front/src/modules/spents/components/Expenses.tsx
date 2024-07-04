@@ -8,6 +8,20 @@ import { getExpensesToday } from "../services/getExpensesToday";
 import { addExpenses, addExpensesCopy } from "../redux/spentSlice";
 import TableExpenses from "./TableExpenses";
 import { getExpensesyDate } from "../services/getExpensesByDate";
+import TotalFooterExpenses from "./TotalFooterExpenses";
+interface IndexArrayData {
+  time: string;
+  value: number;
+}
+export interface ExpensesI {
+  id: number;
+  type: string;
+  suplierId: string;
+  description: string;
+  createdAt: string;
+  total: number;
+  userId: string;
+}
 
 export default function Expenses() {
   const [createExpenseModaOpen, setCreateExpenseModaOpen] = useState(false);
@@ -17,6 +31,7 @@ export default function Expenses() {
   const dispatch = useCustomDispatch();
   const supliers = useCustomSelector((state) => state.createProduct.suppliers);
   const expenses = useCustomSelector((state) => state.spent.expenses);
+  const expensesCopy = useCustomSelector((state) => state.spent.expensesCopy);
 
   const getExpensesTodayHandler = async () => {
     const data = await getExpensesToday();
@@ -61,6 +76,70 @@ export default function Expenses() {
       return;
     }
     dispatch(addExpensesCopy({ expensesCopy: expenses }));
+  };
+
+  const sortByCreationDate = (event: React.MouseEvent<HTMLHRElement>) => {
+    event.preventDefault();
+    if (typeSort == "creationDateSort") {
+      setTypeSort("");
+      const arraySorted = [...expensesCopy].sort((a: ExpensesI, b: ExpensesI) =>
+        b.createdAt?.localeCompare(a.createdAt)
+      );
+      dispatch(addExpensesCopy({ expensesCopy: arraySorted }));
+      return;
+    }
+    setTypeSort("creationDateSort");
+    const arraySorted = [...expensesCopy].sort((a: ExpensesI, b: ExpensesI) =>
+      a.createdAt?.localeCompare(b.createdAt)
+    );
+    dispatch(addExpensesCopy({ expensesCopy: arraySorted }));
+  };
+  const sortByTotal = (event: React.MouseEvent<HTMLHRElement>) => {
+    event.preventDefault();
+    if (typeSort == "totalSort") {
+      setTypeSort("");
+      const arraySorted = [...expensesCopy].sort(
+        (a: ExpensesI, b: ExpensesI) => b.total - a.total
+      );
+      dispatch(addExpensesCopy({ expensesCopy: arraySorted }));
+      return;
+    }
+    setTypeSort("totalSort");
+    const arraySorted = [...expensesCopy].sort(
+      (a: ExpensesI, b: ExpensesI) => a.total - b.total
+    );
+    dispatch(addExpensesCopy({ expensesCopy: arraySorted }));
+  };
+
+  const calculateTotal = () => {
+    let total = 0;
+    let grahpArrayData: IndexArrayData[] = [];
+    expensesCopy.forEach((expense) => {
+      total = expense.total + total;
+      const formattedDateCreate = new Date(expense.createdAt);
+      const year = formattedDateCreate.getFullYear();
+      const month = String(formattedDateCreate.getMonth() + 1).padStart(2, "0"); // Los meses son base 0 en JavaScript
+      const day = String(formattedDateCreate.getDate()).padStart(2, "0");
+      const formatedToChartDate = `${year}-${month}-${day}`;
+
+      const objectData = {
+        time: formatedToChartDate,
+        value: total,
+      };
+      grahpArrayData.push(objectData);
+    });
+    grahpArrayData.sort(
+      (a, b) => new Date(a.time).getTime() - new Date(b.time).getTime()
+    );
+    grahpArrayData = grahpArrayData.filter(
+      (item, index, self) => index === 0 || item.time !== self[index - 1].time
+    );
+    const totals = {
+      total: total,
+
+      grahpArrayData: grahpArrayData,
+    };
+    return totals;
   };
 
   return (
@@ -152,26 +231,22 @@ export default function Expenses() {
         <h3 className={style.titleContainer__h3}>Descripción:</h3>
         <h3 className={style.titleContainer__h3}>Tipo:</h3>
         <h3 className={style.titleContainer__h3}>Proveedor:</h3>
-        <h3 className={style.titleContainer__h3}>
+        <h3 className={style.titleContainer__h3} onClick={sortByCreationDate}>
           Fecha:{" "}
           <span className={style.titleCOntainer__span}>
             {typeSort == "creationDateSort" ? "▼" : "▶"}
           </span>
         </h3>
-        <h3 className={style.titleContainer__h3}>
+        <h3 className={style.titleContainer__h3} onClick={sortByTotal}>
           Total:{" "}
           <span className={style.titleCOntainer__span}>
             {typeSort == "totalSort" ? "▼" : "▶"}
           </span>
         </h3>
-        <h3 className={style.titleContainer__h3}>
-          Usuario:{" "}
-          <span className={style.titleCOntainer__span}>
-            {typeSort == "totalSort" ? "▼" : "▶"}
-          </span>
-        </h3>
+        <h3 className={style.titleContainer__h3}>Usuario: </h3>
       </div>
       <TableExpenses></TableExpenses>
+      <TotalFooterExpenses totals={calculateTotal()} />
     </div>
   );
 }

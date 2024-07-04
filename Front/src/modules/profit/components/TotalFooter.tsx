@@ -1,5 +1,5 @@
 import style from "../styles/TotalFooter.module.css";
-import Graph from "./Graph";
+import Graph from "../../graph/components/Graph";
 import { useState } from "react";
 
 interface IndexArrayData {
