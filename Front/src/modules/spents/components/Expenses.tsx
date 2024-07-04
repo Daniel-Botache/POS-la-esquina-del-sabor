@@ -1,15 +1,28 @@
 import style from "../styles/Spents.module.css";
 import { AddIcon, SearchIcon } from "../../../utils/Icons/icons";
 import CreateExpenseModal from "./CreateExpenseModal";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useCustomDispatch, useCustomSelector } from "../../../store/hooks";
 import { getSuppliers } from "../../createProductModal/redux/createProductSlice";
+import { getExpensesToday } from "../services/getExpensesToday";
+import { addExpenses, addExpensesCopy } from "../redux/spentSlice";
+import TableExpenses from "./TableExpenses";
+import { getExpensesyDate } from "../services/getExpensesByDate";
 
 export default function Expenses() {
   const [createExpenseModaOpen, setCreateExpenseModaOpen] = useState(false);
   const [typeSort, setTypeSort] = useState("");
+  const [filterInitialDate, setFilterInitialDate] = useState("");
+  const [filterFinalDate, setFilterFinalDate] = useState("");
   const dispatch = useCustomDispatch();
   const supliers = useCustomSelector((state) => state.createProduct.suppliers);
+  const expenses = useCustomSelector((state) => state.spent.expenses);
+
+  const getExpensesTodayHandler = async () => {
+    const data = await getExpensesToday();
+    dispatch(addExpenses({ expenses: data }));
+    dispatch(addExpensesCopy({ expensesCopy: data }));
+  };
 
   const toggleModalExpense = () => {
     setCreateExpenseModaOpen(!createExpenseModaOpen);
@@ -17,7 +30,38 @@ export default function Expenses() {
 
   useEffect(() => {
     dispatch(getSuppliers());
+    getExpensesTodayHandler();
   }, []);
+
+  const searchByDateHandle = async () => {
+    const data = await getExpensesyDate(filterInitialDate, filterFinalDate);
+    dispatch(addExpenses({ expenses: data }));
+    dispatch(addExpensesCopy({ expensesCopy: data }));
+  };
+
+  const filterBySupplierHandle = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    if (event.target.value !== "") {
+      const filteredExpense = expenses.filter(
+        (expense) => expense.suplierId == event.target.value
+      );
+      dispatch(addExpensesCopy({ expensesCopy: filteredExpense }));
+      return;
+    }
+    dispatch(addExpensesCopy({ expensesCopy: expenses }));
+  };
+
+  const filterByTypeHandle = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    if (event.target.value !== "") {
+      const filteredExpense = expenses.filter(
+        (expense) => expense.type == event.target.value
+      );
+      dispatch(addExpensesCopy({ expensesCopy: filteredExpense }));
+      return;
+    }
+    dispatch(addExpensesCopy({ expensesCopy: expenses }));
+  };
 
   return (
     <div className={style.principalContainer}>
@@ -28,6 +72,7 @@ export default function Expenses() {
               Desde:
             </label>
             <input
+              onChange={(e) => setFilterInitialDate(e.target.value)}
               type="date"
               name=""
               id="desdeDate"
@@ -43,9 +88,13 @@ export default function Expenses() {
               name=""
               id="hastaDate"
               className={style.inputContainer__input}
+              onChange={(e) => setFilterFinalDate(e.target.value)}
             />
           </div>
-          <button className={style.principalContainer__btn}>
+          <button
+            className={style.principalContainer__btn}
+            onClick={searchByDateHandle}
+          >
             <SearchIcon className={style.principalContainer_icon} />
           </button>
         </div>
@@ -55,6 +104,7 @@ export default function Expenses() {
             Proveedor:
           </label>
           <select
+            onChange={filterBySupplierHandle}
             name="suplierInput"
             id="suplierInput"
             className={style.optionContainer__select}
@@ -62,7 +112,9 @@ export default function Expenses() {
             <option value="">Todos</option>
             {supliers.length > 0
               ? supliers.map((suplier) => (
-                  <option value={suplier.id}>{suplier.company}</option>
+                  <option key={suplier.id} value={suplier.id}>
+                    {suplier.company}
+                  </option>
                 ))
               : null}
           </select>
@@ -73,6 +125,7 @@ export default function Expenses() {
             Tipo:
           </label>
           <select
+            onChange={filterByTypeHandle}
             name="typeInput"
             id="typeInput"
             className={style.optionContainer__select}
@@ -97,6 +150,7 @@ export default function Expenses() {
       <div className={style.titleContainer}>
         <h3 className={style.titleContainer__h3}>Id:</h3>
         <h3 className={style.titleContainer__h3}>Descripción:</h3>
+        <h3 className={style.titleContainer__h3}>Tipo:</h3>
         <h3 className={style.titleContainer__h3}>Proveedor:</h3>
         <h3 className={style.titleContainer__h3}>
           Fecha:{" "}
@@ -117,6 +171,7 @@ export default function Expenses() {
           </span>
         </h3>
       </div>
+      <TableExpenses></TableExpenses>
     </div>
   );
 }
