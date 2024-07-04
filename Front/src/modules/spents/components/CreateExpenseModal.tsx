@@ -3,6 +3,7 @@ import { useCustomSelector, useCustomDispatch } from "../../../store/hooks";
 import { getSuppliers } from "../../createProductModal/redux/createProductSlice";
 import { useEffect, useState } from "react";
 import { postExpense } from "../services/postExpense";
+import { errorMessage } from "../../auth/hooks/notifications";
 
 type CreateExpenseModalProps = {
   onClose: () => void;
@@ -52,6 +53,12 @@ export default function CreateExpenseModal({
       type: type,
       userId: user,
     };
+    if (total == 0 || type == "") {
+      errorMessage(
+        "Debe ingresar un valor numérico para el gasto y seleccionar un tipo"
+      );
+      return;
+    }
     postExpense(expense);
   };
 

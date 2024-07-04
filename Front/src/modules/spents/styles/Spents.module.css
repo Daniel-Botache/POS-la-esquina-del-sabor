@@ -130,3 +130,20 @@ input[type="date"] {
   outline: none;
   background-color: var(--color-white);
 }
+.titleContainer {
+  display: flex;
+  gap: 2%;
+  align-items: baseline;
+  justify-content: center;
+  border-bottom: 2px var(--color-background-grey) solid;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+.titleContainer__h3 {
+  width: 15%;
+  font-size: 1em;
+  cursor: pointer;
+}
+.titleCOntainer__span {
+  font-size: 0.7em;
+  color: var(--color-main-blue);
+}

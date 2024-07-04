@@ -5,6 +5,7 @@ import billReducer from "../modules/sales/redux/billSlice";
 import stockReducer from "../modules/Inventory/redux/stockSlice";
 import createProductReducer from "../modules/createProductModal/redux/createProductSlice";
 import profitReducer from "../modules/profit/redux/profitSlice";
+import spentReducer from "../modules/spents/redux/spentSlice";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
@@ -42,6 +43,12 @@ const persistProfitConfig = {
   whitelist: ["sales", "salesCopy"],
 };
 
+const persistSpentConfig = {
+  key: "spent",
+  storage,
+  whiteList: ["expenses", "expensesCopy"],
+};
+
 //store donde se van a comunicar los reducer, se hace una key con la configuracion de persistencia y
 //se le pasa como segundo argumento el reducer
 export const store = configureStore({
@@ -69,6 +76,10 @@ export const store = configureStore({
     profit: persistReducer<ReturnType<typeof profitReducer>>(
       persistProfitConfig,
       profitReducer
+    ),
+    spent: persistReducer<ReturnType<typeof spentReducer>>(
+      persistSpentConfig,
+      spentReducer
     ),
   },
   middleware: (DefaultSerializer) =>
