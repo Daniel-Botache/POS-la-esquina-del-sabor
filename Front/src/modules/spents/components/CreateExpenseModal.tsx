@@ -1,4 +1,8 @@
 import style from "../styles/createExpenseModal.module.css";
+import { useCustomSelector, useCustomDispatch } from "../../../store/hooks";
+import { getSuppliers } from "../../createProductModal/redux/createProductSlice";
+import { useEffect, useState } from "react";
+import { postExpense } from "../services/postExpense";
 
 type CreateExpenseModalProps = {
   onClose: () => void;
@@ -6,11 +10,54 @@ type CreateExpenseModalProps = {
 export default function CreateExpenseModal({
   onClose,
 }: CreateExpenseModalProps) {
+  const user = useCustomSelector((state) => state.auth.userId);
+  const supliers = useCustomSelector((state) => state.createProduct.suppliers);
+  const dispatch = useCustomDispatch();
+  const [description, setDescription] = useState("");
+  const [total, setTotal] = useState(0);
+  const [type, setType] = useState("");
+  const [selectedSupplier, setSelectedSuplier] = useState("");
+
+  const descriptionHandle = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const descriptionInput = event.target.value;
+    setDescription(descriptionInput);
+  };
+  const totalHandle = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const totalInput = Number(event.target.value);
+    setTotal(totalInput);
+  };
+
+  const typeHandle = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const typeSelected = event.target.value;
+    setType(typeSelected);
+  };
+
+  const suplierHandle = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const suplierSelected = event.target.value;
+    setSelectedSuplier(suplierSelected);
+  };
+
   const handleClose = () => {
     if (onClose) {
       onClose();
     }
   };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const expense = {
+      total: total,
+      suplierId: selectedSupplier,
+      description: description,
+      type: type,
+      userId: user,
+    };
+    postExpense(expense);
+  };
+
+  useEffect(() => {
+    dispatch(getSuppliers());
+  }, []);
 
   return (
     <div className={style.modalOverlay}>
@@ -20,7 +67,7 @@ export default function CreateExpenseModal({
             X
           </button>
         </div>
-        <form className={style.formContainer}>
+        <form className={style.formContainer} onSubmit={handleSubmit}>
           <h2> Crear Gasto</h2>
           <div className={style.inputContainer}>
             <label htmlFor="descriptionInput">Descripción: *</label>
@@ -28,14 +75,17 @@ export default function CreateExpenseModal({
               type="text"
               id="descriptionInput"
               className={style.form__inputText}
+              onChange={descriptionHandle}
             />
           </div>
           <div className={style.inputContainer}>
             <label htmlFor="typeSelect">Tipo:</label>
             <select
+              onChange={typeHandle}
               name="typeSelect"
               id="typeSelect"
               className={style.form__inputText}
+              value={type}
             >
               <option value="">Seleccionar tipo</option>
               <option value="Pago proveedor">Pago proveedor</option>
@@ -49,7 +99,18 @@ export default function CreateExpenseModal({
               name=""
               id="suplierInput"
               className={style.form__inputText}
-            ></select>
+              onChange={suplierHandle}
+              value={selectedSupplier}
+            >
+              <option value="">Seleccionar Proveedor</option>
+              {supliers.length > 0 ? (
+                supliers.map((suplier) => (
+                  <option value={suplier.id}>{suplier.company}</option>
+                ))
+              ) : (
+                <option value="">seleccione proveedor</option>
+              )}
+            </select>
           </div>
           <div className={style.inputContainer}>
             <label htmlFor="totalInput">Total: *</label>
@@ -57,6 +118,7 @@ export default function CreateExpenseModal({
               type="number"
               id="totalInput"
               className={style.form__inputText}
+              onChange={totalHandle}
             />
           </div>
 
