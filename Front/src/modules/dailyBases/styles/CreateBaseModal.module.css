@@ -1,0 +1,79 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+}
+
+.principalContainer {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  background: var(--color-white);
+  padding: 0.8em;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  width: 40vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px var(--color-main-orange) solid;
+}
+
+.closeButton {
+  color: var(--color-main-orange);
+  border: 1px transparent solid;
+  text-align: center;
+  border-radius: 5px;
+  font-size: 1em;
+}
+.closeButtonContainer {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+}
+.closeButton:hover {
+  border: 1px var(--color-main-orange) solid;
+  cursor: pointer;
+}
+.inputContainer {
+  display: flex;
+  gap: 1em;
+  align-items: center;
+  width: 90%;
+  justify-content: space-between;
+}
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  gap: 1em;
+  width: 70%;
+  margin: auto;
+  color: var(--color-main-text);
+}
+.form__inputText {
+  border-radius: 5px;
+  outline: none;
+  border: 1px var(--color-main-orange) solid;
+  background-color: var(--color-background-grey);
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-size: 1rem;
+}
+.principalContainer__btn {
+  border: 1px transparent solid;
+  border-radius: 5px;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-size: 1em;
+  color: var(--color-main-orange);
+  cursor: pointer;
+}
+.principalContainer__btn:hover {
+  border: 1px var(--color-main-orange) solid;
+}
