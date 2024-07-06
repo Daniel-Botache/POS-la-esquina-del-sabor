@@ -94,6 +94,7 @@ export default function Expenses() {
     );
     dispatch(addExpensesCopy({ expensesCopy: arraySorted }));
   };
+
   const sortByTotal = (event: React.MouseEvent<HTMLHRElement>) => {
     event.preventDefault();
     if (typeSort == "totalSort") {

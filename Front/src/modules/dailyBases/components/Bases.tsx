@@ -5,11 +5,13 @@ import CreateBaseModal from "./CreateBaseModal";
 import { getEBasesToday } from "../services/getBasesToday";
 import TableBase from "./TableBase";
 import { getBasesByDate } from "../services/getBasesByDate";
+import { Base } from "./TableBase";
+import TotalFooter from "./TotalFooter";
 
 export default function Bases() {
   const [filterInitialDate, setFilterInitialDate] = useState("");
   const [filterFinalDate, setFilterFinalDate] = useState("");
-  const [typeSelected, setTypeSelected] = useState("");
+
   const [createBaseModalOpen, setCreateBaseModalOpen] = useState(false);
   const [basesSearched, setBasesSearched] = useState([]);
   const [basesSearchedCopy, setBasesSearchedCopy] = useState([]);
@@ -19,10 +21,64 @@ export default function Bases() {
     setCreateBaseModalOpen(!createBaseModalOpen);
   };
 
-  const typeSelectedHandle = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const typeInput = event.target.value;
-    setTypeSelected(typeInput);
+  const sortByCreationDate = (event: React.MouseEvent<HTMLHRElement>) => {
+    event.preventDefault();
+    if (typeSort == "creationDateSort") {
+      setTypeSort("");
+      const arraySorted = [...basesSearchedCopy].sort((a: Base, b: Base) =>
+        b.date?.localeCompare(a.date)
+      );
+      setBasesSearchedCopy(arraySorted);
+      return;
+    }
+    setTypeSort("creationDateSort");
+    const arraySorted = [...basesSearchedCopy].sort((a: Base, b: Base) =>
+      a.date?.localeCompare(b.date)
+    );
+    setBasesSearchedCopy(arraySorted);
   };
+
+  const sortByTotal = (event: React.MouseEvent<HTMLHRElement>) => {
+    event.preventDefault();
+    if (typeSort == "totalSort") {
+      setTypeSort("");
+      const arraySorted = [...basesSearchedCopy].sort(
+        (a: Base, b: Base) => b.total - a.total
+      );
+      setBasesSearchedCopy(arraySorted);
+      return;
+    }
+    setTypeSort("totalSort");
+    const arraySorted = [...basesSearchedCopy].sort(
+      (a: Base, b: Base) => a.total - b.total
+    );
+    setBasesSearchedCopy(arraySorted);
+  };
+
+  const typeSelectedHandle = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    if (event.target.value === "") {
+      setBasesSearchedCopy(basesSearched);
+      return;
+    } else if (event.target.value == "Base") {
+      const filterArrayBases = basesSearched.filter(
+        (base: Base) => base.type == "Base"
+      );
+      setBasesSearchedCopy(filterArrayBases);
+      return;
+    } else if (event.target.value == "Mios") {
+      const filterArrayBases = basesSearched.filter(
+        (base: Base) => base.type == "Mios"
+      );
+      setBasesSearchedCopy(filterArrayBases);
+      return;
+    }
+    const filterArrayBases = basesSearched.filter(
+      (base: Base) => base.type == "Otro"
+    );
+    setBasesSearchedCopy(filterArrayBases);
+    return;
+  };
+
   const getBasesTodayHandle = async () => {
     const basesToday = await getEBasesToday();
     setBasesSearched(basesToday);
@@ -44,6 +100,19 @@ export default function Bases() {
   useEffect(() => {
     getBasesTodayHandle();
   }, []);
+
+  const calculateTotal = () => {
+    let total = 0;
+
+    basesSearchedCopy.forEach((base: Base) => {
+      total = base.total + total;
+    });
+
+    const totals = {
+      total: total,
+    };
+    return totals;
+  };
 
   return (
     <div className={style.principalContainer}>
@@ -102,7 +171,7 @@ export default function Bases() {
         {createBaseModalOpen && <CreateBaseModal onClose={toggleModalBase} />}
       </div>
       <div className={style.titleContainer}>
-        <h3 className={style.titleContainer__h3}>
+        <h3 className={style.titleContainer__h3} onClick={sortByCreationDate}>
           Fecha:{" "}
           <span className={style.titleCOntainer__span}>
             {typeSort == "creationDateSort" ? "▼" : "▶"}
@@ -111,7 +180,7 @@ export default function Bases() {
 
         <h3 className={style.titleContainer__h3}>Tipo:</h3>
         <h3 className={style.titleContainer__h3}>Observación:</h3>
-        <h3 className={style.titleContainer__h3}>
+        <h3 className={style.titleContainer__h3} onClick={sortByTotal}>
           Total:{" "}
           <span className={style.titleCOntainer__span}>
             {typeSort == "totalSort" ? "▼" : "▶"}
@@ -121,6 +190,7 @@ export default function Bases() {
         <h3 className={style.titleContainer__h3}>Usuario: </h3>
       </div>
       <TableBase bases={basesSearchedCopy} />
+      <TotalFooter totals={calculateTotal()} />
     </div>
   );
 }
