@@ -6,7 +6,7 @@ import { BaseInstance } from "../../domain/models/BaseAttributes";
 
 const { Op } = require("sequelize");
 
-export class ExpenseRepository implements IBaseRepository {
+export class BaseRepository implements IBaseRepository {
   public async findByDate(
     until: string,
     since: string
