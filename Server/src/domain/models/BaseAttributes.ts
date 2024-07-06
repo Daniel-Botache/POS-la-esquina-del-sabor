@@ -5,6 +5,7 @@ interface BaseAttributes {
   date: Date;
   observation: string;
   type: string;
+  total: number;
 }
 
 interface BaseCreationAttributes

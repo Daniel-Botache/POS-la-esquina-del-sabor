@@ -41,6 +41,9 @@ export default function Bases() {
             className={style.optionContainer__select}
           >
             <option value="">Todos</option>
+            <option value="Base">Base</option>
+            <option value="Mios">Mios</option>
+            <option value="Otro">Otro</option>
           </select>
         </div>
         <div className={style.headContainer__button} onClick={toggleModalBase}>

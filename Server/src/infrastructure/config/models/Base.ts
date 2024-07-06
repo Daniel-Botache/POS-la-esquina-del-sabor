@@ -20,5 +20,9 @@ export default (sequelize: Sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    total: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   });
 };
