@@ -10,7 +10,7 @@ export class BaseController extends DefaultController {
     this.expenseRepository = new BaseRepository();
   }
 
-  findSaleByDate = async (req: Request, res: Response) => {
+  findSBaseByDate = async (req: Request, res: Response) => {
     const since = req.body.since;
     const until = req.body.until;
     console.log(since, until);
@@ -29,7 +29,7 @@ export class BaseController extends DefaultController {
       return res.status(500).send(err.message);
     }
   };
-  findSaleByDateNow = async (_req: Request, res: Response) => {
+  findBaseDateNow = async (_req: Request, res: Response) => {
     try {
       const baseData = await this.expenseRepository.findByDateNow();
       if (baseData.length > 0) {
