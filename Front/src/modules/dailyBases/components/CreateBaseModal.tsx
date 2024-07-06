@@ -2,7 +2,7 @@ import style from "../styles/CreateBaseModal.module.css";
 import { postBase } from "../services/postBase";
 import { useState } from "react";
 import { useCustomSelector } from "../../../store/hooks";
-import { errorMessage, succesMessage } from "../../auth/hooks/notifications";
+import { errorMessage } from "../../auth/hooks/notifications";
 
 type CreateBaseModalProps = {
   onClose: () => void;
@@ -39,7 +39,10 @@ export default function CreateBaseModal({ onClose }: CreateBaseModalProps) {
 
   const dateHandle = (event: React.ChangeEvent<HTMLInputElement>) => {
     const dateInput = event.target.value;
-    setDate(dateInput);
+    const isoDate = new Date(dateInput).toISOString();
+    const parseDate = Date.parse(isoDate) + 86400000;
+    const formateDate = new Date(parseDate).toISOString();
+    setDate(formateDate);
   };
 
   const typeHandle = (event: React.ChangeEvent<HTMLSelectElement>) => {

@@ -6,6 +6,7 @@ export interface Base {
   type: string;
   total: number;
   userId: string;
+  observation: string;
 }
 
 export async function postBase(base: Base) {

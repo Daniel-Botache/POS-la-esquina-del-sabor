@@ -1,9 +1,9 @@
 import axios from "axios";
 import { errorMessage } from "../../auth/hooks/notifications";
 
-export async function getExpensesyDate(since: string, until: string) {
+export async function getBasesByDate(since: string, until: string) {
   try {
-    const expenses = await axios.post(`/expense/expenseDate`, {
+    const expenses = await axios.post(`/base/baseDate`, {
       since: since,
       until: until,
     });
@@ -11,7 +11,7 @@ export async function getExpensesyDate(since: string, until: string) {
       return expenses.data.success;
     }
     return errorMessage(expenses.data.message);
-  } catch (error: any) {
+  } catch (error) {
     const err = error as Error;
     errorMessage(err.message);
     return [];

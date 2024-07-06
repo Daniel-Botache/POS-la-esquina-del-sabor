@@ -13,7 +13,7 @@ export async function postExpense(expense: Expense) {
   try {
     console.log(expense);
     const data = await axios.post("/expense", expense);
-    if (data.data.success == true) {
+    if (data.data.succes == true) {
       succesMessage(data.data.message);
       return true;
     }
