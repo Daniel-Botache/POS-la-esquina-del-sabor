@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { DefaultController } from "../webserver/defaultController";
-import { sequelize } from "../config/database";
+
+import { BaseController } from "../webserver/BaseController";
 
 const router = Router();
-const controller = new DefaultController(sequelize.models.Base);
+const controller = new BaseController();
 
 router.get("/", controller.getAllData);
 router.get("/:id", controller.getDataById);

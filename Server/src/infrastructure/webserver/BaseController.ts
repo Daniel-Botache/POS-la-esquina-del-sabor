@@ -3,7 +3,7 @@ import { DefaultController } from "./defaultController";
 import { Request, Response } from "express";
 import { BaseRepository } from "../Repository/BaseRepository";
 
-export class ExpenseController extends DefaultController {
+export class BaseController extends DefaultController {
   private expenseRepository: BaseRepository;
   constructor() {
     super(sequelize.models.Base);
