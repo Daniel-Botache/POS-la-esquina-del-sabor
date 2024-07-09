@@ -1,0 +1,149 @@
+.headContainer__button {
+  display: flex;
+  border-radius: 10px;
+  border: 1px var(--color-main-orange) solid;
+  padding: 0.3em;
+  height: 1.2em;
+  justify-content: center;
+  align-items: center;
+  color: var(--color-main-orange);
+  fill: var(--color-main-orange);
+  gap: 0.3em;
+  cursor: pointer;
+  transition: 0.5s;
+  width: 15%;
+  background-color: var(--color-white);
+}
+
+.headContainer__button__icon {
+  width: 1.5em;
+}
+.headContainer__button__p {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-size: 0.8em;
+}
+
+.headContainer__button:hover {
+  background-color: var(--color-main-orange);
+  color: var(--color-white);
+  fill: var(--color-white);
+}
+
+.principalContainer {
+  padding-top: 3em;
+  padding-bottom: 2em;
+  padding-left: 2.5em;
+  padding-right: 2em;
+}
+
+.optionContainer__input {
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  outline: none;
+  width: 100%;
+  margin-left: 0;
+  background-color: var(--color-white);
+  font-size: 1.2em;
+}
+
+.optionContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: baseline;
+  gap: 0.5em;
+  align-items: center;
+}
+
+.optionContainer__search {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+}
+
+.principalContainer__btn {
+  border: 1px transparent solid;
+  background-color: var(--color-main-orange);
+  border-radius: 5px;
+  font-family: "Franklin Gothic ", "Arial Narrow", Arial, sans-serif;
+  transition: 0.5s;
+  width: 2rem;
+  color: var(--color-white);
+  cursor: pointer;
+}
+
+.principalContainer__btn:hover {
+  background-color: var(--color-white);
+  border: 1px var(--color-main-orange) solid;
+  color: var(--color-main-orange);
+}
+
+.principalContainer__btn:hover .principalContainer_icon {
+  fill: var(--color-main-orange);
+}
+
+.headContainer {
+  display: flex;
+  justify-content: space-between;
+  border: 1px var(--color-main-orange) solid;
+  border-radius: 10px;
+  padding: 1em;
+  background-color: var(--color-background-grey);
+}
+.principalContainer_icon {
+  fill: var(--color-white);
+}
+inputContainer {
+  display: flex;
+  justify-content: space-evenly;
+  width: 70%;
+}
+.inputContainer__label {
+  font-size: 0.8em;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+.optionContainer__h3 {
+  font-size: 1em;
+  margin: 0.3em 0 0.8em 0;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+input[type="date"] {
+  &::-webkit-calendar-picker-indicator {
+    font-size: 1.5em;
+  }
+}
+.inputContainer__input {
+  border: 1px var(--color-main-orange) solid;
+  border-radius: 5px;
+  outline: none;
+  appearance: none;
+  font-size: 1em;
+}
+.optionContainer__select {
+  border: 1px var(--color-main-orange) solid;
+  border-radius: 5px;
+  font-size: 1em;
+  outline: none;
+  background-color: var(--color-white);
+}
+.titleContainer {
+  display: flex;
+  gap: 2%;
+  align-items: baseline;
+  justify-content: center;
+  border-bottom: 2px var(--color-background-grey) solid;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+.titleContainer__h3 {
+  width: 20%;
+  font-size: 1em;
+  cursor: pointer;
+}
+.titleCOntainer__span {
+  font-size: 0.7em;
+  color: var(--color-main-blue);
+}

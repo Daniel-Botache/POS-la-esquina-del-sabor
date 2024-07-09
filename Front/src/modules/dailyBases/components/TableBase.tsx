@@ -39,7 +39,7 @@ export default function TableBase({ bases }: TableBaseProps) {
               className={style.principalContainer_icon}
             />
             <h3 className={style.principalContainer_h3}>
-              Gastos no encontrados
+              Bases no encontradas
             </h3>
           </div>
         )}
