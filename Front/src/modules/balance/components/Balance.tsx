@@ -43,6 +43,7 @@ export default function Balance() {
     });
 
     const balanceToday = {
+      base: baseTotalToday,
       date: new Date().toISOString(),
       totalSpent: expenseTotalToday,
       totalProfit: profitTotalToday,
@@ -54,6 +55,32 @@ export default function Balance() {
     console.log(arrayToday);
     setBalanceSearched(arrayToday);
     setBalanceSearchedCopy(arrayToday);
+  };
+
+  const balanceByDateHandle = async (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+    const objectBases: { [key: string]: BalanceI } = {};
+    const basesByDate = await getBasesByDate(
+      filterInitialDate,
+      filterFinalDate
+    );
+    const salesByDate = await getSalesByDate(
+      filterInitialDate,
+      filterFinalDate
+    );
+    const expensesByDate = await getExpensesyDate(
+      filterInitialDate,
+      filterFinalDate
+    );
+    basesByDate.forEach((base: Base) => {
+      objectBases[base.date] = {
+        ...objectBases[base.date],
+        base: base.total,
+      };
+    });
+    console.log(objectBases);
   };
 
   useEffect(() => {
@@ -86,7 +113,10 @@ export default function Balance() {
               className={style.inputContainer__input}
             />
           </div>
-          <button className={style.principalContainer__btn}>
+          <button
+            className={style.principalContainer__btn}
+            onClick={balanceByDateHandle}
+          >
             <SearchIcon className={style.principalContainer_icon} />
           </button>
         </div>

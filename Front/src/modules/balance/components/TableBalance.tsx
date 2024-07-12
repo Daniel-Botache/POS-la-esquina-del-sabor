@@ -8,6 +8,7 @@ export interface BalanceI {
   balance: number;
   totalProfit: number;
   percentageProfit: number;
+  base: number;
 }
 
 type TableBalanceProps = {
