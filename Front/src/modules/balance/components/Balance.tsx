@@ -16,9 +16,9 @@ import { BalanceI } from "./TableBalance";
 export default function Balance() {
   const [filterInitialDate, setFilterInitialDate] = useState("");
   const [filterFinalDate, setFilterFinalDate] = useState("");
-  const [typeSort, setTypeSort] = useState("");
-  const [balanceSearched, setBalanceSearched] = useState<BalanceI[]>([]);
-  const [balanceSearchedCopy, setBalanceSearchedCopy] = useState<BalanceI[]>(
+  const [typeSort, _setTypeSort] = useState("");
+  const [_balanceSearched, setBalanceSearched] = useState<BalanceI[]>([]);
+  const [_balanceSearchedCopy, setBalanceSearchedCopy] = useState<BalanceI[]>(
     []
   );
 
@@ -66,11 +66,11 @@ export default function Balance() {
       filterInitialDate,
       filterFinalDate
     );
-    const salesByDate = await getSalesByDate(
+    const _salesByDate = await getSalesByDate(
       filterInitialDate,
       filterFinalDate
     );
-    const expensesByDate = await getExpensesyDate(
+    const _expensesByDate = await getExpensesyDate(
       filterInitialDate,
       filterFinalDate
     );
