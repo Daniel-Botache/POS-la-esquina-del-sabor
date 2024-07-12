@@ -18,7 +18,7 @@ export default function Balance() {
   const [filterFinalDate, setFilterFinalDate] = useState("");
   const [typeSort, _setTypeSort] = useState("");
   const [_balanceSearched, setBalanceSearched] = useState<BalanceI[]>([]);
-  const [_balanceSearchedCopy, setBalanceSearchedCopy] = useState<BalanceI[]>(
+  const [balanceSearchedCopy, setBalanceSearchedCopy] = useState<BalanceI[]>(
     []
   );
 
@@ -66,11 +66,11 @@ export default function Balance() {
       filterInitialDate,
       filterFinalDate
     );
-    const _salesByDate = await getSalesByDate(
+    const salesByDate = await getSalesByDate(
       filterInitialDate,
       filterFinalDate
     );
-    const _expensesByDate = await getExpensesyDate(
+    const expensesByDate = await getExpensesyDate(
       filterInitialDate,
       filterFinalDate
     );
@@ -80,7 +80,7 @@ export default function Balance() {
         base: base.total,
       };
     });
-    console.log(objectBases);
+    console.log(objectBases,expensesByDate, salesByDate);
   };
 
   useEffect(() => {
