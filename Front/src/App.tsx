@@ -6,7 +6,7 @@ import Sales from "./modules/sales/components/Sales";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import axios from "axios";
-axios.defaults.baseURL = "http://localhost:3000";
+axios.defaults.baseURL = "https://pos-la-esquina-del-sabor.onrender.com";
 import Head from "./modules/head/components/head";
 import Stock from "./modules/Inventory/components/Stock";
 import Profit from "./modules/profit/components/Profit";
