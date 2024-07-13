@@ -3,6 +3,8 @@ import { postBase } from "../services/postBase";
 import { useState } from "react";
 import { useCustomSelector } from "../../../store/hooks";
 import { errorMessage } from "../../auth/hooks/notifications";
+import { changeDeleteStatus } from "../../Inventory/redux/stockSlice";
+import { useCustomDispatch } from "../../../store/hooks";
 
 type CreateBaseModalProps = {
   onClose: () => void;
@@ -14,6 +16,7 @@ export default function CreateBaseModal({ onClose }: CreateBaseModalProps) {
   const [total, setTotal] = useState(0);
   const [observation, setObservation] = useState("");
   const useId = useCustomSelector((state) => state.auth.userId);
+  const dispatch = useCustomDispatch();
 
   const handleClose = () => {
     if (onClose) {
@@ -21,7 +24,7 @@ export default function CreateBaseModal({ onClose }: CreateBaseModalProps) {
     }
   };
 
-  const submitHandle = (event: React.FormEvent<HTMLFormElement>) => {
+  const submitHandle = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (date !== "" && type !== "" && total !== 0) {
       const base = {
@@ -31,7 +34,9 @@ export default function CreateBaseModal({ onClose }: CreateBaseModalProps) {
         observation: observation,
         userId: useId,
       };
-      postBase(base);
+      await postBase(base);
+      dispatch(changeDeleteStatus());
+      handleClose();
       return;
     }
     errorMessage("Debe completar los campos con *");

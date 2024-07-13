@@ -4,8 +4,8 @@
   border: 1px var(--color-main-orange) solid;
   border-radius: 10px;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-  width: 55%;
-  height: 79.5vh;
+  width: 65%;
+  height: 80vh;
   margin-top: 1.5em;
   margin-bottom: auto;
   color: var(--color-main-text);
@@ -45,6 +45,7 @@
   border-radius: 10px;
   outline: none;
   border: 2px var(--color-background-grey) solid;
+  font-size: 1em;
 }
 .insertProductContainer {
   display: flex;

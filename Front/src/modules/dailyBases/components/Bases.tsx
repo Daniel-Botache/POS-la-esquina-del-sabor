@@ -7,6 +7,7 @@ import TableBase from "./TableBase";
 import { getBasesByDate } from "../services/getBasesByDate";
 import { Base } from "./TableBase";
 import TotalFooter from "./TotalFooter";
+import { useCustomSelector } from "../../../store/hooks";
 
 export default function Bases() {
   const [filterInitialDate, setFilterInitialDate] = useState("");
@@ -16,6 +17,7 @@ export default function Bases() {
   const [basesSearched, setBasesSearched] = useState([]);
   const [basesSearchedCopy, setBasesSearchedCopy] = useState([]);
   const [typeSort, setTypeSort] = useState("");
+  const deleted = useCustomSelector((state) => state.stock.deleted);
 
   const toggleModalBase = () => {
     setCreateBaseModalOpen(!createBaseModalOpen);
@@ -99,7 +101,7 @@ export default function Bases() {
 
   useEffect(() => {
     getBasesTodayHandle();
-  }, []);
+  }, [deleted]);
 
   const calculateTotal = () => {
     let total = 0;

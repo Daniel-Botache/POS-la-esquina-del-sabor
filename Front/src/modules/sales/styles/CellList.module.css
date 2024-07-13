@@ -12,7 +12,7 @@
 .principalContainer__text {
   width: 20%;
   text-align: center;
-  font-size: 0.9em;
+  font-size: 1.1em;
 }
 .principalContainerSelected {
   display: flex;

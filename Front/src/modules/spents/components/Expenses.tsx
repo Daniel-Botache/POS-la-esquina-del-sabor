@@ -32,6 +32,7 @@ export default function Expenses() {
   const supliers = useCustomSelector((state) => state.createProduct.suppliers);
   const expenses = useCustomSelector((state) => state.spent.expenses);
   const expensesCopy = useCustomSelector((state) => state.spent.expensesCopy);
+  const deleted = useCustomSelector((state) => state.stock.deleted);
 
   const getExpensesTodayHandler = async () => {
     const data = await getExpensesToday();
@@ -46,7 +47,7 @@ export default function Expenses() {
   useEffect(() => {
     dispatch(getSuppliers());
     getExpensesTodayHandler();
-  }, []);
+  }, [deleted]);
 
   const searchByDateHandle = async () => {
     const data = await getExpensesyDate(filterInitialDate, filterFinalDate);

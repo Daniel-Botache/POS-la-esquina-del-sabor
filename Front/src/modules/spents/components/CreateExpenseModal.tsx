@@ -4,6 +4,7 @@ import { getSuppliers } from "../../createProductModal/redux/createProductSlice"
 import { useEffect, useState } from "react";
 import { postExpense } from "../services/postExpense";
 import { errorMessage } from "../../auth/hooks/notifications";
+import { changeDeleteStatus } from "../../Inventory/redux/stockSlice";
 
 type CreateExpenseModalProps = {
   onClose: () => void;
@@ -44,7 +45,7 @@ export default function CreateExpenseModal({
     }
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const expense = {
       total: total,
@@ -59,7 +60,9 @@ export default function CreateExpenseModal({
       );
       return;
     }
-    postExpense(expense);
+    await postExpense(expense);
+    dispatch(changeDeleteStatus());
+    handleClose();
   };
 
   useEffect(() => {

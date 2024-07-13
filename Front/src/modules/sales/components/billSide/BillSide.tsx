@@ -99,7 +99,6 @@ export default function BillSide() {
       valueSpent: totalSpent,
       bales: transactionType === "Venta" && bales.length > 0 ? bales : null,
     };
-    console.log(saleData);
     if (paymentType === "Efectivo") {
       saleData.valueCash = totalSale;
       const totalIn = Number(prompt("Dinero que recibe:"));
@@ -129,6 +128,7 @@ export default function BillSide() {
         handlePrint();
       }
       dispatch(clearProductsBill());
+      setClientIdStatus("");
       succesMessage(
         transactionType === "Abono"
           ? "Abono realizado con éxito"
@@ -238,6 +238,7 @@ export default function BillSide() {
         <div className={style.clientContainer}>
           <h4 className={style.principalContainer__h4}>Cliente:</h4>
           <input
+            value={clientIdStatus}
             onChange={handleInputClientChange}
             type="text"
             placeholder="Cédula"
