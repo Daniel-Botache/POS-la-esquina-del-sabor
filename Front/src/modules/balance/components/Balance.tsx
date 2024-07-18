@@ -1,6 +1,6 @@
 import style from "../styles/balance.module.css";
 import { SearchIcon } from "../../../utils/Icons/icons";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import TableBalance from "./TableBalance";
 import { getBasesByDate } from "../../dailyBases/services/getBasesByDate";
 import { getEBasesToday } from "../../dailyBases/services/getBasesToday";
@@ -17,10 +17,41 @@ export default function Balance() {
   const [filterInitialDate, setFilterInitialDate] = useState("");
   const [filterFinalDate, setFilterFinalDate] = useState("");
   const [typeSort, _setTypeSort] = useState("");
-  const [_balanceSearched, setBalanceSearched] = useState<BalanceI[]>([]);
+  const [balanceSearched, setBalanceSearched] = useState<BalanceI[]>([]);
   const [balanceSearchedCopy, setBalanceSearchedCopy] = useState<BalanceI[]>(
     []
   );
+
+  const filterProfitType = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    if (event.target.value === "cash") {
+      const filteredBalanceCopy: BalanceI[] = balanceSearched.map(
+        (balanceItem) => ({
+          ...balanceItem,
+          balance:
+            balanceItem.base -
+            balanceItem.totalSpent +
+            balanceItem.totalCashProfit,
+          totalProfit: balanceItem.totalCashProfit,
+          percentageProfit:
+            balanceItem.totalSpent === 0
+              ? 100
+              : Math.round(
+                  (balanceItem.totalCashProfit - balanceItem.totalSpent) *
+                    (100 / balanceItem.totalSpent)
+                ),
+        })
+      );
+      setBalanceSearchedCopy(filteredBalanceCopy);
+    } else if (event.target.value === "") {
+      setBalanceSearchedCopy([...balanceSearched]);
+    }
+  };
+
+  const normalizeDate = (dateString: string): string => {
+    const date = new Date(dateString);
+    date.setHours(0, 0, 0, 0);
+    return date.toISOString();
+  };
 
   const balanceTodayhandle = async () => {
     const arrayToday = [];
@@ -29,16 +60,22 @@ export default function Balance() {
     baseDataToday.forEach((base: Base) => {
       baseTotalToday = baseTotalToday + base.total;
     });
+
     const expensesDataToday = await getExpensesToday();
     let expenseTotalToday = 0;
     expensesDataToday.forEach((expense: ExpensesI) => {
       expenseTotalToday = expenseTotalToday + expense.total;
     });
+
     const profitsDataToday = await getSalesToday();
     let profitTotalToday = 0;
+    let profitCashTotalToday = 0;
+    let profitTransTotalToday = 0;
     profitsDataToday.forEach((sale: Sales) => {
       if (!sale.credit) {
-        profitTotalToday = profitTotalToday + sale.total;
+        profitTotalToday = profitTotalToday + sale.total - sale.valueSpent;
+        profitCashTotalToday = profitCashTotalToday + sale.valueCash;
+        profitTransTotalToday = profitTransTotalToday + sale.valueTransaction;
       }
     });
 
@@ -47,12 +84,18 @@ export default function Balance() {
       date: new Date().toISOString(),
       totalSpent: expenseTotalToday,
       totalProfit: profitTotalToday,
+      totalCashProfit: profitCashTotalToday,
+      totalTransProfit: profitTransTotalToday,
       balance: baseTotalToday - expenseTotalToday + profitTotalToday,
       percentageProfit:
-        (profitTotalToday - expenseTotalToday) * (100 / expenseTotalToday),
+        expenseTotalToday == 0
+          ? 100
+          : Math.round(
+              (profitTotalToday - expenseTotalToday) * (100 / expenseTotalToday)
+            ),
     };
     arrayToday.push(balanceToday);
-    console.log(arrayToday);
+
     setBalanceSearched(arrayToday);
     setBalanceSearchedCopy(arrayToday);
   };
@@ -62,6 +105,7 @@ export default function Balance() {
   ) => {
     event.preventDefault();
     const objectBases: { [key: string]: BalanceI } = {};
+    const arrayByDate: BalanceI[] = [];
     const basesByDate = await getBasesByDate(
       filterInitialDate,
       filterFinalDate
@@ -75,12 +119,65 @@ export default function Balance() {
       filterFinalDate
     );
     basesByDate.forEach((base: Base) => {
-      objectBases[base.date] = {
-        ...objectBases[base.date],
-        base: base.total,
-      };
+      const normalizedDate = normalizeDate(base.date);
+      if (!objectBases[normalizedDate]) {
+        objectBases[normalizedDate] = {
+          date: normalizedDate,
+          totalSpent: 0,
+          totalProfit: 0,
+          balance: 0,
+          percentageProfit: 0,
+          base: 0,
+          totalTransProfit: 0,
+          totalCashProfit: 0,
+        };
+      }
+      objectBases[normalizedDate].base += base.total;
     });
-    console.log(objectBases,expensesByDate, salesByDate);
+    salesByDate.forEach((profit: Sales) => {
+      const normalizedDate = normalizeDate(profit.createdAt);
+      if (!objectBases[normalizedDate]) {
+        objectBases[normalizedDate] = {
+          date: normalizedDate,
+          totalSpent: 0,
+          totalProfit: 0,
+          balance: 0,
+          percentageProfit: 0,
+          base: 0,
+          totalTransProfit: 0,
+          totalCashProfit: 0,
+        };
+      }
+      objectBases[normalizedDate].totalProfit += profit.total;
+    });
+    expensesByDate.forEach((spent: ExpensesI) => {
+      const normalizedDate = normalizeDate(spent.createdAt);
+      if (!objectBases[normalizedDate]) {
+        objectBases[normalizedDate] = {
+          date: normalizedDate,
+          totalSpent: 0,
+          totalProfit: 0,
+          balance: 0,
+          percentageProfit: 0,
+          base: 0,
+          totalTransProfit: 0,
+          totalCashProfit: 0,
+        };
+      }
+      objectBases[normalizedDate].totalSpent += spent.total;
+    });
+    Object.entries(objectBases).forEach(([_key, value]) => {
+      value.balance = value.base - value.totalSpent + value.totalProfit;
+      value.percentageProfit =
+        value.totalSpent == 0
+          ? 100
+          : Math.round(
+              (value.totalProfit - value.totalSpent) * (100 / value.totalSpent)
+            );
+      arrayByDate.push(value);
+    });
+    setBalanceSearched(arrayByDate);
+    setBalanceSearchedCopy(arrayByDate);
   };
 
   useEffect(() => {
@@ -126,6 +223,7 @@ export default function Balance() {
             Tipo de ganancia
           </label>
           <select
+            onChange={filterProfitType}
             name="balanceType"
             id="balanceType"
             className={style.optionContainer__select}
@@ -157,7 +255,12 @@ export default function Balance() {
             {typeSort == "totalSort" ? "▼" : "▶"}
           </span>
         </h3>
-
+        <h3 className={style.titleContainer__h3}>
+          Base:{" "}
+          <span className={style.titleCOntainer__span}>
+            {typeSort == "BaseTotalSort" ? "▼" : "▶"}
+          </span>
+        </h3>
         <h3 className={style.titleContainer__h3}>
           Balance:{" "}
           <span className={style.titleCOntainer__span}>

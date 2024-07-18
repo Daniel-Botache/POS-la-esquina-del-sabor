@@ -9,6 +9,8 @@ export interface BalanceI {
   totalProfit: number;
   percentageProfit: number;
   base: number;
+  totalCashProfit: number;
+  totalTransProfit: number;
 }
 
 type TableBalanceProps = {
@@ -28,6 +30,7 @@ export default function TableBalance({ balances }: TableBalanceProps) {
               totalProfit={balance.totalProfit}
               balance={balance.balance}
               percentageProfit={balance.percentageProfit}
+              totalBase={balance.base}
             />
           ))
         ) : (

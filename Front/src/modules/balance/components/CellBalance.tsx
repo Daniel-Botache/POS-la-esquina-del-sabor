@@ -6,6 +6,7 @@ type CellBalanceProps = {
   balance: number;
   totalProfit: number;
   percentageProfit: number;
+  totalBase: number;
 };
 
 export default function CellBalance({
@@ -14,6 +15,7 @@ export default function CellBalance({
   totalSpent,
   balance,
   percentageProfit,
+  totalBase,
 }: CellBalanceProps) {
   const fromatedBalance = new Intl.NumberFormat("es-CO").format(balance);
   const formattedDateCreate = new Date(date).toLocaleDateString();
@@ -23,8 +25,9 @@ export default function CellBalance({
       <div className={style.prepertyContainer}>{formattedDateCreate}</div>
       <div className={style.prepertyContainer}>{totalSpent}</div>
       <div className={style.prepertyContainer}>{totalProfit}</div>
+      <div className={style.prepertyContainer}>{totalBase}</div>
       <div className={style.prepertyContainer}>{fromatedBalance}</div>
-      <div className={style.prepertyContainer}>{percentageProfit}</div>
+      <div className={style.prepertyContainer}>{percentageProfit} %</div>
     </div>
   );
 }
