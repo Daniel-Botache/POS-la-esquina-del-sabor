@@ -7,6 +7,7 @@ import {
   BalanceIcon,
   BaseIcon,
   GastosIcon,
+  SuplierIcon,
 } from "../../../utils/Icons/icons";
 import style from "../styles/NavBarLeft.module.css";
 import { Link } from "react-router-dom";
@@ -91,6 +92,17 @@ export default function NavBarLeft() {
           <BaseIcon
             className={`${style.principalContainer__icon} ${
               location.pathname == "/bases"
+                ? style.principalContainer__icon_scale
+                : ""
+            }`}
+          />
+        </div>
+      </Link>
+      <Link to="/suppliers">
+        <div title="Proveedores">
+          <SuplierIcon
+            className={`${style.principalContainer__icon} ${
+              location.pathname == "/suppliers"
                 ? style.principalContainer__icon_scale
                 : ""
             }`}

@@ -7,6 +7,7 @@ import expenseImg from "../../../utils/images/gastos.jpg";
 import balanceImg from "../../../utils/images/balance.jpg";
 import basesImg from "../../../utils/images/base.jpg";
 import optionsImg from "../../../utils/images/opciones.jpg";
+import suplierImg from "../../../utils/images/suppliersImage.jpg";
 import styles from "../styles/Home.module.css";
 import { Link } from "react-router-dom";
 export default function Home() {
@@ -32,6 +33,9 @@ export default function Home() {
       </Link>
       <Link to={"/bases"} className={styles.principalContainer__Link}>
         <MenuCard title={"Bases"} img={basesImg}></MenuCard>
+      </Link>
+      <Link to={"/suppliers"} className={styles.principalContainer__Link}>
+        <MenuCard title={"Proveedores"} img={suplierImg}></MenuCard>
       </Link>
       <Link to={"/options"} className={styles.principalContainer__Link}>
         <MenuCard title={"Opciones"} img={optionsImg}></MenuCard>
