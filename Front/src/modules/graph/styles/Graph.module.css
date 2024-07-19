@@ -5,7 +5,7 @@
   border: 1px var(--color-main-orange) solid;
 }
 .principalContainer {
-  height: 680px;
+  height: 90%;
   width: 90%;
   position: fixed;
   background-color: rgba(0, 0, 0, 0.5);

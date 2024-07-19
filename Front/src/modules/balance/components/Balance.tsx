@@ -12,6 +12,12 @@ import { Base } from "../../dailyBases/services/postBase";
 import { ExpensesI } from "../../spents/components/Expenses";
 import { Sales } from "../../profit/redux/profitSlice";
 import { BalanceI } from "./TableBalance";
+import FooterBalance from "./FooterBalance";
+
+interface IndexArrayData {
+  time: string;
+  value: number;
+}
 
 export default function Balance() {
   const [filterInitialDate, setFilterInitialDate] = useState("");
@@ -21,6 +27,42 @@ export default function Balance() {
   const [balanceSearchedCopy, setBalanceSearchedCopy] = useState<BalanceI[]>(
     []
   );
+
+  const calculateTotal = () => {
+    let totalBalance = 0;
+    let totalCash = 0;
+    let totalPercentage = 0;
+    let grahpArrayData: IndexArrayData[] = [];
+    balanceSearchedCopy.forEach((item) => {
+      totalBalance += item.balance;
+      totalCash += item.totalCashProfit;
+      totalPercentage += item.percentageProfit;
+      const formattedDateCreate = new Date(item.date);
+      const year = formattedDateCreate.getFullYear();
+      const month = String(formattedDateCreate.getMonth() + 1).padStart(2, "0"); // Los meses son base 0 en JavaScript
+      const day = String(formattedDateCreate.getDate()).padStart(2, "0");
+      const formatedToChartDate = `${year}-${month}-${day}`;
+      const objectData = {
+        time: formatedToChartDate,
+        value: item.balance,
+      };
+      grahpArrayData.push(objectData);
+    });
+    grahpArrayData.sort(
+      (a, b) => new Date(a.time).getTime() - new Date(b.time).getTime()
+    );
+    grahpArrayData = grahpArrayData.filter(
+      (item, index, self) => index === 0 || item.time !== self[index - 1].time
+    );
+    const totals = {
+      totalBalance: totalBalance,
+      totalPercentage: totalPercentage,
+      totalCash: totalCash,
+      grahpArrayData: grahpArrayData,
+    };
+
+    return totals;
+  };
 
   const filterProfitType = (event: React.ChangeEvent<HTMLSelectElement>) => {
     if (event.target.value === "cash") {
@@ -299,6 +341,7 @@ export default function Balance() {
         </h3>
       </div>
       <TableBalance balances={balanceSearchedCopy} />
+      <FooterBalance totals={calculateTotal()} />
     </div>
   );
 }
