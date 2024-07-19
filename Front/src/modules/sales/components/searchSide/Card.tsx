@@ -22,13 +22,20 @@ export default function Card(props: any) {
       alert("No puede agregar una paca sobre una paca, escoja otro producto.");
       return;
     }
-    let quantityPrompt = Number(prompt("Cantidad"));
-    if (isNaN(quantityPrompt)) {
+    let quantityPrompt = prompt("Cantidad");
+    if (quantityPrompt === null) {
+      return;
+    }
+    let quantityPrompts = Number(quantityPrompt);
+    if (isNaN(quantityPrompts)) {
       alert("Solo se aceptan valores numericos");
       return;
     }
+    if (quantityPrompts == 0) {
+      quantityPrompts = 1;
+    }
 
-    dispatch(addProductBill({ product: props, quantity: quantityPrompt }));
+    dispatch(addProductBill({ product: props, quantity: quantityPrompts }));
   };
   return (
     <div className={style.principalContainer} onClick={handleAddItem}>
