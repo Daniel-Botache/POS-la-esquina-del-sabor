@@ -38,25 +38,27 @@ export default function Card(props: any) {
     dispatch(addProductBill({ product: props, quantity: quantityPrompts }));
   };
   return (
-    <div className={style.principalContainer} onClick={handleAddItem}>
-      <div className={style.headContainer}>
-        <h3 className={style.headContainer__h3}> Id: {props.id} </h3>
-        <h3 className={style.headContainer__h3}>{props.barCode}</h3>
-        <FavoriteIcon className={style.headContainer__icon} />
-      </div>
+    <div className={style.principalContainer}>
+      <FavoriteIcon className={style.headContainer__icon} />
+      <div onClick={handleAddItem} className={style.principalContainer_item}>
+        <div className={style.headContainer}>
+          <h3 className={style.headContainer__h3}> Id: {props.id} </h3>
+          <h3 className={style.headContainer__h3}>{props.barCode}</h3>
+        </div>
 
-      <div className={style.imgContainer}>
-        <img
-          src={props.img}
-          alt="producto"
-          className={style.imgContainer__img}
-        />
+        <div className={style.imgContainer}>
+          <img
+            src={props.img}
+            alt="producto"
+            className={style.imgContainer__img}
+          />
+        </div>
+        <p className={style.principalContainer__p}>Inv: {props.volume}</p>
+        <h2 className={style.principalContainer__h2}>{props.name}</h2>
+        <h2 className={style.principalContainer__h2}>
+          $ {new Intl.NumberFormat("es-CO").format(props.price)}
+        </h2>
       </div>
-      <p className={style.principalContainer__p}>Inv: {props.volume}</p>
-      <h2 className={style.principalContainer__h2}>{props.name}</h2>
-      <h2 className={style.principalContainer__h2}>
-        $ {new Intl.NumberFormat("es-CO").format(props.price)}
-      </h2>
     </div>
   );
 }

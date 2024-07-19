@@ -1,10 +1,10 @@
 .principalContainer {
   display: flex;
   flex-direction: column;
-  width: 12em;
+  width: 13em;
   border-radius: 10px;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-  height: 15em;
+  height: 16em;
   gap: 0.5em;
   padding: 0.5em;
   background-color: var(--color-white);
@@ -12,6 +12,16 @@
   align-items: center;
   border: 1px transparent solid;
   cursor: pointer;
+}
+.principalContainer_item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  padding: 0.5em;
+  height: 13em;
+  background-color: var(--color-white);
+  justify-content: center;
+  align-items: center;
 }
 .principalContainer:hover {
   border: 1px var(--color-main-orange) solid;
@@ -30,6 +40,7 @@
 .headContainer__icon {
   width: 1em;
   fill: var(--color-main-orange);
+  align-self: flex-end;
 }
 .imgContainer {
   width: 80%;
