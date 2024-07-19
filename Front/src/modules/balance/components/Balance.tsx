@@ -44,6 +44,25 @@ export default function Balance() {
       setBalanceSearchedCopy(filteredBalanceCopy);
     } else if (event.target.value === "") {
       setBalanceSearchedCopy([...balanceSearched]);
+    } else if (event.target.value === "transaction") {
+      const filteredBalanceCopy: BalanceI[] = balanceSearched.map(
+        (balanceItem) => ({
+          ...balanceItem,
+          balance:
+            balanceItem.base -
+            balanceItem.totalSpent +
+            balanceItem.totalTransProfit,
+          totalProfit: balanceItem.totalTransProfit,
+          percentageProfit:
+            balanceItem.totalSpent === 0
+              ? 100
+              : Math.round(
+                  (balanceItem.totalTransProfit - balanceItem.totalSpent) *
+                    (100 / balanceItem.totalSpent)
+                ),
+        })
+      );
+      setBalanceSearchedCopy(filteredBalanceCopy);
     }
   };
 
@@ -74,7 +93,8 @@ export default function Balance() {
     profitsDataToday.forEach((sale: Sales) => {
       if (!sale.credit) {
         profitTotalToday = profitTotalToday + sale.total - sale.valueSpent;
-        profitCashTotalToday = profitCashTotalToday + sale.valueCash;
+        profitCashTotalToday =
+          profitCashTotalToday + sale.valueCash - sale.valueSpent;
         profitTransTotalToday = profitTransTotalToday + sale.valueTransaction;
       }
     });
@@ -148,7 +168,11 @@ export default function Balance() {
           totalCashProfit: 0,
         };
       }
-      objectBases[normalizedDate].totalProfit += profit.total;
+      objectBases[normalizedDate].totalProfit +=
+        profit.total - profit.valueSpent;
+      objectBases[normalizedDate].totalCashProfit +=
+        profit.valueCash - profit.valueSpent;
+      objectBases[normalizedDate].totalCashProfit += profit.valueTransaction;
     });
     expensesByDate.forEach((spent: ExpensesI) => {
       const normalizedDate = normalizeDate(spent.createdAt);
