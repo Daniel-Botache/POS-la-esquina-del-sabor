@@ -103,7 +103,7 @@ export default function Stock() {
         }
       });
     }
-    setSelectedProductIds([]); // Limpiar los IDs seleccionados después de eliminar
+    setSelectedProductIds([]);
   };
 
   const dispatch = useCustomDispatch();
