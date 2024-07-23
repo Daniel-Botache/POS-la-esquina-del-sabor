@@ -8,6 +8,7 @@ import {
 import { useState, useEffect } from "react";
 import { useCustomDispatch, useCustomSelector } from "../../../store/hooks";
 import { getSuppliers } from "../../createProductModal/redux/createProductSlice";
+import SearchBarClient from "./SearchBarClient";
 
 export default function Credits() {
   const dispatch = useCustomDispatch();
@@ -25,6 +26,7 @@ export default function Credits() {
   return (
     <div className={style.principalContainer}>
       <div className={style.searchBarContainer}>
+        <SearchBarClient />
         <div className={style.orderContainer}>
           <div className={style.headContainer__button}>
             <DeleteIcon className={style.headContainer__button__icon} />
@@ -32,7 +34,7 @@ export default function Credits() {
           </div>
           <div className={style.headContainer__button}>
             <AddIcon className={style.headContainer__button__icon} />
-            <p className={style.headContainer__button__p}>Crear Producto</p>
+            <p className={style.headContainer__button__p}>Crear cliente</p>
           </div>
           <div
             className={style.headContainer__button}
