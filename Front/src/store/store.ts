@@ -8,8 +8,15 @@ import profitReducer from "../modules/profit/redux/profitSlice";
 import spentReducer from "../modules/spents/redux/spentSlice";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import clientReducer from "../modules/credits/redux/clientSlice";
 
 //configuracion para peristir el reducer en el localstorage
+const persistClientConfig = {
+  key: "clients",
+  storage,
+  whitelist: ["clients", "clientsCopy"],
+};
+
 const persistCreateProductConfig = {
   key: "createProduct",
   storage,
@@ -80,6 +87,10 @@ export const store = configureStore({
     spent: persistReducer<ReturnType<typeof spentReducer>>(
       persistSpentConfig,
       spentReducer
+    ),
+    clients: persistReducer<ReturnType<typeof clientReducer>>(
+      persistClientConfig,
+      clientReducer
     ),
   },
   middleware: (DefaultSerializer) =>
