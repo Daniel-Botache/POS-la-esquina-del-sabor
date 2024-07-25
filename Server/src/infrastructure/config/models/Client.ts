@@ -34,5 +34,9 @@ export default (sequelize: Sequelize) => {
       type: DataTypes.INTEGER,
       defaultValue: 0,
     },
+    lastPayment: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
   });
 };

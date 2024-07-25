@@ -12,6 +12,7 @@ interface BaleAttributes {
   spent: boolean;
   bale: boolean;
   lastVolumeDate: Date;
+  isFavorite: boolean;
 }
 interface BaleCreationAttributes extends Optional<BaleAttributes, "barCode"> {}
 

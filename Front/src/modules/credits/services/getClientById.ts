@@ -8,7 +8,7 @@ export async function getProductByIdService(id: number) {
     if (response.data) {
       return response.data;
     }
-    errorMessage("No se encontró prodcuto");
+    errorMessage("No se encontró cliente");
     return false;
   } catch (error) {
     errorMessage("Problema con el servidor");

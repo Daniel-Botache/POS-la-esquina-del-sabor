@@ -11,6 +11,7 @@ interface ProductAttributes {
   spent: boolean;
   img: string;
   lastVolumeDate: Date;
+  isFavorite: boolean;
 }
 
 interface ProductCreationAttributes

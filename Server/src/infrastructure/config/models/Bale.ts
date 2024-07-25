@@ -53,5 +53,10 @@ export default (sequelize: Sequelize) => {
       allowNull: false,
       defaultValue: NOW,
     },
+    isFavorite: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+      allowNull: true,
+    },
   });
 };

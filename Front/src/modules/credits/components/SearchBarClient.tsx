@@ -1,5 +1,6 @@
 import style from "../styles/SearchBarClient.module.css";
 import { SearchIcon } from "../../../utils/Icons/icons";
+import { getSaleByClientId } from "../../profit/services/getSaleByClientId";
 
 export default function SearchBarClient() {
   return (

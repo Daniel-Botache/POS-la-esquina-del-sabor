@@ -9,6 +9,7 @@ export interface ClientAttributes {
   quotaMax: number;
   clientType: string;
   remainingQuota: number;
+  lastPayment: Date;
 }
 
 interface ClientCreationAttributes extends Optional<ClientAttributes, "id"> {}
