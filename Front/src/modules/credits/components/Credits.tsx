@@ -5,6 +5,7 @@ import {
   FilterIcon,
   SearchIcon,
 } from "../../../utils/Icons/icons";
+import { getAllClients } from "../services/getAllClients";
 import { useState, useEffect } from "react";
 import { useCustomDispatch, useCustomSelector } from "../../../store/hooks";
 import { getSuppliers } from "../../createProductModal/redux/createProductSlice";

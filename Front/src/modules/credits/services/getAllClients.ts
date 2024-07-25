@@ -1,17 +1,17 @@
 import axios from "axios";
 import { errorMessage } from "../../auth/hooks/notifications";
 
-export async function getClientById(id: string) {
+export async function getAllClients() {
   try {
-    const response = await axios.get(`/client/${id}`);
+    const response = await axios.get(`/client`);
 
     if (response.data) {
       return response.data;
     }
-    errorMessage("No se encontró cliente");
+    errorMessage("No se encontraron clientes");
     return false;
   } catch (error) {
-    errorMessage("Cliente no encontrado");
+    errorMessage("Clientes no encontrados");
     return false;
   }
 }
