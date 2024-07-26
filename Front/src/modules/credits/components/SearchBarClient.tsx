@@ -28,10 +28,11 @@ export default function SearchBarClient() {
     event.preventDefault();
     if (clientIdSate !== "") {
       const clientData = await getClientById(clientIdSate);
-
+      const arrayClients = [];
       if (clientData) {
-        dispatch(addClient({ clients: clientData }));
-        dispatch(addClientCopy({ clientsCopy: clientData }));
+        arrayClients.push(clientData);
+        dispatch(addClient({ clients: arrayClients }));
+        dispatch(addClientCopy({ clientsCopy: arrayClients }));
         setClientIdSate("");
       }
       return;

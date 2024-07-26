@@ -8,13 +8,29 @@ import {
 import { useState, useEffect } from "react";
 import { useCustomDispatch, useCustomSelector } from "../../../store/hooks";
 import SearchBarClient from "./SearchBarClient";
+import TableClient from "./TableClient";
+
+type CheckedClient = {
+  id: string;
+};
 
 export default function Credits() {
   const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(false);
   const [typeSort, setTypeSort] = useState("");
+  const [selectedClientsIds, setSelectedClientsIds] = useState<CheckedClient[]>(
+    []
+  );
 
   const toggleModalFilters = () => {
     setIsFiltersModalOpen(!isFiltersModalOpen);
+  };
+
+  const handleCheckboxChange = (clientId: { id: string }) => {
+    setSelectedClientsIds((prevSelectedClientsIds) =>
+      prevSelectedClientsIds.some((client) => client.id === client.id)
+        ? prevSelectedClientsIds.filter((client) => client.id !== clientId.id)
+        : [...prevSelectedClientsIds, clientId]
+    );
   };
 
   return (
@@ -152,6 +168,7 @@ export default function Credits() {
 
         <h3 className={style.titleContainer__h3}>Acciones:</h3>
       </div>
+      <TableClient onCheckboxChange={handleCheckboxChange} />
     </div>
   );
 }

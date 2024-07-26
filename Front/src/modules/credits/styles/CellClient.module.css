@@ -1,0 +1,65 @@
+.principalContainer {
+  font-family: "Franklin Gothic   ", "Arial Narrow", Arial, sans-serif;
+  display: flex;
+  gap: 2%;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 2px var(--color-background-grey) solid;
+}
+.prepertyContainer {
+  width: 10%;
+  font-size: 1em;
+}
+.redBackground {
+  background-color: var(--color-main-red);
+  border-radius: 10px;
+  color: var(--color-white);
+}
+
+.greyBackground {
+  background-color: var(--color-white);
+}
+
+.greenBackground {
+  background-color: rgb(47, 194, 47);
+  border-radius: 10px;
+  color: var(--color-white);
+}
+
+.prepertyContainer__btn {
+  border: 1px transparent solid;
+  background-color: transparent;
+  border-radius: 10px;
+  width: 10%;
+  cursor: pointer;
+}
+.prepertyContainer__btn:hover .prepertyContainer__editIcon {
+  fill: var(--color-white);
+  background-color: var(--color-main-blue);
+  border-radius: 5px;
+}
+
+.prepertyContainer__btn:hover .prepertyContainer__deleteIcon {
+  fill: var(--color-white);
+  background-color: var(--color-main-red);
+  border-radius: 5px;
+}
+.prepertyContainer__editIcon {
+  width: 1.8em;
+  height: 2em;
+  margin: auto;
+  fill: var(--color-main-blue);
+}
+.prepertyContainer__deleteIcon {
+  width: 1.8em;
+  height: 2em;
+  margin: auto;
+  fill: var(--color-main-red);
+}
+.prepertyContainer_options {
+  width: 10%;
+  font-size: 1em;
+  display: flex;
+  justify-content: space-evenly;
+  gap: 0.8em;
+}
