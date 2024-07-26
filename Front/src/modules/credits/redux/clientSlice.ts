@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-type Client = {
+export type Client = {
   id: number;
   name: string;
   tel: string;
@@ -9,7 +9,7 @@ type Client = {
   quotaMax: number;
   clientType: string;
   remainingCuota: number;
-  lastPayment: string;
+  lastPayment: string | null;
   createdAt: string;
   updatedAt: string;
 };

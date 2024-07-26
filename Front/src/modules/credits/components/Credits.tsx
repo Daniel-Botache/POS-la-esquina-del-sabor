@@ -5,24 +5,17 @@ import {
   FilterIcon,
   SearchIcon,
 } from "../../../utils/Icons/icons";
-import { getAllClients } from "../services/getAllClients";
 import { useState, useEffect } from "react";
 import { useCustomDispatch, useCustomSelector } from "../../../store/hooks";
-import { getSuppliers } from "../../createProductModal/redux/createProductSlice";
 import SearchBarClient from "./SearchBarClient";
 
 export default function Credits() {
-  const dispatch = useCustomDispatch();
   const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(false);
   const [typeSort, setTypeSort] = useState("");
 
   const toggleModalFilters = () => {
     setIsFiltersModalOpen(!isFiltersModalOpen);
   };
-
-  useEffect(() => {
-    dispatch(getSuppliers());
-  }, []);
 
   return (
     <div className={style.principalContainer}>

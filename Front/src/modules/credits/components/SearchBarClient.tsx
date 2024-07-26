@@ -4,10 +4,21 @@ import { getClientById } from "../services/getClientById";
 import { addClient, addClientCopy } from "../redux/clientSlice";
 import { useCustomDispatch } from "../../../store/hooks";
 import React, { useState } from "react";
+import { getAllClients } from "../services/getAllClients";
+import { useEffect } from "react";
 
 export default function SearchBarClient() {
   const [clientIdSate, setClientIdSate] = useState("");
   const dispatch = useCustomDispatch();
+
+  const searchAllClientsHandle = async () => {
+    const clientsData = await getAllClients();
+    if (clientsData.length > 0) {
+      dispatch(addClient({ clients: clientsData }));
+      dispatch(addClientCopy({ clientsCopy: clientsData }));
+    }
+    console.log(clientsData);
+  };
 
   const searchCLientHandle = async (
     event:
@@ -15,14 +26,18 @@ export default function SearchBarClient() {
       | React.KeyboardEvent<HTMLInputElement>
   ) => {
     event.preventDefault();
-    const clientData = await getClientById(clientIdSate);
+    if (clientIdSate !== "") {
+      const clientData = await getClientById(clientIdSate);
 
-    if (clientData) {
-      dispatch(addClient({ clients: clientData }));
-      dispatch(addClientCopy({ clientsCopy: clientData }));
-      setClientIdSate("");
+      if (clientData) {
+        dispatch(addClient({ clients: clientData }));
+        dispatch(addClientCopy({ clientsCopy: clientData }));
+        setClientIdSate("");
+      }
+      return;
     }
-    console.log("Holi");
+    searchAllClientsHandle();
+    return;
   };
 
   const takeclientIdHandle = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,6 +50,10 @@ export default function SearchBarClient() {
       await searchCLientHandle(e);
     }
   };
+
+  useEffect(() => {
+    searchAllClientsHandle();
+  }, []);
   return (
     <div className={style.principalContainer}>
       <input
