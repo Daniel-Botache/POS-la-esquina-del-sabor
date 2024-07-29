@@ -1,6 +1,15 @@
 import style from "../styles/CreateClientModal.module.css";
 
-export default function CreateClientModal() {
+type CreateClientModalProps = {
+  onClose: () => void;
+};
+
+export default function CreateClientModal({ onClose }: CreateClientModalProps) {
+  const handleClose = () => {
+    if (onClose) {
+      onClose();
+    }
+  };
   return (
     <div className={style.modalOverlay}>
       <div className={style.principalContainer}>
@@ -9,63 +18,62 @@ export default function CreateClientModal() {
             X
           </button>
         </div>
-        <form className={style.formContainer} onSubmit={handleSubmit}>
-          <h2> Crear Gasto</h2>
+        <form className={style.formContainer}>
+          <h2> Crear Cliente</h2>
           <div className={style.inputContainer}>
-            <label htmlFor="descriptionInput">Descripción: *</label>
+            <label htmlFor="cedulaInput">Cédula: *</label>
             <input
               type="text"
-              id="descriptionInput"
+              id="cedulaInput"
               className={style.form__inputText}
-              onChange={descriptionHandle}
             />
           </div>
           <div className={style.inputContainer}>
-            <label htmlFor="typeSelect">Tipo:</label>
-            <select
-              onChange={typeHandle}
-              name="typeSelect"
-              id="typeSelect"
+            <label htmlFor="nameInput">Nombre: *</label>
+            <input
+              type="text"
+              id="nameInput"
               className={style.form__inputText}
-              value={type}
+            />
+          </div>
+          <div className={style.inputContainer}>
+            <label htmlFor="telInput">Teléfono: *</label>
+            <input
+              type="text"
+              id="telInput"
+              className={style.form__inputText}
+            />
+          </div>
+          <div className={style.inputContainer}>
+            <label htmlFor="addressInput">Dirección: </label>
+            <input
+              type="text"
+              id="addressInput"
+              className={style.form__inputText}
+            />
+          </div>
+          <div className={style.inputContainer}>
+            <label htmlFor="creditSelect">Crédito:</label>
+            <select
+              name="creditSelect"
+              id="creditSelect"
+              className={style.form__inputText}
             >
-              <option value="">Seleccionar tipo</option>
-              <option value="Pago proveedor">Pago proveedor</option>
-              <option value="Nomina">Nómina</option>
-              <option value="Pago externo">Pago externo</option>
+              <option value="false">No</option>
+              <option value="true">Si</option>
             </select>
           </div>
           <div className={style.inputContainer}>
-            <label htmlFor="suplierInput">Proveedor:</label>
-            <select
-              name=""
-              id="suplierInput"
-              className={style.form__inputText}
-              onChange={suplierHandle}
-              value={selectedSupplier}
-            >
-              <option value="">Seleccionar Proveedor</option>
-              {supliers.length > 0 ? (
-                supliers.map((suplier) => (
-                  <option value={suplier.id}>{suplier.company}</option>
-                ))
-              ) : (
-                <option value="">seleccione proveedor</option>
-              )}
-            </select>
-          </div>
-          <div className={style.inputContainer}>
-            <label htmlFor="totalInput">Total: *</label>
+            <label htmlFor="quotaMaxInput">Cupo máximo: *</label>
             <input
               type="number"
-              id="totalInput"
+              id="quotaMaxInput"
               className={style.form__inputText}
-              onChange={totalHandle}
             />
           </div>
 
           <button type="submit" className={style.principalContainer__btn}>
-            Crear Gasto
+            Crear Cliente
           </button>
         </form>
       </div>

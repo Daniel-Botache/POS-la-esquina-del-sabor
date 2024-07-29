@@ -13,6 +13,7 @@ import { Client } from "../redux/clientSlice";
 import { addClientCopy } from "../redux/clientSlice";
 import { deleteClient } from "../services/deleteClient";
 import { changeDeleteStatus } from "../../Inventory/redux/stockSlice";
+import CreateClientModal from "./CreateClientModal";
 
 type CheckedClient = {
   id: string;
@@ -31,9 +32,14 @@ export default function Credits() {
   const [dateFilter, setDateFilter] = useState(0);
   const [filterQuantySince, setFilterQuantySince] = useState(0);
   const [filterQuantyTo, setFilterQuantyTo] = useState(Infinity);
+  const [isModalCreateClientOpen, setIsModalCreateClientOpen] = useState(false);
 
   const toggleModalFilters = () => {
     setIsFiltersModalOpen(!isFiltersModalOpen);
+  };
+
+  const toggleModalCreateClient = () => {
+    setIsModalCreateClientOpen(!isModalCreateClientOpen);
   };
 
   const handleCheckboxChange = (clientId: { id: string }) => {
@@ -227,7 +233,10 @@ export default function Credits() {
             <DeleteIcon className={style.headContainer__button__icon} />
             <p className={style.headContainer__button__p}>Eliminar selección</p>
           </div>
-          <div className={style.headContainer__button}>
+          <div
+            className={style.headContainer__button}
+            onClick={toggleModalCreateClient}
+          >
             <AddIcon className={style.headContainer__button__icon} />
             <p className={style.headContainer__button__p}>Crear cliente</p>
           </div>
@@ -356,6 +365,9 @@ export default function Credits() {
         <h3 className={style.titleContainer__h3}>Acciones:</h3>
       </div>
       <TableClient onCheckboxChange={handleCheckboxChange} />
+      {isModalCreateClientOpen && (
+        <CreateClientModal onClose={toggleModalCreateClient} />
+      )}
     </div>
   );
 }
