@@ -9,12 +9,16 @@ import { useState, useEffect } from "react";
 import { useCustomDispatch, useCustomSelector } from "../../../store/hooks";
 import SearchBarClient from "./SearchBarClient";
 import TableClient from "./TableClient";
+import { Client } from "../redux/clientSlice";
+import { addClientCopy, addClient } from "../redux/clientSlice";
 
 type CheckedClient = {
   id: string;
 };
 
 export default function Credits() {
+  const dispatch = useCustomDispatch();
+  const clientsCopy = useCustomSelector((state) => state.clients.clientsCopy);
   const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(false);
   const [typeSort, setTypeSort] = useState("");
   const [selectedClientsIds, setSelectedClientsIds] = useState<CheckedClient[]>(
@@ -31,6 +35,93 @@ export default function Credits() {
         ? prevSelectedClientsIds.filter((client) => client.id !== clientId.id)
         : [...prevSelectedClientsIds, clientId]
     );
+  };
+  const sortByName = (event: React.MouseEvent<HTMLHRElement>) => {
+    event.preventDefault();
+    if (typeSort == "nameSort") {
+      setTypeSort("");
+      const arraySorted = [...clientsCopy].sort((a: Client, b: Client) =>
+        b.name?.localeCompare(a.name)
+      );
+      dispatch(addClientCopy({ clientsCopy: arraySorted }));
+      return;
+    }
+    setTypeSort("nameSort");
+    const arraySorted = [...clientsCopy].sort((a: Client, b: Client) =>
+      a.name?.localeCompare(b.name)
+    );
+    dispatch(addClientCopy({ clientsCopy: arraySorted }));
+  };
+
+  const sortByLastPayment = (event: React.MouseEvent<HTMLHRElement>) => {
+    event.preventDefault();
+    if (typeSort == "lastPaymentSort") {
+      setTypeSort("");
+      const arraySorted = [...clientsCopy].sort((a: Client, b: Client) =>
+        b.lastPayment !== null
+          ? b.lastPayment.localeCompare(
+              a.lastPayment !== null ? a.lastPayment : new Date().toISOString()
+            )
+          : new Date()
+              .toISOString()
+              .localeCompare(
+                a.lastPayment !== null
+                  ? a.lastPayment
+                  : new Date().toISOString()
+              )
+      );
+      dispatch(addClientCopy({ clientsCopy: arraySorted }));
+      return;
+    }
+    setTypeSort("lastPaymentSort");
+    const arraySorted = [...clientsCopy].sort((a: Client, b: Client) =>
+      a.lastPayment !== null
+        ? a.lastPayment.localeCompare(
+            b.lastPayment !== null ? b.lastPayment : new Date().toISOString()
+          )
+        : new Date()
+            .toISOString()
+            .localeCompare(
+              b.lastPayment !== null ? b.lastPayment : new Date().toISOString()
+            )
+    );
+    dispatch(addClientCopy({ clientsCopy: arraySorted }));
+  };
+
+  const sortByRemainingQuota = (event: React.MouseEvent<HTMLHRElement>) => {
+    event.preventDefault();
+    if (typeSort == "remainingQuotaSort") {
+      setTypeSort("");
+      const arraySorted = [...clientsCopy].sort(
+        (a: Client, b: Client) => b.remainingQuota - a.remainingQuota
+      );
+      dispatch(addClientCopy({ clientsCopy: arraySorted }));
+      return;
+    }
+    setTypeSort("remainingQuotaSort");
+    const arraySorted = [...clientsCopy].sort(
+      (a: Client, b: Client) => a.remainingQuota - b.remainingQuota
+    );
+    dispatch(addClientCopy({ clientsCopy: arraySorted }));
+  };
+
+  const sortByTotalCredit = (event: React.MouseEvent<HTMLHRElement>) => {
+    event.preventDefault();
+    if (typeSort == "totalCreditSort") {
+      setTypeSort("");
+      const arraySorted = [...clientsCopy].sort(
+        (a: Client, b: Client) =>
+          b.quotaMax - b.remainingQuota - (a.quotaMax - a.remainingQuota)
+      );
+      dispatch(addClientCopy({ clientsCopy: arraySorted }));
+      return;
+    }
+    setTypeSort("totalCreditSort");
+    const arraySorted = [...clientsCopy].sort(
+      (a: Client, b: Client) =>
+        a.quotaMax - a.remainingQuota - (b.quotaMax - b.remainingQuota)
+    );
+    dispatch(addClientCopy({ clientsCopy: arraySorted }));
   };
 
   return (
@@ -129,35 +220,35 @@ export default function Credits() {
           className={style.titleContainer__check}
         />
         <h3 className={style.titleContainer__h3}>Cédula: </h3>
-        <h3 className={style.titleContainer__h3}>
+        <h3 className={style.titleContainer__h3} onClick={sortByName}>
           Nombre:{" "}
-          <span className={style.titleCOntainer__span}>
-            {typeSort == "barCodeSort" ? "▼" : "▶"}
-          </span>
-        </h3>
-        <h3 className={style.titleContainer__h3}>Tipo de cliente: </h3>
-        <h3 className={style.titleContainer__h3}>
-          Fecha último abono:{" "}
           <span className={style.titleCOntainer__span}>
             {typeSort == "nameSort" ? "▼" : "▶"}
           </span>
         </h3>
-        <h3 className={style.titleContainer__h3}>
+        <h3 className={style.titleContainer__h3}>Tipo de cliente: </h3>
+        <h3 className={style.titleContainer__h3} onClick={sortByLastPayment}>
+          Fecha último abono:{" "}
+          <span className={style.titleCOntainer__span}>
+            {typeSort == "lastPaymentSort" ? "▼" : "▶"}
+          </span>
+        </h3>
+        <h3 className={style.titleContainer__h3} onClick={sortByLastPayment}>
           Dias de mora:{" "}
           <span className={style.titleCOntainer__span}>
-            {typeSort == "volumeSort" ? "▼" : "▶"}
+            {typeSort == "lastPaymentSort" ? "▼" : "▶"}
           </span>
         </h3>
-        <h3 className={style.titleContainer__h3}>
+        <h3 className={style.titleContainer__h3} onClick={sortByRemainingQuota}>
           Cupo restante:{" "}
           <span className={style.titleCOntainer__span}>
-            {typeSort == "maximumSort" ? "▼" : "▶"}
+            {typeSort == "remainingQuotaSort" ? "▼" : "▶"}
           </span>
         </h3>
-        <h3 className={style.titleContainer__h3}>
+        <h3 className={style.titleContainer__h3} onClick={sortByTotalCredit}>
           Total crédito{" "}
           <span className={style.titleCOntainer__span}>
-            {typeSort == "creationDateSort" ? "▼" : "▶"}
+            {typeSort == "totalCreditSort" ? "▼" : "▶"}
           </span>
         </h3>
 
