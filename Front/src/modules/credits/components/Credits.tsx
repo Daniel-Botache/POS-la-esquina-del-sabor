@@ -5,12 +5,12 @@ import {
   FilterIcon,
   SearchIcon,
 } from "../../../utils/Icons/icons";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useCustomDispatch, useCustomSelector } from "../../../store/hooks";
 import SearchBarClient from "./SearchBarClient";
 import TableClient from "./TableClient";
 import { Client } from "../redux/clientSlice";
-import { addClientCopy, addClient } from "../redux/clientSlice";
+import { addClientCopy } from "../redux/clientSlice";
 
 type CheckedClient = {
   id: string;
@@ -18,12 +18,17 @@ type CheckedClient = {
 
 export default function Credits() {
   const dispatch = useCustomDispatch();
+  const clients = useCustomSelector((state) => state.clients.clients);
   const clientsCopy = useCustomSelector((state) => state.clients.clientsCopy);
   const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(false);
   const [typeSort, setTypeSort] = useState("");
   const [selectedClientsIds, setSelectedClientsIds] = useState<CheckedClient[]>(
     []
   );
+  const [filterType, setFilterType] = useState("todos");
+  const [dateFilter, setDateFilter] = useState(0);
+  const [filterQuantySince, setFilterQuantySince] = useState(0);
+  const [filterQuantyTo, setFilterQuantyTo] = useState(Infinity);
 
   const toggleModalFilters = () => {
     setIsFiltersModalOpen(!isFiltersModalOpen);
@@ -124,6 +129,71 @@ export default function Credits() {
     dispatch(addClientCopy({ clientsCopy: arraySorted }));
   };
 
+  const handleTypeSelected = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const typeIdSelected = event.target.value;
+    setFilterType(typeIdSelected);
+    const filteredClients = clients.filter((client) => {
+      const matchesType =
+        typeIdSelected === "todos" || client.clientType === typeIdSelected;
+      return matchesType;
+    });
+    dispatch(addClientCopy({ clientsCopy: filteredClients }));
+  };
+
+  const filterAllHandle = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    const initialDate = dateFilter ? new Date(dateFilter) : null;
+    if (initialDate) initialDate.setHours(0, 0, 0, 0);
+    const filteredClients = clients.filter((client) => {
+      const clientDate = new Date(
+        client.lastPayment !== null ? client.lastPayment : new Date()
+      );
+      clientDate.setHours(0, 0, 0, 0);
+      const matchDate = !initialDate || clientDate <= initialDate;
+      const matchesType =
+        filterType === "todos" || client.clientType === filterType;
+      const matchVolume =
+        filterQuantySince <= client.quotaMax - client.remainingQuota &&
+        client.quotaMax - client.remainingQuota <= filterQuantyTo;
+      return matchDate && matchesType && matchVolume;
+    });
+    dispatch(addClientCopy({ clientsCopy: filteredClients }));
+  };
+
+  const handleFilterDateInitial = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const date = event.target.value;
+    if (date == "") {
+      setDateFilter(0);
+      return;
+    }
+    const isoDate = new Date(date).toISOString();
+    const parseDate = Date.parse(isoDate) + 86400000;
+
+    setDateFilter(parseDate);
+  };
+
+  const handleQuantySinceFilter = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const quanty = Number(event.target.value);
+    if (event.target.value == "") {
+      setFilterQuantySince(0);
+      return;
+    }
+    setFilterQuantySince(quanty);
+  };
+
+  const handleQuantyToFilter = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const quanty = Number(event.target.value);
+    if (event.target.value == "" || quanty == 0) {
+      setFilterQuantyTo(Infinity);
+      return;
+    }
+    setFilterQuantyTo(quanty);
+  };
+
   return (
     <div className={style.principalContainer}>
       <div className={style.searchBarContainer}>
@@ -164,6 +234,7 @@ export default function Credits() {
               name=""
               id="desdeDate"
               className={style.inputContainer__input}
+              onChange={handleFilterDateInitial}
             />
           </div>
         </div>
@@ -174,10 +245,11 @@ export default function Credits() {
             id=""
             defaultValue={"todos"}
             className={style.optionContainer__select}
+            onChange={handleTypeSelected}
           >
             <option value="todos">Todos</option>
             <option value="VIP">VIP</option>
-            <option value="VIP">Regular</option>
+            <option value="Regular">Regular</option>
             <option value="Moroso">Moroso</option>
           </select>
         </div>
@@ -193,6 +265,7 @@ export default function Credits() {
               name=""
               id=""
               className={style.inputContainer__input_number}
+              onChange={handleQuantySinceFilter}
             />
             <div className={style.inputContainer__div}></div>
           </div>
@@ -205,8 +278,12 @@ export default function Credits() {
               name=""
               id=""
               className={style.inputContainer__input_number}
+              onChange={handleQuantyToFilter}
             />
-            <button className={style.principalContainer__btn}>
+            <button
+              className={style.principalContainer__btn}
+              onClick={filterAllHandle}
+            >
               <SearchIcon className={style.principalContainer__icon} />
             </button>
           </div>
