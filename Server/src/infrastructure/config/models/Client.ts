@@ -18,7 +18,7 @@ export default (sequelize: Sequelize) => {
     ban: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue: false,
+      defaultValue: true,
     },
     quotaMax: {
       type: DataTypes.INTEGER,

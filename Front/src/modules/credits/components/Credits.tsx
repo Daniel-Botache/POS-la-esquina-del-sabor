@@ -11,6 +11,8 @@ import SearchBarClient from "./SearchBarClient";
 import TableClient from "./TableClient";
 import { Client } from "../redux/clientSlice";
 import { addClientCopy } from "../redux/clientSlice";
+import { deleteClient } from "../services/deleteClient";
+import { changeDeleteStatus } from "../../Inventory/redux/stockSlice";
 
 type CheckedClient = {
   id: string;
@@ -41,6 +43,25 @@ export default function Credits() {
         : [...prevSelectedClientsIds, clientId]
     );
   };
+
+  const handleDeleteProduct = (id: number) => {
+    deleteClient(id);
+    dispatch(changeDeleteStatus());
+  };
+
+  const handleDeleteSelectedProducts = () => {
+    const userConfirm = confirm(`¿Seguro desea eliminar los productos?`);
+    if (userConfirm) {
+      selectedClientsIds.forEach((id) => {
+        const client = clients.find((client) => client.id.toString() === id.id);
+        if (client) {
+          handleDeleteProduct(client.id);
+        }
+      });
+    }
+    setSelectedClientsIds([]);
+  };
+
   const sortByName = (event: React.MouseEvent<HTMLHRElement>) => {
     event.preventDefault();
     if (typeSort == "nameSort") {
@@ -199,7 +220,10 @@ export default function Credits() {
       <div className={style.searchBarContainer}>
         <SearchBarClient />
         <div className={style.orderContainer}>
-          <div className={style.headContainer__button}>
+          <div
+            className={style.headContainer__button}
+            onClick={handleDeleteSelectedProducts}
+          >
             <DeleteIcon className={style.headContainer__button__icon} />
             <p className={style.headContainer__button__p}>Eliminar selección</p>
           </div>

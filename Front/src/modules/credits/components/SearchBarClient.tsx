@@ -2,7 +2,7 @@ import style from "../styles/SearchBarClient.module.css";
 import { SearchIcon } from "../../../utils/Icons/icons";
 import { getClientById } from "../services/getClientById";
 import { addClient, addClientCopy } from "../redux/clientSlice";
-import { useCustomDispatch } from "../../../store/hooks";
+import { useCustomDispatch, useCustomSelector } from "../../../store/hooks";
 import React, { useState } from "react";
 import { getAllClients } from "../services/getAllClients";
 import { useEffect } from "react";
@@ -10,14 +10,12 @@ import { useEffect } from "react";
 export default function SearchBarClient() {
   const [clientIdSate, setClientIdSate] = useState("");
   const dispatch = useCustomDispatch();
+  const deleted = useCustomSelector((state) => state.stock.deleted);
 
   const searchAllClientsHandle = async () => {
     const clientsData = await getAllClients();
-    if (clientsData.length > 0) {
-      dispatch(addClient({ clients: clientsData }));
-      dispatch(addClientCopy({ clientsCopy: clientsData }));
-    }
-    console.log(clientsData);
+    dispatch(addClient({ clients: clientsData }));
+    dispatch(addClientCopy({ clientsCopy: clientsData }));
   };
 
   const searchCLientHandle = async (
@@ -54,7 +52,8 @@ export default function SearchBarClient() {
 
   useEffect(() => {
     searchAllClientsHandle();
-  }, []);
+  }, [deleted]);
+
   return (
     <div className={style.principalContainer}>
       <input
