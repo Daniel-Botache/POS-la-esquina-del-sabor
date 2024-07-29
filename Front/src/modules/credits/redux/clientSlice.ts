@@ -8,10 +8,8 @@ export type Client = {
   ban: boolean;
   quotaMax: number;
   clientType: string;
-  remainingCuota: number;
+  remainingQuota: number;
   lastPayment: string | null;
-  createdAt: string;
-  updatedAt: string;
 };
 
 interface ClientState {

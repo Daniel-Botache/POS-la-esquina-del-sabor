@@ -128,12 +128,7 @@ export default function Credits() {
           id=""
           className={style.titleContainer__check}
         />
-        <h3 className={style.titleContainer__h3}>
-          Cédula:{" "}
-          <span className={style.titleCOntainer__span}>
-            {typeSort == "idSort" ? "▼" : "▶"}
-          </span>
-        </h3>
+        <h3 className={style.titleContainer__h3}>Cédula: </h3>
         <h3 className={style.titleContainer__h3}>
           Nombre:{" "}
           <span className={style.titleCOntainer__span}>

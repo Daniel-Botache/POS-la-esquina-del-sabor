@@ -24,10 +24,8 @@ export default function TableClient({ onCheckboxChange }: TableProps) {
             lastPayment={client.lastPayment}
             quotaMax={client.quotaMax}
             ban={client.ban}
-            remainingCuota={client.remainingCuota}
-            createdAt={client.createdAt}
+            remainingQuota={client.remainingQuota}
             onCheckboxChange={onCheckboxChange}
-            updatedAt={client.updatedAt}
           />
         ))}
       </div>

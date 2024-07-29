@@ -63,3 +63,9 @@
   justify-content: space-evenly;
   gap: 0.8em;
 }
+.prepertyContainer__detailIcon {
+  width: 1.8em;
+  height: 2em;
+  margin: auto;
+  fill: var(--color-main-green);
+}
