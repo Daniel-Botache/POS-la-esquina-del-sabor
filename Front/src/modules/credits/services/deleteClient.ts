@@ -1,7 +1,7 @@
 import axios from "axios";
 import { succesMessage, errorMessage } from "../../auth/hooks/notifications";
 
-export async function deleteClient(id: number) {
+export async function deleteClient(id: string) {
   try {
     const deletedClient = await axios.delete(`/client/${id}`);
     if (deletedClient.data) {

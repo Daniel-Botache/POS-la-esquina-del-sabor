@@ -33,6 +33,11 @@ export default function Credits() {
   const [filterQuantySince, setFilterQuantySince] = useState(0);
   const [filterQuantyTo, setFilterQuantyTo] = useState(Infinity);
   const [isModalCreateClientOpen, setIsModalCreateClientOpen] = useState(false);
+  const dateToday = new Date();
+  const year = dateToday.getFullYear();
+  const month = String(dateToday.getMonth() + 1).padStart(2, "0");
+  const day = String(dateToday.getDate()).padStart(2, "0");
+  const formatedToChartDate = `${year}-${month}-${day}`;
 
   const toggleModalFilters = () => {
     setIsFiltersModalOpen(!isFiltersModalOpen);
@@ -50,7 +55,7 @@ export default function Credits() {
     );
   };
 
-  const handleDeleteProduct = (id: number) => {
+  const handleDeleteProduct = (id: string) => {
     deleteClient(id);
     dispatch(changeDeleteStatus());
   };
@@ -266,6 +271,7 @@ export default function Credits() {
               type="date"
               name=""
               id="desdeDate"
+              max={formatedToChartDate}
               className={style.inputContainer__input}
               onChange={handleFilterDateInitial}
             />
