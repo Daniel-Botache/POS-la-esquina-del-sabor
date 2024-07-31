@@ -77,3 +77,37 @@
 .principalContainer__btn:hover {
   border: 1px var(--color-main-orange) solid;
 }
+
+.inputContainer_disabled {
+  display: flex;
+  gap: 1em;
+  align-items: center;
+  width: 90%;
+  justify-content: space-between;
+  display: none;
+}
+.inputContainer_error {
+  display: flex;
+  gap: 1em;
+  align-items: center;
+  width: 90%;
+  justify-content: right;
+  animation-name: scale-in;
+  animation-duration: 0.8s;
+}
+.inputContainer_label {
+  color: rgb(211, 27, 27);
+  font-size: 0.8em;
+}
+@keyframes scale-in {
+  from {
+    scale: 0;
+    opacity: 0;
+    display: none;
+  }
+  to {
+    opacity: 1;
+    scale: 100%;
+    display: flex;
+  }
+}
