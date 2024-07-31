@@ -1,24 +1,29 @@
 import style from "../styles/CreateClientModal.module.css";
 import { postClient } from "../services/postClient";
-import { useState } from "react";
+import React, { useState } from "react";
 import { idValidation } from "../validations/idValidation";
+import { changeDeleteStatus } from "../../Inventory/redux/stockSlice";
+import { useCustomDispatch } from "../../../store/hooks";
+import { succesMessage, errorMessage } from "../../auth/hooks/notifications";
+import { create } from "domain";
 
 type CreateClientModalProps = {
   onClose: () => void;
 };
 
 export default function CreateClientModal({ onClose }: CreateClientModalProps) {
-  const [idState, setIdState] = useState(0);
+  const [idState, setIdState] = useState("");
   const [nameState, setNameState] = useState("");
   const [telState, setTelState] = useState("");
   const [addressState, setAddressState] = useState("");
   const [banState, setBanState] = useState(false);
   const [quotaMaxState, setQuotaMaxState] = useState(0);
   const [errorId, setErrorId] = useState("");
+  const dispatch = useCustomDispatch();
 
   const changeIdHandle = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const id = Number(event.target.value);
-    setErrorId(idValidation(id));
+    const id = event.target.value;
+    setErrorId(idValidation(Number(id)));
     setIdState(id);
   };
 
@@ -48,6 +53,42 @@ export default function CreateClientModal({ onClose }: CreateClientModalProps) {
     setQuotaMaxState(quotaMax);
   };
 
+  const clearStates = () => {
+    setIdState("");
+    setNameState("");
+    setTelState("");
+    setAddressState("");
+    setQuotaMaxState(0);
+  };
+
+  const submitHandle = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const client = {
+      id: idState.toString(),
+      name: nameState,
+      tel: telState,
+      address: addressState,
+      ban: banState,
+      quotaMax: !banState ? 0 : quotaMaxState,
+      remainingQuota: !banState ? 0 : quotaMaxState,
+      lastPayment: null,
+      clientType: "Regular",
+    };
+
+    if (errorId == "") {
+      const createdClient = await postClient(client);
+      if (createdClient.succes) {
+        clearStates();
+        dispatch(changeDeleteStatus());
+        succesMessage(createdClient.message);
+        return;
+      }
+      errorMessage(createdClient.message);
+      return;
+    }
+    errorMessage("El formulario no debe contener errores, revise los campos");
+  };
+
   const handleClose = () => {
     if (onClose) {
       onClose();
@@ -61,7 +102,7 @@ export default function CreateClientModal({ onClose }: CreateClientModalProps) {
             X
           </button>
         </div>
-        <form className={style.formContainer}>
+        <form className={style.formContainer} onSubmit={submitHandle}>
           <h2> Crear Cliente</h2>
           <div className={style.inputContainer}>
             <label htmlFor="cedulaInput">Cédula: *</label>
@@ -70,6 +111,7 @@ export default function CreateClientModal({ onClose }: CreateClientModalProps) {
               id="cedulaInput"
               className={style.form__inputText}
               onChange={changeIdHandle}
+              value={idState}
             />
           </div>
           {errorId ? (
@@ -87,6 +129,7 @@ export default function CreateClientModal({ onClose }: CreateClientModalProps) {
               id="nameInput"
               className={style.form__inputText}
               onChange={changeNameHandle}
+              value={nameState}
             />
           </div>
           <div className={style.inputContainer}>
@@ -96,6 +139,7 @@ export default function CreateClientModal({ onClose }: CreateClientModalProps) {
               id="telInput"
               className={style.form__inputText}
               onChange={changeTelHandle}
+              value={telState}
             />
           </div>
           <div className={style.inputContainer}>
@@ -105,6 +149,7 @@ export default function CreateClientModal({ onClose }: CreateClientModalProps) {
               id="addressInput"
               className={style.form__inputText}
               onChange={changeAddressHandle}
+              value={addressState}
             />
           </div>
           <div className={style.inputContainer}>
@@ -131,6 +176,7 @@ export default function CreateClientModal({ onClose }: CreateClientModalProps) {
               className={style.form__inputText}
               onChange={changeQuotaMaxHandle}
               disabled={banState ? false : true}
+              value={quotaMaxState}
             />
           </div>
 

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export type Client = {
-  id: number;
+  id: string;
   name: string;
   tel: string;
   address: string;
