@@ -21,7 +21,7 @@ export default function TableClient({ onCheckboxChange }: TableProps) {
               id={client.id}
               name={client.name}
               address={client.address}
-              tel={client.address}
+              tel={client.tel}
               clientType={client.clientType}
               lastPayment={client.lastPayment}
               quotaMax={client.quotaMax}

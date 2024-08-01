@@ -8,15 +8,31 @@ import { succesMessage, errorMessage } from "../../auth/hooks/notifications";
 
 type CreateClientModalProps = {
   onClose: () => void;
+  id: string;
+  name: string;
+  address: string;
+  tel: string;
+  ban: boolean;
+  edit: boolean;
+  quotaMax: number;
 };
 
-export default function CreateClientModal({ onClose }: CreateClientModalProps) {
-  const [idState, setIdState] = useState("");
-  const [nameState, setNameState] = useState("");
-  const [telState, setTelState] = useState("");
-  const [addressState, setAddressState] = useState("");
-  const [banState, setBanState] = useState(false);
-  const [quotaMaxState, setQuotaMaxState] = useState(0);
+export default function CreateClientModal({
+  onClose,
+  id,
+  name,
+  address,
+  tel,
+  ban,
+  quotaMax,
+  edit,
+}: CreateClientModalProps) {
+  const [idState, setIdState] = useState(id);
+  const [nameState, setNameState] = useState(name);
+  const [telState, setTelState] = useState(tel);
+  const [addressState, setAddressState] = useState(address);
+  const [banState, setBanState] = useState(ban);
+  const [quotaMaxState, setQuotaMaxState] = useState(quotaMax);
   const [errorId, setErrorId] = useState("");
   const dispatch = useCustomDispatch();
 
@@ -111,6 +127,7 @@ export default function CreateClientModal({ onClose }: CreateClientModalProps) {
               className={style.form__inputText}
               onChange={changeIdHandle}
               value={idState}
+              disabled={edit ? true : false}
             />
           </div>
           {errorId ? (
@@ -158,6 +175,7 @@ export default function CreateClientModal({ onClose }: CreateClientModalProps) {
               id="creditSelect"
               className={style.form__inputText}
               onChange={changeBanHandle}
+              value={Number(ban)}
             >
               <option value={0}>No</option>
               <option value={1}>Si</option>
@@ -180,7 +198,7 @@ export default function CreateClientModal({ onClose }: CreateClientModalProps) {
           </div>
 
           <button type="submit" className={style.principalContainer__btn}>
-            Crear Cliente
+            {edit ? "Editar Cliente" : "Crear Cliente"}
           </button>
         </form>
       </div>

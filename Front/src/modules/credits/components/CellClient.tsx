@@ -3,6 +3,11 @@ import { Client } from "../redux/clientSlice";
 import { useEffect, useState } from "react";
 import { DeleteIcon, EditIcon, DetailIcon } from "../../../utils/Icons/icons";
 import { putClient } from "../services/putClient";
+import CreateClientModal from "./CreateClientModal";
+import { deleteClient } from "../services/deleteClient";
+import { succesMessage, errorMessage } from "../../auth/hooks/notifications";
+import { changeDeleteStatus } from "../../Inventory/redux/stockSlice";
+import { useCustomDispatch } from "../../../store/hooks";
 
 type ClientProps = Client & {
   onCheckboxChange: (client: { id: string }) => void;
@@ -22,6 +27,12 @@ export default function CellCLient({
   onCheckboxChange,
 }: ClientProps) {
   const [colorBackground, setColorBackground] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const dispatch = useCustomDispatch();
+
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
 
   const handleCheckboxChange = () => {
     onCheckboxChange({ id: id.toString() });
@@ -75,6 +86,26 @@ export default function CellCLient({
     putClient(id, client);
   }, []);
 
+  const deleteClientHandle = async (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+    const confirm = window.confirm(
+      "Seguro desea eliminar completamente a este cliente, no podrá recuperar ninguno de los datos relacionados"
+    );
+    if (confirm) {
+      const deletedClient = await deleteClient(id);
+      if (deletedClient) {
+        dispatch(changeDeleteStatus());
+        succesMessage("Cliente eliminado completamente");
+        return;
+      }
+      errorMessage("Problema con el servidor actualice la página");
+      return;
+    }
+    return;
+  };
+
   return (
     <div className={style.principalContainer}>
       <div className={style.prepertyContainer__check}>
@@ -95,19 +126,31 @@ export default function CellCLient({
       </div>
 
       <div className={style.prepertyContainer_options}>
-        <button className={style.prepertyContainer__btn}>
+        <button
+          className={style.prepertyContainer__btn}
+          onClick={deleteClientHandle}
+        >
           <DeleteIcon className={style.prepertyContainer__deleteIcon} />
         </button>
-        <button className={style.prepertyContainer__btn}>
+        <button className={style.prepertyContainer__btn} onClick={toggleModal}>
           <EditIcon className={style.prepertyContainer__editIcon} />
         </button>
         <button className={style.prepertyContainer__btn}>
           <DetailIcon className={style.prepertyContainer__detailIcon} />
         </button>
       </div>
-      {/*   {isModalOpen && (
-        <EditProductModal id={id} bale={bale} onClose={handleOpenModal} />
-      )} */}
+      {isModalOpen && (
+        <CreateClientModal
+          edit={true}
+          id={id}
+          name={name}
+          tel={tel}
+          address={address}
+          ban={ban}
+          quotaMax={quotaMax}
+          onClose={toggleModal}
+        />
+      )}
     </div>
   );
 }

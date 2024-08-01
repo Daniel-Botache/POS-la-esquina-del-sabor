@@ -39,7 +39,7 @@ export default function Balance() {
       totalPercentage += item.percentageProfit;
       const formattedDateCreate = new Date(item.date);
       const year = formattedDateCreate.getFullYear();
-      const month = String(formattedDateCreate.getMonth() + 1).padStart(2, "0"); // Los meses son base 0 en JavaScript
+      const month = String(formattedDateCreate.getMonth() + 1).padStart(2, "0");
       const day = String(formattedDateCreate.getDate()).padStart(2, "0");
       const formatedToChartDate = `${year}-${month}-${day}`;
       const objectData = {

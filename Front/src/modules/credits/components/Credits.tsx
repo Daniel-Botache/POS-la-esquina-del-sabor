@@ -372,7 +372,16 @@ export default function Credits() {
       </div>
       <TableClient onCheckboxChange={handleCheckboxChange} />
       {isModalCreateClientOpen && (
-        <CreateClientModal onClose={toggleModalCreateClient} />
+        <CreateClientModal
+          id={""}
+          name={""}
+          edit={false}
+          tel={""}
+          address={""}
+          quotaMax={0}
+          ban={false}
+          onClose={toggleModalCreateClient}
+        />
       )}
     </div>
   );
