@@ -45,12 +45,12 @@ export default function CellCLient({
   const calculateTotalCreditHandle = quotaMax - remainingQuota;
 
   const calculateClientType = () => {
-    if (calculateDayPastDueHandle() > 30) {
+    if (calculateDayPastDueHandle() > 35) {
       setColorBackground(style.redBackground);
       return "Moroso";
     } else if (
-      calculateDayPastDueHandle() > 15 &&
-      calculateDayPastDueHandle() < 30
+      calculateDayPastDueHandle() > 20 &&
+      calculateDayPastDueHandle() < 35
     ) {
       setColorBackground(style.greyBackground);
       return "Regular";
