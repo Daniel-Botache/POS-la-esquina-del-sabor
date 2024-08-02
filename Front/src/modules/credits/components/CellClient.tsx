@@ -8,6 +8,7 @@ import { deleteClient } from "../services/deleteClient";
 import { succesMessage, errorMessage } from "../../auth/hooks/notifications";
 import { changeDeleteStatus } from "../../Inventory/redux/stockSlice";
 import { useCustomDispatch } from "../../../store/hooks";
+import ClientDetailModal from "./ClientDetailModal";
 
 type ClientProps = Client & {
   onCheckboxChange: (client: { id: string }) => void;
@@ -28,10 +29,15 @@ export default function CellCLient({
 }: ClientProps) {
   const [colorBackground, setColorBackground] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDetailModalOpen, setIsDetailModalOpem] = useState(false);
   const dispatch = useCustomDispatch();
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
+  };
+
+  const toggleDetailModal = () => {
+    setIsDetailModalOpem(!isDetailModalOpen);
   };
 
   const handleCheckboxChange = () => {
@@ -135,7 +141,10 @@ export default function CellCLient({
         <button className={style.prepertyContainer__btn} onClick={toggleModal}>
           <EditIcon className={style.prepertyContainer__editIcon} />
         </button>
-        <button className={style.prepertyContainer__btn}>
+        <button
+          className={style.prepertyContainer__btn}
+          onClick={toggleDetailModal}
+        >
           <DetailIcon className={style.prepertyContainer__detailIcon} />
         </button>
       </div>
@@ -149,6 +158,21 @@ export default function CellCLient({
           ban={ban}
           quotaMax={quotaMax}
           onClose={toggleModal}
+        />
+      )}
+      {isDetailModalOpen && (
+        <ClientDetailModal
+          id={id}
+          name={name}
+          tel={tel}
+          address={address}
+          ban={ban}
+          quotaMax={quotaMax}
+          lastPayment={lastPayment}
+          remainingQuota={remainingQuota}
+          clientType={clientType}
+          dayPastDue={calculateDayPastDueHandle()}
+          onClose={toggleDetailModal}
         />
       )}
     </div>
