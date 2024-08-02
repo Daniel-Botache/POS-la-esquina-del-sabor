@@ -49,7 +49,7 @@ export default function Credits() {
 
   const handleCheckboxChange = (clientId: { id: string }) => {
     setSelectedClientsIds((prevSelectedClientsIds) =>
-      prevSelectedClientsIds.some((client) => client.id === client.id)
+      prevSelectedClientsIds.some((client) => client.id === clientId.id)
         ? prevSelectedClientsIds.filter((client) => client.id !== clientId.id)
         : [...prevSelectedClientsIds, clientId]
     );
@@ -57,11 +57,10 @@ export default function Credits() {
 
   const handleDeleteProduct = (id: string) => {
     deleteClient(id);
-    dispatch(changeDeleteStatus());
   };
 
   const handleDeleteSelectedProducts = () => {
-    const userConfirm = confirm(`¿Seguro desea eliminar los productos?`);
+    const userConfirm = confirm(`¿Seguro desea eliminar los Clientes?`);
     if (userConfirm) {
       selectedClientsIds.forEach((id) => {
         const client = clients.find((client) => client.id.toString() === id.id);
@@ -70,6 +69,7 @@ export default function Credits() {
         }
       });
     }
+    dispatch(changeDeleteStatus());
     setSelectedClientsIds([]);
   };
 
