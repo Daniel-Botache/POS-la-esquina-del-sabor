@@ -5,6 +5,7 @@ import { idValidation } from "../validations/idValidation";
 import { changeDeleteStatus } from "../../Inventory/redux/stockSlice";
 import { useCustomDispatch } from "../../../store/hooks";
 import { succesMessage, errorMessage } from "../../auth/hooks/notifications";
+import { putClient } from "../services/putClient";
 
 type CreateClientModalProps = {
   onClose: () => void;
@@ -89,7 +90,15 @@ export default function CreateClientModal({
       lastPayment: null,
       clientType: "Regular",
     };
-
+    if (edit) {
+      const editedClient = await putClient(id, client);
+      if (editedClient) {
+        handleClose();
+        dispatch(changeDeleteStatus());
+        succesMessage("Cliente actualizado Correctamente");
+        return;
+      }
+    }
     if (errorId == "") {
       const createdClient = await postClient(client);
       if (createdClient.succes) {
