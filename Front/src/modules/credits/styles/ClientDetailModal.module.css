@@ -84,6 +84,29 @@
 .infoContainer_h3_bottom {
   margin-top: 1em;
 }
+.inputContainer {
+  display: flex;
+  gap: 0.5em;
+  justify-content: space-around;
+  width: 90%;
+  align-items: center;
+}
+.inputContainer__label {
+  font-size: 0.8em;
+}
+.inputContainer__input {
+  border: 1px var(--color-main-orange) solid;
+  border-radius: 5px;
+  outline: none;
+  appearance: none;
+  font-size: 1em;
+}
+.filterContainer {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  margin-top: 0.4em;
+}
 
 @keyframes scale-in {
   from {

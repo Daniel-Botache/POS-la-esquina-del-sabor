@@ -21,6 +21,8 @@ export default function ClientDetailModal({
   onClose,
 }: ClientProps) {
   const [colorBackground, setColorBackground] = useState("");
+  const [filterInitialDate, setFilterInitialDate] = useState(0);
+  const [filterFinalDate, setFilterFinalDate] = useState(0);
 
   const calculateColorType = () => {
     if (clientType == "Regular") {
@@ -55,6 +57,34 @@ export default function ClientDetailModal({
     calculateColorType();
   }, []);
 
+  const handleFilterDateInitial = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const date = event.target.value;
+    if (date == "") {
+      setFilterInitialDate(0);
+      return;
+    }
+    const isoDate = new Date(date).toISOString();
+    const parseDate = Date.parse(isoDate) + 86400000;
+    console.log(`Esta es la seleccion Inicial${parseDate}`);
+    setFilterInitialDate(parseDate);
+  };
+
+  const handleFilterDateFinal = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const date = event.target.value;
+    if (date == "") {
+      setFilterInitialDate(0);
+      return;
+    }
+    const isoDate = new Date(date).toISOString();
+    const parseDate = Date.parse(isoDate) + 86400000;
+    console.log(`Esta es la seleccion final${isoDate}`);
+    setFilterFinalDate(parseDate);
+  };
+
   return (
     <div className={style.modalOverlay}>
       <div className={style.principalContainer}>
@@ -69,10 +99,49 @@ export default function ClientDetailModal({
               <h1 className={style.infoContainer_h1}>{name}</h1>
               <h3 className={style.infoContainer_h3}>C.C: {id}</h3>
             </div>
-            <div className={style.infoContainer}>
+            <div
+              className={`${style.infoContainer_h3} ${style.infoContainer_h3_bottom}`}
+            >
               <h3 className={style.infoContainer_h3}>
                 Cupo asignado: ${formatedQuotaMaxHandle}
               </h3>
+              <div className={style.filterContainer}>
+                <div className={style.optionContainer}>
+                  <div className={style.filterContainer}>
+                    {" "}
+                    <div className={style.inputContainer}>
+                      <label
+                        htmlFor="desdeDate"
+                        className={style.inputContainer__label}
+                      >
+                        Desde:
+                      </label>
+                      <input
+                        onChange={handleFilterDateInitial}
+                        type="date"
+                        name=""
+                        id="desdeDate"
+                        className={style.inputContainer__input}
+                      />
+                    </div>
+                    <div className={style.inputContainer}>
+                      <label
+                        htmlFor="hastaDate"
+                        className={style.inputContainer__label}
+                      >
+                        Hasta:
+                      </label>
+                      <input
+                        onChange={handleFilterDateFinal}
+                        type="date"
+                        name=""
+                        id="hastaDate"
+                        className={style.inputContainer__input}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             <div className={style.infoContainer}>
               <h3 className={`${style.infoContainer_h3} ${colorBackground}`}>
@@ -85,7 +154,6 @@ export default function ClientDetailModal({
               </h3>
             </div>
           </div>
-          <div className={style.filterContainer}></div>
         </div>
       </div>
     </div>
