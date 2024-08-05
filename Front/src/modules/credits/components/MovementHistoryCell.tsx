@@ -30,11 +30,13 @@ export default function MovementHistoryCell({
 
   const formatedTotalDeuHandle = new Intl.NumberFormat("es-CO").format(total);
 
+  const formattedDateCreate = new Date(createdAt).toLocaleDateString();
+
   return (
     <div className={style.principalContainer}>
       <div className={style.prepertyContainer}>{id}</div>
       <div className={style.prepertyContainer}>{movementType}</div>
-      <div className={style.prepertyContainer}>{"createdAt"}</div>
+      <div className={style.prepertyContainer}>{formattedDateCreate}</div>
       <div className={style.prepertyContainer}>{formatedTotalDeuHandle}</div>
       <div className={style.prepertyContainer_options}>
         <button

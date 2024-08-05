@@ -32,28 +32,60 @@ export default function MovementHistoryTable({
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const date = event.target.value;
-    if (date == "") {
-      setFilterInitialDate(0);
-      return;
-    }
+
     const isoDate = new Date(date).toISOString();
-    const parseDate = Date.parse(isoDate) + 86400000;
-    console.log(`Esta es la seleccion Inicial${parseDate}`);
+    const parseDate = Date.parse(isoDate);
+    console.log(`Esta es la seleccion final${isoDate}`);
     setFilterInitialDate(parseDate);
+    const finalDate = filterFinalDate ? new Date(filterFinalDate) : new Date(0);
+    const initialDate = parseDate ? new Date(date) : null;
+    if (initialDate) initialDate.setHours(0, 0, 0, 0);
+    if (finalDate) finalDate.setHours(23, 59, 59, 999);
+    const filteredProducts = creditsPayments.filter((sale: Sales) => {
+      const DateSaleString = new Date(sale.createdAt).toISOString();
+      const pparseDateSale = Date.parse(DateSaleString) - 86400000;
+      const saleDate = new Date(pparseDateSale);
+      saleDate.setHours(0, 0, 0, 0);
+      const matchDate =
+        !initialDate ||
+        !finalDate ||
+        (saleDate >= initialDate && saleDate <= finalDate);
+      return matchDate;
+    });
+    setCreditsPaymentsCopy(filteredProducts);
   };
 
   const handleFilterDateFinal = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const date = event.target.value;
-    if (date == "") {
-      setFilterInitialDate(0);
-      return;
-    }
+
     const isoDate = new Date(date).toISOString();
-    const parseDate = Date.parse(isoDate) + 86400000;
+    const parseDate = Date.parse(isoDate);
     console.log(`Esta es la seleccion final${isoDate}`);
     setFilterFinalDate(parseDate);
+    const initialDate = filterInitialDate
+      ? new Date(filterInitialDate)
+      : new Date(0);
+    const finalDate = parseDate ? new Date(date) : null;
+    if (initialDate) initialDate.setHours(0, 0, 0, 0);
+    if (finalDate) finalDate.setHours(23, 59, 59, 999);
+    const filteredProducts = creditsPayments.filter((sale: Sales) => {
+      const DateSaleString = new Date(sale.createdAt).toISOString();
+      const pparseDateSale = Date.parse(DateSaleString) - 86400000;
+      const saleDate = new Date(pparseDateSale);
+      saleDate.setHours(0, 0, 0, 0);
+      const matchDate =
+        !initialDate ||
+        !finalDate ||
+        (saleDate >= initialDate && saleDate <= finalDate);
+      return matchDate;
+    });
+    setCreditsPaymentsCopy(filteredProducts);
+  };
+
+  const showAllsHandle = () => {
+    setCreditsPaymentsCopy(creditsPayments);
   };
 
   return (
@@ -96,7 +128,7 @@ export default function MovementHistoryTable({
             </div>
           </div>
         </div>
-        <div className={style.headContainer__button}>
+        <div className={style.headContainer__button} onClick={showAllsHandle}>
           {<SearchIcon className={style.headContainer__button__icon} />}
           <p className={style.headContainer__button__p}>Mostrar Todos</p>
         </div>
