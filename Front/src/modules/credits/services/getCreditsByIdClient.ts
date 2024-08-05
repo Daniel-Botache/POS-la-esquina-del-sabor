@@ -1,5 +1,5 @@
 import axios from "axios";
-import { errorMessage } from "../../auth/hooks/notifications";
+
 import { Sales } from "../../profit/redux/profitSlice";
 
 export async function getCreditsByClientId(id: string) {
@@ -20,8 +20,6 @@ export async function getCreditsByClientId(id: string) {
     }
     return sales.data.success;
   } catch (error: any) {
-    const err = error as Error;
-    errorMessage(err.message);
     return [];
   }
 }

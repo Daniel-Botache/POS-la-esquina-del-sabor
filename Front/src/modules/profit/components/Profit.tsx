@@ -213,6 +213,7 @@ export default function Profit() {
   };
   useEffect(() => {
     getSalesTodayHandler();
+    console.log("montaje");
   }, []);
 
   const sortByCreationDate = (event: React.MouseEvent<HTMLHRElement>) => {

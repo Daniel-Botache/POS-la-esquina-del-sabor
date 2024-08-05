@@ -5,6 +5,7 @@ import MovementHistoryCell from "./MovementHistoryCell";
 import { Sales } from "../../profit/redux/profitSlice";
 import { getCreditsByClientId } from "../services/getCreditsByIdClient";
 import warningIcon from "../../../utils/Icons/73028warning_109526.svg";
+import { errorMessage } from "../../auth/hooks/notifications";
 
 type MovementHistoryTableProps = {
   id: string;
@@ -19,9 +20,18 @@ export default function MovementHistoryTable({
   const [creditsPaymentsCopy, setCreditsPaymentsCopy] = useState<Sales[]>([]);
 
   const getCreditsHandle = async () => {
-    const creditsById = await getCreditsByClientId(id);
-    setCreditsPayments(creditsById);
-    setCreditsPaymentsCopy(creditsById);
+    try {
+      const creditsById = await getCreditsByClientId(id);
+      if (creditsById.length === 0) {
+        errorMessage("No se encuentran movimientos para este cliente");
+      } else {
+        setCreditsPayments(creditsById);
+        setCreditsPaymentsCopy(creditsById);
+      }
+    } catch (error) {
+      console.error("Error fetching credits:", error);
+      errorMessage("Error al obtener movimientos");
+    }
   };
 
   useEffect(() => {
@@ -142,6 +152,7 @@ export default function MovementHistoryTable({
         {creditsPaymentsCopy.length > 0 ? (
           creditsPaymentsCopy.map((sale: any) => (
             <MovementHistoryCell
+              key={sale.id}
               id={sale.id}
               movementType={sale.movementType}
               createdAt={sale.createdAt}
@@ -159,7 +170,7 @@ export default function MovementHistoryTable({
               className={style.principalContainer_icon}
             />
             <h3 className={style.principalContainer_h3}>
-              clientes no encontrados
+              Movimientos de crédito no encontrados
             </h3>
           </div>
         )}
