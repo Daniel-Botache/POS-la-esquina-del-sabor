@@ -47,6 +47,13 @@ export default function ClientDetailModal({
   const formatedQuotaMaxHandle = new Intl.NumberFormat("es-CO").format(
     quotaMax
   );
+  const formatedRemainingQuotaHandle = new Intl.NumberFormat("es-CO").format(
+    remainingQuota
+  );
+
+  const formatedTotalDeuHandle = new Intl.NumberFormat("es-CO").format(
+    quotaMax - remainingQuota
+  );
 
   useEffect(() => {
     calculateColorType();
@@ -86,6 +93,10 @@ export default function ClientDetailModal({
           </div>
         </div>
         <MovementHistoryTable id={id} />
+        <div className={style.creditInformation}>
+          <h3>Cupo disponible: ${formatedRemainingQuotaHandle} </h3>
+          <h3>Deuda Total: {formatedTotalDeuHandle}</h3>
+        </div>
       </div>
     </div>
   );

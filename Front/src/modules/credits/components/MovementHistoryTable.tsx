@@ -108,27 +108,29 @@ export default function MovementHistoryTable({
         <h3 className={style.titleContainer__h3}>Total</h3>
         <h3 className={style.titleContainer__h3}>Acciones</h3>
       </div>
-      {creditsPaymentsCopy.length > 0 ? (
-        creditsPaymentsCopy.map((sale: Sales) => (
-          <MovementHistoryCell
-            id={sale.id}
-            movementType={sale.movementType}
-            createdAt={sale.createdAt}
-            total={sale.total}
-          />
-        ))
-      ) : (
-        <div className={style.principalContainer_notFound}>
-          <img
-            src={warningIcon}
-            alt="warningIcon"
-            className={style.principalContainer_icon}
-          />
-          <h3 className={style.principalContainer_h3}>
-            clientes no encontrados
-          </h3>
-        </div>
-      )}
+      <div className={style.billProductContainer}>
+        {creditsPaymentsCopy.length > 0 ? (
+          creditsPaymentsCopy.map((sale: Sales) => (
+            <MovementHistoryCell
+              id={sale.id}
+              movementType={sale.movementType}
+              createdAt={sale.createdAt}
+              total={sale.total}
+            />
+          ))
+        ) : (
+          <div className={style.principalContainer_notFound}>
+            <img
+              src={warningIcon}
+              alt="warningIcon"
+              className={style.principalContainer_icon}
+            />
+            <h3 className={style.principalContainer_h3}>
+              clientes no encontrados
+            </h3>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
