@@ -35,7 +35,6 @@ export default function MovementHistoryTable({
 
     const isoDate = new Date(date).toISOString();
     const parseDate = Date.parse(isoDate);
-    console.log(`Esta es la seleccion final${isoDate}`);
     setFilterInitialDate(parseDate);
     const finalDate = filterFinalDate ? new Date(filterFinalDate) : new Date(0);
     const initialDate = parseDate ? new Date(date) : null;
@@ -62,7 +61,6 @@ export default function MovementHistoryTable({
 
     const isoDate = new Date(date).toISOString();
     const parseDate = Date.parse(isoDate);
-    console.log(`Esta es la seleccion final${isoDate}`);
     setFilterFinalDate(parseDate);
     const initialDate = filterInitialDate
       ? new Date(filterInitialDate)

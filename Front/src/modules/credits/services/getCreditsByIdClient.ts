@@ -13,7 +13,10 @@ export async function getCreditsByClientId(id: string) {
         (sale: Sales) => sale.movementType == "Abono"
       );
       const arrayConcat = arrayFilteredCredits.concat(arrayFilteredPayments);
-      return arrayConcat;
+      const arraySorted = [...arrayConcat].sort((a: Sales, b: Sales) =>
+        a.createdAt?.localeCompare(b.createdAt)
+      );
+      return arraySorted;
     }
     return sales.data.success;
   } catch (error: any) {
