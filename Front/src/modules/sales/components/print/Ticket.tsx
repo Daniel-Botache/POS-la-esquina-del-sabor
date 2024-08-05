@@ -4,7 +4,7 @@ import style from "../../styles/Ticket.module.css";
 interface TicketProps {
   products: any;
   total: number;
-  clientIdStatus: string;
+  clientIdStatus: string | null;
   userId: string;
   history: boolean;
 }

@@ -21,8 +21,8 @@ type Products = {
 type ProfitDetailProps = {
   id: number;
   movementType: string;
-  clientId: string;
-  createdAt: Date;
+  clientId: string | null;
+  createdAt: Date | string;
   total: number;
   products: Products[];
   bales: [];

@@ -110,12 +110,15 @@ export default function MovementHistoryTable({
       </div>
       <div className={style.billProductContainer}>
         {creditsPaymentsCopy.length > 0 ? (
-          creditsPaymentsCopy.map((sale: Sales) => (
+          creditsPaymentsCopy.map((sale: any) => (
             <MovementHistoryCell
               id={sale.id}
               movementType={sale.movementType}
               createdAt={sale.createdAt}
               total={sale.total}
+              clientId={sale.clientId}
+              products={sale.products}
+              bales={sale.bales}
             />
           ))
         ) : (
