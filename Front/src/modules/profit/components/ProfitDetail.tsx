@@ -46,7 +46,21 @@ export default function ProfitDetail({
   const formattedDateCreate = new Date(createdAt).toLocaleString();
 
   const concatProductsAndBales = () => {
-    const arrayProductsAndBales = products.concat(bales);
+    let arrayProductsAndBales = products.concat(bales);
+    if (arrayProductsAndBales.length <= 0 && total > 0) {
+      arrayProductsAndBales = [
+        {
+          id: "0",
+          barCode: "",
+          name: "Abono",
+          price: total,
+          bale: false,
+          ProductSale: { productId: "0", quantity: 1, saleId: "0" },
+          BaleSale: { baleId: "", quantity: 0, saleId: "" },
+        },
+      ];
+    }
+    console.log(arrayProductsAndBales);
     return arrayProductsAndBales;
   };
 
