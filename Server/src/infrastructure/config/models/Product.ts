@@ -23,7 +23,7 @@ export default (sequelize: Sequelize) => {
     barCode: {
       type: DataTypes.STRING,
       allowNull: true,
-      unique: true,
+    
     },
     price: {
       type: DataTypes.INTEGER,
