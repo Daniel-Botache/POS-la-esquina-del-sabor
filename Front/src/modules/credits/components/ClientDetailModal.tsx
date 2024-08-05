@@ -1,6 +1,7 @@
 import style from "../styles/ClientDetailModal.module.css";
 import { Client } from "../redux/clientSlice";
 import { useState, useEffect } from "react";
+import MovementHistoryTable from "./MovementHistoryTable";
 
 type ClientProps = Client & {
   onClose: () => void;
@@ -84,6 +85,7 @@ export default function ClientDetailModal({
             </div>
           </div>
         </div>
+        <MovementHistoryTable id={id} />
       </div>
     </div>
   );

@@ -1,0 +1,110 @@
+.principalContainer {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.principalContainer_icon {
+  width: 3em;
+}
+
+.principalContainer_notFound {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2em;
+}
+.principalContainer_h3 {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  color: var(--color-main-red);
+}
+
+.filterContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.headContainer {
+  margin-top: 2em;
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--color-background-grey);
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom: 2px solid var(--color-white);
+  align-items: center;
+  padding-left: 2em;
+  padding-right: 2em;
+}
+.optionContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: baseline;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  align-items: baseline;
+  color: var(--color-main-text);
+  gap: 0.5em;
+}
+.inputContainer {
+  display: flex;
+  gap: 0.5em;
+  justify-content: space-around;
+  width: 90%;
+  align-items: center;
+}
+.inputContainer__label {
+  font-size: 0.8em;
+}
+.inputContainer__input {
+  border: 1px var(--color-main-orange) solid;
+  border-radius: 5px;
+  outline: none;
+  appearance: none;
+  font-size: 1em;
+}
+input[type="date"] {
+  &::-webkit-calendar-picker-indicator {
+    font-size: 1.5em;
+  }
+}
+
+.headContainer__button {
+  display: flex;
+  border-radius: 10px;
+  border: 1px var(--color-main-orange) solid;
+  padding: 0.3em;
+  height: 1.2em;
+  justify-content: center;
+  align-items: center;
+  color: var(--color-main-orange);
+  fill: var(--color-main-orange);
+  gap: 0.3em;
+  cursor: pointer;
+  transition: 0.5s;
+  background-color: var(--color-white);
+}
+
+.headContainer__button__icon {
+  width: 1.5em;
+}
+
+.headContainer__button:hover {
+  background-color: var(--color-main-orange);
+  color: var(--color-white);
+  fill: var(--color-white);
+}
+.titleContainer {
+  display: flex;
+  gap: 2%;
+  align-items: baseline;
+  justify-content: space-between;
+  border-bottom: 2px var(--color-white) solid;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  background-color: var(--color-background-grey);
+}
+.titleContainer__h3 {
+  width: 15%;
+  font-size: 1em;
+  cursor: pointer;
+}

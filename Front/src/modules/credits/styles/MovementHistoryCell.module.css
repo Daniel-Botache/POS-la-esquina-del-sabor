@@ -1,0 +1,33 @@
+.principalContainer {
+  font-family: "Franklin Gothic   ", "Arial Narrow", Arial, sans-serif;
+  display: flex;
+  gap: 2%;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px var(--color-white) solid;
+  background-color: var(--color-background-grey);
+}
+.prepertyContainer {
+  width: 15%;
+  font-size: 1em;
+}
+.prepertyContainer__btn {
+  border: 1px transparent solid;
+  background-color: transparent;
+  border-radius: 10px;
+  width: 10%;
+  cursor: pointer;
+}
+.prepertyContainer__detailIcon {
+  width: 1.8em;
+  height: 2em;
+  margin: auto;
+  fill: var(--color-main-green);
+}
+.prepertyContainer_options {
+  width: 15%;
+  font-size: 1em;
+  display: flex;
+  justify-content: space-evenly;
+  gap: 0.8em;
+}

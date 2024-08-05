@@ -25,7 +25,7 @@ export default function MovementHistoryCell({
     <div className={style.principalContainer}>
       <div className={style.prepertyContainer}>{id}</div>
       <div className={style.prepertyContainer}>{movementType}</div>
-      <div className={style.prepertyContainer}>{createdAt}</div>
+      <div className={style.prepertyContainer}>{"createdAt"}</div>
       <div className={style.prepertyContainer}>{total}</div>
       <div className={style.prepertyContainer_options}>
         <button

@@ -2,7 +2,7 @@ import axios from "axios";
 import { errorMessage } from "../../auth/hooks/notifications";
 import { Sales } from "../../profit/redux/profitSlice";
 
-export async function getSaleByClientId(id: string) {
+export async function getCreditsByClientId(id: string) {
   try {
     const sales = await axios.get(`/sale/salesClient/${id} `);
     if (sales.data.success.length > 0) {

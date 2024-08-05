@@ -63,6 +63,8 @@
 .tileContainer {
   display: flex;
   justify-content: space-between;
+  padding-left: 2em;
+  padding-right: 2em;
 }
 
 .infoContainer {
