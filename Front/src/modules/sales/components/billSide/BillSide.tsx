@@ -241,9 +241,7 @@ export default function BillSide() {
   };
 
   const calculateTotalProduct = () => {
-    return Object.values(productsSelected).reduce((total, product) => {
-      return total + product.quantity;
-    }, 0);
+    return Object.values(productsSelected).length;
   };
 
   useEffect(() => {
@@ -409,7 +407,7 @@ export default function BillSide() {
       )}
       <div className={style.cancelSaleContainer}>
         <p className={style.cancelSaleContainer__p}>
-          {calculateTotalProduct()} Productos
+          {calculateTotalProduct()} Tipos de producto
         </p>
         <button
           className={style.cancelSaleContainer__btn}
