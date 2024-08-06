@@ -69,12 +69,14 @@ export default function CellCLient({
     const nowDate = new Date().getTime();
     if (lastPayment !== null && quotaMax > 0) {
       const timeLastPayment = new Date(lastPayment).getTime();
-      const diferenceTime = (nowDate - timeLastPayment) / 86400000;
+      const diferenceTime = Math.floor((nowDate - timeLastPayment) / 86400000);
       return diferenceTime;
     }
     return 0;
   };
-
+  const formattedDateCreate = lastPayment
+    ? new Date(lastPayment).toLocaleDateString()
+    : "";
   useEffect(() => {
     const client = {
       clientType: calculateClientType(),
@@ -111,7 +113,7 @@ export default function CellCLient({
       <div className={style.prepertyContainer}>{id}</div>
       <div className={style.prepertyContainer}>{name}</div>
       <div className={style.prepertyContainer}>{clientType}</div>
-      <div className={style.prepertyContainer}>{lastPayment}</div>
+      <div className={style.prepertyContainer}>{formattedDateCreate}</div>
       <div className={`${style.prepertyContainer} ${colorBackground}`}>
         {calculateDayPastDueHandle()}
       </div>

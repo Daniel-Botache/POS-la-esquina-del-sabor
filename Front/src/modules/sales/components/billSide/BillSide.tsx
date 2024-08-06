@@ -122,6 +122,9 @@ export default function BillSide() {
       if (saleData.credit) {
         const client = await getClientById(clientIdStatus);
         if (client.remainingQuota >= totalSale) {
+          client.lastPayment == null
+            ? (client.lastPayment = new Date())
+            : (client.lastPayment = client.lastPayment);
           client.remainingQuota = client.remainingQuota - totalSale;
           const clientCreditUpDated = await putClient(clientIdStatus, client);
           clientCreditUpDated
@@ -132,7 +135,24 @@ export default function BillSide() {
         }
       }
     }
-
+    if (transactionType === "Abono") {
+      if (
+        Object.keys(productsSelected).length > 1 ||
+        !Object.keys(productsSelected).includes("")
+      ) {
+        errorMessage(
+          "No es posible procesar ventas y abonos en la misma factura"
+        );
+        return;
+      }
+      const client = await getClientById(clientIdStatus);
+      client.remainingQuota = client.remainingQuota + totalSale;
+      client.lastPayment = new Date();
+      const clientPaymentUpDated = await putClient(clientIdStatus, client);
+      clientPaymentUpDated
+        ? succesMessage("Credito actualizado correctamente")
+        : errorMessage("Verificar cliente");
+    }
     try {
       await postSaleService(saleData);
       putProductService(productsSelected);
@@ -270,6 +290,7 @@ export default function BillSide() {
           onChange={handleInputChange}
           onKeyDown={handleInputEnter}
           value={barCode}
+          disabled={transactionType == "Abono" ? true : false}
         />
         <div>
           <label htmlFor="Abono">
