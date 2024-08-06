@@ -21,6 +21,8 @@ import {
   MixPaymentIcon,
   CancelIcon,
 } from "../../../../utils/Icons/icons";
+import { putClient } from "../../../credits/services/putClient";
+import { getClientById } from "../../../credits/services/getClientById";
 
 export default function BillSide() {
   const [barCode, setbarCode] = useState("");
@@ -117,6 +119,18 @@ export default function BillSide() {
 
     if (transactionType === "Venta" && clientIdStatus !== "") {
       saleData.credit = confirm("¿Es crédito?");
+      if (saleData.credit) {
+        const client = await getClientById(clientIdStatus);
+        if (client.remainingQuota >= totalSale) {
+          client.remainingQuota = client.remainingQuota - totalSale;
+          const clientCreditUpDated = await putClient(clientIdStatus, client);
+          clientCreditUpDated
+            ? succesMessage("Credito creado correctamente")
+            : errorMessage("Verificar cliente");
+        } else {
+          return errorMessage("Cupo insuficiente");
+        }
+      }
     }
 
     try {

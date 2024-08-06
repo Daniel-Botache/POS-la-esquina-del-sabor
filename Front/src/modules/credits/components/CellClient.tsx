@@ -69,7 +69,7 @@ export default function CellCLient({
     const nowDate = new Date().getTime();
     if (lastPayment !== null && quotaMax > 0) {
       const timeLastPayment = new Date(lastPayment).getTime();
-      const diferenceTime = nowDate - timeLastPayment / 86400000;
+      const diferenceTime = (nowDate - timeLastPayment) / 86400000;
       return diferenceTime;
     }
     return 0;
@@ -77,15 +77,6 @@ export default function CellCLient({
 
   useEffect(() => {
     const client = {
-      id,
-      name,
-      tel,
-      address,
-      ban,
-      remainingQuota,
-      quotaMax,
-      lastPayment,
-
       clientType: calculateClientType(),
     };
 
