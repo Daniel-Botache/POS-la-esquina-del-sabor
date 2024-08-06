@@ -236,7 +236,7 @@ export default function BillSide() {
 
   const calculateTotal = () => {
     return Object.values(productsSelected).reduce((total, product) => {
-      return total + product.price * product.quantity;
+      return Math.ceil((total + product.price * product.quantity) / 100) * 100;
     }, 0);
   };
 
@@ -246,12 +246,11 @@ export default function BillSide() {
 
   useEffect(() => {
     const total = Object.values(productsSelected).reduce((sum, product) => {
-      return sum + product.price * product.quantity;
+      return sum + Math.ceil((product.price * product.quantity) / 100) * 100;
     }, 0);
     setTotalSale(total);
     const spent = Object.values(productsSelected).reduce((sum, product) => {
       if (product.spent && !product.bale) {
-        console.log(sum);
         return sum + product.price * product.quantity;
       }
       return sum;
@@ -332,7 +331,10 @@ export default function BillSide() {
               productName={productData.name}
               quantity={productData.quantity}
               price={productData.price}
-              total={productData.price * productData.quantity}
+              total={
+                Math.ceil((productData.price * productData.quantity) / 100) *
+                100
+              }
               onDelete={handleDelete}
             />
           ))}

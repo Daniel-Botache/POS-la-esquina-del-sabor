@@ -104,8 +104,12 @@ export default function ProfitDetail({
                 price={product.price}
                 total={
                   !product.bale
-                    ? product.price * product.ProductSale.quantity
-                    : product.price * product.BaleSale.quantity
+                    ? Math.ceil(
+                        (product.price * product.ProductSale.quantity) / 100
+                      ) * 100
+                    : Math.ceil(
+                        (product.price * product.BaleSale.quantity) / 100
+                      ) * 100
                 }
               />
             ))}

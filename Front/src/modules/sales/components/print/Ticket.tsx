@@ -32,12 +32,15 @@ const Ticket = forwardRef<HTMLDivElement, TicketProps>(
               </span>
               <span>
                 Total: $
-                {productData.price *
-                  (history
-                    ? productData.bale
-                      ? productData.BaleSale.quantity
-                      : productData.ProductSale.quantity
-                    : productData.quantity)}
+                {Math.ceil(
+                  (productData.price *
+                    (history
+                      ? productData.bale
+                        ? productData.BaleSale.quantity
+                        : productData.ProductSale.quantity
+                      : productData.quantity)) /
+                    100
+                ) * 100}
               </span>
             </div>
           ))}

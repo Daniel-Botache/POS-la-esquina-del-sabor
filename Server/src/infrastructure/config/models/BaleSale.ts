@@ -18,7 +18,7 @@ export default (sequelize: Sequelize) => {
       },
     },
     quantity: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.FLOAT,
       allowNull: false,
     },
   });
