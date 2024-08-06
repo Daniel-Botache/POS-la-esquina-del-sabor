@@ -293,11 +293,10 @@ export default function CreateProductModal({
               Cantidad *
             </label>
             <input
-              value={Number(newProduct.volume)}
               onChange={(e) =>
                 setNewProduct((prevState) => ({
                   ...prevState,
-                  volume: Number(e.target.value),
+                  volume: parseFloat(e.target.value),
                 }))
               }
               type="text"

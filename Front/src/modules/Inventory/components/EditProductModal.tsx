@@ -273,18 +273,20 @@ export default function EditProductModal({
               Cantidad *
             </label>
             <input
-              value={newProduct.volume ?? ""}
+              defaultValue={newProduct.volume?.toString() ?? ""}
               onChange={(e) => {
                 const now = Date.now();
                 const today = new Date(now);
                 const formatedToday = today.toISOString();
+                const volumeWithDot = e.target.value.replace(",", "."); // Replace comma with dot
                 setNewProduct((prevState) => ({
                   ...prevState,
-                  volume: Number(e.target.value),
+                  volume: parseFloat(volumeWithDot),
                   lastVolumeDate: formatedToday,
                 }));
               }}
-              type="text"
+              type="number"
+              step="0.01"
               id="inputVolume"
               className={style.form__inputText}
             />
