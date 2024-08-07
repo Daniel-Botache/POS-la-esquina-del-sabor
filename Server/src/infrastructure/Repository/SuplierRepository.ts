@@ -2,6 +2,7 @@ import { ISuplierRepository } from "../../application/repositories/ISuplierRepos
 import { SuplierInstance } from "../../domain/models/SuplierAttributes";
 import { Suplier } from "../config/database";
 import { Product } from "../config/database";
+import { Op } from "sequelize";
 
 export class SuplierRepository implements ISuplierRepository {
   public async findById(id: string): Promise<SuplierInstance | null> {
@@ -9,5 +10,15 @@ export class SuplierRepository implements ISuplierRepository {
       include: [{ model: Product, as: "products" }],
     });
     return data as SuplierInstance;
+  }
+  public async findByName(name: string): Promise<SuplierInstance[]> {
+    const suppliers = await Suplier.findAll({
+      where: {
+        name: {
+          [Op.iLike]: `%${name}%`,
+        },
+      },
+    });
+    return suppliers.map((supplier) => supplier as SuplierInstance);
   }
 }
