@@ -45,14 +45,26 @@ export default function CellCLient({
   const calculateClientType = () => {
     if (calculateDayPastDueHandle() > 35) {
       setColorBackground(style.redBackground);
+      const client = {
+        ban: true,
+      };
+      putClient(id, client);
       return "Moroso";
     } else if (
       calculateDayPastDueHandle() > 20 &&
       calculateDayPastDueHandle() < 35
     ) {
+      const client = {
+        ban: false,
+      };
+      putClient(id, client);
       setColorBackground(style.greyBackground);
       return "Regular";
     }
+    const client = {
+      ban: false,
+    };
+    putClient(id, client);
     setColorBackground(style.greenBackground);
     return "VIP";
   };
