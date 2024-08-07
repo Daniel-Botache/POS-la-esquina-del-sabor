@@ -9,8 +9,15 @@ import spentReducer from "../modules/spents/redux/spentSlice";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import clientReducer from "../modules/credits/redux/clientSlice";
+import supplierReducer from "../modules/suppliers/redux/supplierSlice";
 
 //configuracion para peristir el reducer en el localstorage
+const persistSupplierConfig = {
+  key: "suppliers",
+  storage,
+  whitelist: ["suppliers", "suppliersCopy"],
+};
+
 const persistClientConfig = {
   key: "clients",
   storage,
@@ -91,6 +98,10 @@ export const store = configureStore({
     clients: persistReducer<ReturnType<typeof clientReducer>>(
       persistClientConfig,
       clientReducer
+    ),
+    suppliers: persistReducer<ReturnType<typeof supplierReducer>>(
+      persistSupplierConfig,
+      supplierReducer
     ),
   },
   middleware: (DefaultSerializer) =>
