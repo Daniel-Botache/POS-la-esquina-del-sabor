@@ -14,7 +14,7 @@ export class SuplierRepository implements ISuplierRepository {
   public async findByName(name: string): Promise<SuplierInstance[]> {
     const suppliers = await Suplier.findAll({
       where: {
-        name: {
+        company: {
           [Op.iLike]: `%${name}%`,
         },
       },
