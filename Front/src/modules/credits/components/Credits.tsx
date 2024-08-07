@@ -6,7 +6,6 @@ import SearchBarClient from "./SearchBarClient";
 import TableClient from "./TableClient";
 import { Client } from "../redux/clientSlice";
 import { addClientCopy } from "../redux/clientSlice";
-
 import CreateClientModal from "./CreateClientModal";
 
 export default function Credits() {
