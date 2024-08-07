@@ -14,6 +14,7 @@ import Expenses from "./modules/spents/components/Expenses";
 import Bases from "./modules/dailyBases/components/Bases";
 import Balance from "./modules/balance/components/Balance";
 import Credits from "./modules/credits/components/Credits";
+import Suppliers from "./modules/suppliers/components/Suppliers";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route path="/bases" element={<Bases />} />
         <Route path="/balance" element={<Balance />} />
         <Route path="/credits" element={<Credits />} />
+        <Route path="/suppliers" element={<Suppliers />} />
       </Routes>
       <Footer />
     </>

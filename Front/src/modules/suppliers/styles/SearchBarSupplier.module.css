@@ -1,0 +1,39 @@
+.principalContainer__input {
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  outline: none;
+  width: 70%;
+  margin-left: 0;
+}
+.principalContainer {
+  width: 60%;
+  display: flex;
+}
+
+.principalContainer__icon {
+  width: 1.2em;
+  height: 1.3em;
+  margin: auto;
+  fill: var(--color-white);
+}
+
+.principalContainer__btn {
+  border: 1px transparent solid;
+  display: flex;
+  background-color: var(--color-main-orange);
+  border-radius: 5px;
+  font-family: "Franklin Gothic ", "Arial Narrow", Arial, sans-serif;
+  transition: 0.5s;
+  width: 4rem;
+  color: var(--color-white);
+  cursor: pointer;
+}
+.principalContainer__btn:hover .principalContainer__icon {
+  fill: var(--color-main-orange);
+}
+.principalContainer__btn:hover {
+  background-color: var(--color-white);
+  border: 1px var(--color-main-orange) solid;
+  color: var(--color-main-orange);
+}
