@@ -10,9 +10,7 @@ import { changeDeleteStatus } from "../../Inventory/redux/stockSlice";
 import { useCustomDispatch } from "../../../store/hooks";
 import ClientDetailModal from "./ClientDetailModal";
 
-type ClientProps = Client & {
-  onCheckboxChange: (client: { id: string }) => void;
-};
+type ClientProps = Client & {};
 
 export default function CellCLient({
   id,
@@ -24,8 +22,6 @@ export default function CellCLient({
   clientType,
   remainingQuota,
   lastPayment,
-
-  onCheckboxChange,
 }: ClientProps) {
   const [colorBackground, setColorBackground] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -38,10 +34,6 @@ export default function CellCLient({
 
   const toggleDetailModal = () => {
     setIsDetailModalOpem(!isDetailModalOpen);
-  };
-
-  const handleCheckboxChange = () => {
-    onCheckboxChange({ id: id.toString() });
   };
 
   const formatedRemainingQuotaHandle = new Intl.NumberFormat("es-CO").format(
@@ -107,9 +99,7 @@ export default function CellCLient({
 
   return (
     <div className={style.principalContainer}>
-      <div className={style.prepertyContainer__check}>
-        <input type="checkbox" name="" id="" onChange={handleCheckboxChange} />
-      </div>
+      <div className={style.prepertyContainer}>{ban ? "No" : "Si"}</div>
       <div className={style.prepertyContainer}>{id}</div>
       <div className={style.prepertyContainer}>{name}</div>
       <div className={style.prepertyContainer}>{clientType}</div>
@@ -151,6 +141,7 @@ export default function CellCLient({
           ban={ban}
           quotaMax={quotaMax}
           onClose={toggleModal}
+          remainingQuota={remainingQuota}
         />
       )}
       {isDetailModalOpen && (

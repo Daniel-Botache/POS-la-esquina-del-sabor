@@ -15,6 +15,7 @@ type CreateClientModalProps = {
   tel: string;
   ban: boolean;
   edit: boolean;
+  remainingQuota: number;
   quotaMax: number;
 };
 
@@ -27,12 +28,14 @@ export default function CreateClientModal({
   ban,
   quotaMax,
   edit,
+  remainingQuota,
 }: CreateClientModalProps) {
   const [idState, setIdState] = useState(id);
   const [nameState, setNameState] = useState(name);
   const [telState, setTelState] = useState(tel);
   const [addressState, setAddressState] = useState(address);
   const [banState, setBanState] = useState(ban);
+  const [quotaMaxStateCopy, _setQuotaMaxStateCopy] = useState(quotaMax);
   const [quotaMaxState, setQuotaMaxState] = useState(quotaMax);
   const [errorId, setErrorId] = useState("");
   const dispatch = useCustomDispatch();
@@ -85,13 +88,21 @@ export default function CreateClientModal({
       tel: telState,
       address: addressState,
       ban: banState,
-      quotaMax: !banState ? 0 : quotaMaxState,
-      remainingQuota: !banState ? 0 : quotaMaxState,
+      quotaMax: quotaMaxState,
+      remainingQuota: quotaMaxState,
       lastPayment: null,
       clientType: "Regular",
     };
     if (edit) {
-      const editedClient = await putClient(id, client);
+      const clientToEdit = {
+        name: nameState,
+        tel: telState,
+        address: addressState,
+        ban: banState,
+        quotaMax: quotaMaxState,
+        remainingQuota: remainingQuota + (quotaMaxState - quotaMaxStateCopy),
+      };
+      const editedClient = await putClient(id, clientToEdit);
       if (editedClient) {
         handleClose();
         dispatch(changeDeleteStatus());
@@ -184,15 +195,15 @@ export default function CreateClientModal({
               id="creditSelect"
               className={style.form__inputText}
               onChange={changeBanHandle}
-              value={Number(ban)}
+              defaultValue={Number(ban)}
             >
-              <option value={0}>No</option>
-              <option value={1}>Si</option>
+              <option value={1}>No</option>
+              <option value={0}>Si</option>
             </select>
           </div>
           <div
             className={
-              banState ? style.inputContainer : style.inputContainer_disabled
+              !banState ? style.inputContainer : style.inputContainer_disabled
             }
           >
             <label htmlFor="quotaMaxInput">Cupo máximo: *</label>
@@ -201,7 +212,7 @@ export default function CreateClientModal({
               id="quotaMaxInput"
               className={style.form__inputText}
               onChange={changeQuotaMaxHandle}
-              disabled={banState ? false : true}
+              disabled={banState ? true : false}
               value={quotaMaxState}
             />
           </div>

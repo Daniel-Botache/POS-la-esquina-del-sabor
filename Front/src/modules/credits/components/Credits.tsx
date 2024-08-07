@@ -1,23 +1,13 @@
 import style from "../styles/Credits.module.css";
-import {
-  DeleteIcon,
-  AddIcon,
-  FilterIcon,
-  SearchIcon,
-} from "../../../utils/Icons/icons";
+import { AddIcon, FilterIcon, SearchIcon } from "../../../utils/Icons/icons";
 import { useState } from "react";
 import { useCustomDispatch, useCustomSelector } from "../../../store/hooks";
 import SearchBarClient from "./SearchBarClient";
 import TableClient from "./TableClient";
 import { Client } from "../redux/clientSlice";
 import { addClientCopy } from "../redux/clientSlice";
-import { deleteClient } from "../services/deleteClient";
-import { changeDeleteStatus } from "../../Inventory/redux/stockSlice";
-import CreateClientModal from "./CreateClientModal";
 
-type CheckedClient = {
-  id: string;
-};
+import CreateClientModal from "./CreateClientModal";
 
 export default function Credits() {
   const dispatch = useCustomDispatch();
@@ -25,9 +15,7 @@ export default function Credits() {
   const clientsCopy = useCustomSelector((state) => state.clients.clientsCopy);
   const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(false);
   const [typeSort, setTypeSort] = useState("");
-  const [selectedClientsIds, setSelectedClientsIds] = useState<CheckedClient[]>(
-    []
-  );
+
   const [filterType, setFilterType] = useState("todos");
   const [dateFilter, setDateFilter] = useState(0);
   const [filterQuantySince, setFilterQuantySince] = useState(0);
@@ -45,32 +33,6 @@ export default function Credits() {
 
   const toggleModalCreateClient = () => {
     setIsModalCreateClientOpen(!isModalCreateClientOpen);
-  };
-
-  const handleCheckboxChange = (clientId: { id: string }) => {
-    setSelectedClientsIds((prevSelectedClientsIds) =>
-      prevSelectedClientsIds.some((client) => client.id === clientId.id)
-        ? prevSelectedClientsIds.filter((client) => client.id !== clientId.id)
-        : [...prevSelectedClientsIds, clientId]
-    );
-  };
-
-  const handleDeleteProduct = (id: string) => {
-    deleteClient(id);
-  };
-
-  const handleDeleteSelectedProducts = () => {
-    const userConfirm = confirm(`¿Seguro desea eliminar los Clientes?`);
-    if (userConfirm) {
-      selectedClientsIds.forEach((id) => {
-        const client = clients.find((client) => client.id.toString() === id.id);
-        if (client) {
-          handleDeleteProduct(client.id);
-        }
-      });
-    }
-    dispatch(changeDeleteStatus());
-    setSelectedClientsIds([]);
   };
 
   const sortByName = (event: React.MouseEvent<HTMLHRElement>) => {
@@ -233,13 +195,6 @@ export default function Credits() {
         <div className={style.orderContainer}>
           <div
             className={style.headContainer__button}
-            onClick={handleDeleteSelectedProducts}
-          >
-            <DeleteIcon className={style.headContainer__button__icon} />
-            <p className={style.headContainer__button__p}>Eliminar selección</p>
-          </div>
-          <div
-            className={style.headContainer__button}
             onClick={toggleModalCreateClient}
           >
             <AddIcon className={style.headContainer__button__icon} />
@@ -329,12 +284,7 @@ export default function Credits() {
         </div>
       </div>
       <div className={style.titleContainer}>
-        <input
-          type="checkbox"
-          name=""
-          id=""
-          className={style.titleContainer__check}
-        />
+        <h3 className={style.titleContainer__h3}>Activo: </h3>
         <h3 className={style.titleContainer__h3}>Cédula: </h3>
         <h3 className={style.titleContainer__h3} onClick={sortByName}>
           Nombre:{" "}
@@ -370,7 +320,7 @@ export default function Credits() {
 
         <h3 className={style.titleContainer__h3}>Acciones:</h3>
       </div>
-      <TableClient onCheckboxChange={handleCheckboxChange} />
+      <TableClient />
       {isModalCreateClientOpen && (
         <CreateClientModal
           id={""}
@@ -379,8 +329,9 @@ export default function Credits() {
           tel={""}
           address={""}
           quotaMax={0}
-          ban={false}
+          ban={true}
           onClose={toggleModalCreateClient}
+          remainingQuota={0}
         />
       )}
     </div>

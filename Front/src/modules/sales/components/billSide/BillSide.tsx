@@ -121,7 +121,7 @@ export default function BillSide() {
       saleData.credit = confirm("¿Es crédito?");
       if (saleData.credit) {
         const client = await getClientById(clientIdStatus);
-        if (client.remainingQuota >= totalSale) {
+        if (client.remainingQuota >= totalSale && client.ban == false) {
           client.lastPayment == null
             ? (client.lastPayment = new Date())
             : (client.lastPayment = client.lastPayment);
@@ -131,7 +131,7 @@ export default function BillSide() {
             ? succesMessage("Credito creado correctamente")
             : errorMessage("Verificar cliente");
         } else {
-          return errorMessage("Cupo insuficiente");
+          return errorMessage("Cupo insuficiente o crédito inactivo por mora");
         }
       }
     }

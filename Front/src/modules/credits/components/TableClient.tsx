@@ -4,11 +4,7 @@ import { Client } from "../redux/clientSlice";
 import CellCLient from "./CellClient";
 import warningIcon from "../../../utils/Icons/73028warning_109526.svg";
 
-type TableProps = {
-  onCheckboxChange: (product: { id: string }) => void;
-};
-
-export default function TableClient({ onCheckboxChange }: TableProps) {
+export default function TableClient() {
   const clients = useCustomSelector((state) => state.clients.clientsCopy);
 
   return (
@@ -27,7 +23,6 @@ export default function TableClient({ onCheckboxChange }: TableProps) {
               quotaMax={client.quotaMax}
               ban={client.ban}
               remainingQuota={client.remainingQuota}
-              onCheckboxChange={onCheckboxChange}
             />
           ))
         ) : (
