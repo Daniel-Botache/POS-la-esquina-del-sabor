@@ -5,7 +5,8 @@ export type Supplier = {
   company: string;
   tel: string;
   adviser: string;
-  createdAt: Date;
+  createdAt: string;
+  products: [];
 };
 
 interface SupplierState {

@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useCustomSelector, useCustomDispatch } from "../../../store/hooks";
 import { Supplier } from "../redux/supplierSlice";
 import { addSupplierCopy } from "../redux/supplierSlice";
+import TableSuppliers from "./TableSuppliers";
 
 export default function Suppliers() {
   const [isModalCreateSupplierOpen, setIsModalCreateSupplierOpen] =
@@ -78,6 +79,7 @@ export default function Suppliers() {
       {isModalCreateSupplierOpen && (
         <CreateSupplierModal onClose={toggleModalCreateSupplier} />
       )}
+      <TableSuppliers />
     </div>
   );
 }
