@@ -14,7 +14,6 @@ export default function Credits() {
   const clientsCopy = useCustomSelector((state) => state.clients.clientsCopy);
   const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(false);
   const [typeSort, setTypeSort] = useState("");
-
   const [filterType, setFilterType] = useState("todos");
   const [dateFilter, setDateFilter] = useState(0);
   const [filterQuantySince, setFilterQuantySince] = useState(0);

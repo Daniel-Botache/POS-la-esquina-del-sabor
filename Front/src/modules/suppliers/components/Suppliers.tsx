@@ -61,23 +61,20 @@ export default function Suppliers() {
         </h3>
         <h3 className={style.titleContainer__h3}>Asesor: </h3>
         <h3 className={style.titleContainer__h3}>Teléfono:</h3>
-        <h3 className={style.titleContainer__h3}>
-          Fecha de Creación:{" "}
-          <span className={style.titleCOntainer__span}>
-            {typeSort == "lastPaymentSort" ? "▼" : "▶"}
-          </span>
-        </h3>
-        <h3 className={style.titleContainer__h3}>
-          Total de productos:{" "}
-          <span className={style.titleCOntainer__span}>
-            {typeSort == "remainingQuotaSort" ? "▼" : "▶"}
-          </span>
-        </h3>
+        <h3 className={style.titleContainer__h3}>Fecha de Creación: </h3>
+        <h3 className={style.titleContainer__h3}>Total de productos: </h3>
 
         <h3 className={style.titleContainer__h3}>Acciones:</h3>
       </div>
       {isModalCreateSupplierOpen && (
-        <CreateSupplierModal onClose={toggleModalCreateSupplier} />
+        <CreateSupplierModal
+          edit={false}
+          id={""}
+          company={""}
+          tel={""}
+          adviser={""}
+          onClose={toggleModalCreateSupplier}
+        />
       )}
       <TableSuppliers />
     </div>
