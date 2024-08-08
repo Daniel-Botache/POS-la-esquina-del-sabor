@@ -7,6 +7,7 @@ import { changeDeleteStatus } from "../../Inventory/redux/stockSlice";
 import { useCustomDispatch } from "../../../store/hooks";
 import { Supplier } from "../redux/supplierSlice";
 import { getSupplierById } from "../services/getSupplierById";
+import { deleteSupplier } from "../services/deleteSupplier";
 
 type SupplierProps = { id: string };
 
@@ -38,24 +39,24 @@ export default function CellSuppliers({ id }: SupplierProps) {
     getSupplierInfoHandle();
   }, []);
 
-  const deleteClientHandle = async (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    event.preventDefault();
-    const confirm = window.confirm(
-      "Seguro desea eliminar completamente a este proveedor, no podrá recuperar ninguno de los datos relacionados"
-    );
-    if (confirm) {
-      const deletedClient = 0;
-      if (deletedClient) {
-        dispatch(changeDeleteStatus());
-        succesMessage("Cliente eliminado completamente");
-        return;
+  const deleteSupplierHandle = async () => {
+    try {
+      const confirmDelete = confirm(
+        "¿Seguro desea eliminar el proveedor? No podrá volver a recuperar sus datos ni los relacionados"
+      );
+      if (confirmDelete) {
+        const deletedSupplier = await deleteSupplier(id);
+        console.log(confirmDelete);
+        if (deletedSupplier) {
+          dispatch(changeDeleteStatus());
+          return succesMessage("Proveedor eliminado ");
+        }
+        return errorMessage("No ha sido posible eliminar el proveedor");
       }
-      errorMessage("Problema con el servidor actualice la página");
       return;
+    } catch (error) {
+      return errorMessage("No ha sido posible eliminar el proveedor");
     }
-    return;
   };
 
   return (
@@ -71,7 +72,7 @@ export default function CellSuppliers({ id }: SupplierProps) {
       <div className={style.prepertyContainer_options}>
         <button
           className={style.prepertyContainer__btn}
-          onClick={deleteClientHandle}
+          onClick={deleteSupplierHandle}
         >
           <DeleteIcon className={style.prepertyContainer__deleteIcon} />
         </button>
