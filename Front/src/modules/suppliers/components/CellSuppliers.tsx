@@ -4,7 +4,7 @@ import { DeleteIcon, EditIcon } from "../../../utils/Icons/icons";
 import CreateSupplierModal from "../../createSupplierModal/components/CreateSupplierModal";
 import { succesMessage, errorMessage } from "../../auth/hooks/notifications";
 import { changeDeleteStatus } from "../../Inventory/redux/stockSlice";
-import { useCustomDispatch } from "../../../store/hooks";
+import { useCustomDispatch, useCustomSelector } from "../../../store/hooks";
 import { Supplier } from "../redux/supplierSlice";
 import { getSupplierById } from "../services/getSupplierById";
 import { deleteSupplier } from "../services/deleteSupplier";
@@ -12,6 +12,7 @@ import { deleteSupplier } from "../services/deleteSupplier";
 type SupplierProps = { id: string };
 
 export default function CellSuppliers({ id }: SupplierProps) {
+  const deletedStatus = useCustomSelector((state) => state.stock.deleted);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [supplierObject, setSupplierObject] = useState<Supplier>();
   const dispatch = useCustomDispatch();
@@ -37,7 +38,7 @@ export default function CellSuppliers({ id }: SupplierProps) {
 
   useEffect(() => {
     getSupplierInfoHandle();
-  }, []);
+  }, [deletedStatus]);
 
   const deleteSupplierHandle = async () => {
     try {
@@ -80,19 +81,16 @@ export default function CellSuppliers({ id }: SupplierProps) {
           <EditIcon className={style.prepertyContainer__editIcon} />
         </button>
       </div>
-      {/* {isModalOpen && (
+      {isModalOpen && (
         <CreateSupplierModal
           edit={true}
           id={id}
-          name={name}
-          tel={tel}
-          address={address}
-          ban={ban}
-          quotaMax={quotaMax}
+          company={supplierObject ? supplierObject.company : ""}
+          tel={supplierObject ? supplierObject.tel : ""}
+          adviser={supplierObject ? supplierObject.adviser : ""}
           onClose={toggleModal}
-          remainingQuota={remainingQuota}
         />
-      )} */}
+      )}
     </div>
   );
 }

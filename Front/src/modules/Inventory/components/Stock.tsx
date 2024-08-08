@@ -648,7 +648,14 @@ export default function Stock() {
       </div>
       <Table onCheckboxChange={handleCheckboxChange} />
       {isModalSupplierOpen && (
-        <CreateSupplierModal onClose={toggleModalSupplier} />
+        <CreateSupplierModal
+          edit={false}
+          id={""}
+          company={""}
+          tel={""}
+          adviser={""}
+          onClose={toggleModalSupplier}
+        />
       )}
       {isModalProductOpen && (
         <CreateProductModal onClose={toggleModalProduct} />

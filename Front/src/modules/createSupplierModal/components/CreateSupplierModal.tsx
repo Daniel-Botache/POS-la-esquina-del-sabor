@@ -1,7 +1,10 @@
 import style from "../styles/CreateSupplierModal.module.css";
 import { useState } from "react";
 import { postNewSupplier } from "../services/postSupplier";
-import { errorMessage } from "../../auth/hooks/notifications";
+import { errorMessage, succesMessage } from "../../auth/hooks/notifications";
+import { putSupplier } from "../services/putSupplier";
+import { changeDeleteStatus } from "../../Inventory/redux/stockSlice";
+import { useCustomDispatch } from "../../../store/hooks";
 
 interface Supplier {
   company: string;
@@ -11,15 +14,26 @@ interface Supplier {
 
 type CreateSupplierModalProps = {
   onClose: () => void;
+  id: string;
+  edit: boolean;
+  company: string;
+  adviser: string;
+  tel: string;
 };
 
 export default function CreateSupplierModal({
   onClose,
+  company,
+  adviser,
+  tel,
+  edit,
+  id,
 }: CreateSupplierModalProps) {
+  const dispatch = useCustomDispatch();
   const [newSupplier, setNewSupplier] = useState<Supplier>({
-    company: "",
-    adviser: "",
-    tel: "",
+    company: company,
+    adviser: adviser,
+    tel: tel,
   });
 
   function capitalizeFirstLetter(string: string) {
@@ -32,6 +46,23 @@ export default function CreateSupplierModal({
       errorMessage("Debe agregar por lo menos el nombre de la empresa");
       return;
     }
+    if (edit) {
+      try {
+        const editedSuplier = await putSupplier(id, newSupplier);
+        if (editedSuplier) {
+          succesMessage("Proveedor editado correctamente");
+          dispatch(changeDeleteStatus());
+          handleClose();
+          return;
+        }
+        return errorMessage("Debe agregar los campos correspondientes");
+      } catch (error) {
+        return errorMessage(
+          "Problema al editar proveedor verifique el servidor"
+        );
+      }
+    }
+
     const response = await postNewSupplier(newSupplier);
     setNewSupplier({
       company: "",
@@ -39,6 +70,7 @@ export default function CreateSupplierModal({
       tel: "",
     });
     if (response) {
+      dispatch(changeDeleteStatus());
       handleClose();
     }
   };
@@ -62,6 +94,7 @@ export default function CreateSupplierModal({
           <div className={style.inputContainer}>
             <label htmlFor="compayInput">Empresa: *</label>
             <input
+              value={newSupplier.company}
               onChange={(e) =>
                 setNewSupplier((prevState) => ({
                   ...prevState,
@@ -76,6 +109,7 @@ export default function CreateSupplierModal({
           <div className={style.inputContainer}>
             <label htmlFor="adviserInput">Asesor:</label>
             <input
+              value={newSupplier.adviser}
               onChange={(e) =>
                 setNewSupplier((prevState) => ({
                   ...prevState,
@@ -90,6 +124,7 @@ export default function CreateSupplierModal({
           <div className={style.inputContainer}>
             <label htmlFor="telInput">Teléfono:</label>
             <input
+              value={newSupplier.tel}
               onChange={(e) =>
                 setNewSupplier((prevState) => ({
                   ...prevState,
