@@ -204,7 +204,7 @@ export default function Profit() {
     const totals = {
       total: total,
       totalSpent: totalSpent,
-      totalCash: totalCash,
+      totalCash: totalCash - totalSpent,
       totalTrans: totalTrans,
       grahpArrayData: grahpArrayData,
     };
