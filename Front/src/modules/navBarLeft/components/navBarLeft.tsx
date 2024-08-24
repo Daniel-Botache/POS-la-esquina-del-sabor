@@ -21,7 +21,7 @@ export default function NavBarLeft() {
   return (
     <div className={style.principalContainer}>
       <Link to="/sales">
-        <div title="Ventas">
+        <div title="Facturar">
           <VentasIcon
             className={`${style.principalContainer__icon} ${
               location.pathname == "/sales"
@@ -54,7 +54,7 @@ export default function NavBarLeft() {
         </div>
       </Link>
       <Link to="/profit">
-        <div title="Ganancias">
+        <div title="Ventas">
           <GananciasIcon
             className={`${style.principalContainer__icon} ${
               location.pathname == "/profit"

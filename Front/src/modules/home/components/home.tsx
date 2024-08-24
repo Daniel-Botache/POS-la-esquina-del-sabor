@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <div className={styles.principalContainer}>
       <Link to={"/sales"} className={styles.principalContainer__Link}>
-        <MenuCard title={"Ventas"} img={salesImg}></MenuCard>
+        <MenuCard title={"Facturar"} img={salesImg}></MenuCard>
       </Link>
       <Link to={"/stock"} className={styles.principalContainer__Link}>
         <MenuCard title={"Inventario"} img={stockImg}></MenuCard>
@@ -23,7 +23,7 @@ export default function Home() {
         <MenuCard title={"Créditos"} img={creditImg}></MenuCard>
       </Link>
       <Link to={"/profit"} className={styles.principalContainer__Link}>
-        <MenuCard title={"Ganancias"} img={profitImg}></MenuCard>
+        <MenuCard title={"Ventas"} img={profitImg}></MenuCard>
       </Link>
       <Link to={"/expenses"} className={styles.principalContainer__Link}>
         <MenuCard title={"Gastos"} img={expenseImg}></MenuCard>
